@@ -3,388 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="No Fate Ecosystem - Deterministic Boundary Framework for Legal and Institutional Systems">
-    <title>No Fate Ecosystem - Deterministic Boundary Framework</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
-        }
-        
-        header {
-            background: #1a1a1a;
-            color: #fff;
-            padding: 2rem 0;
-            border-bottom: 4px solid #0066cc;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #ccc;
-            font-weight: 300;
-        }
-        
-        .version {
-            display: inline-block;
-            background: #0066cc;
-            color: #fff;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-        
-        nav {
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            padding: 0;
-        }
-        
-        nav li {
-            margin: 0;
-        }
-        
-        nav a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: #333;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        
-        nav a:hover {
-            background: #f0f0f0;
-        }
-        
-        main {
-            background: #fff;
-            margin: 2rem auto;
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        section {
-            margin-bottom: 3rem;
-        }
-        
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-            border-bottom: 2px solid #0066cc;
-            padding-bottom: 0.5rem;
-        }
-        
-        h3 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: #333;
-        }
-        
-        .document-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .document-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1.5rem;
-            background: #fafafa;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .document-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        
-        .document-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #0066cc;
-        }
-        
-        .document-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        
-        .document-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: #0066cc;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.2s;
-            font-size: 0.9rem;
-        }
-        
-        .btn:hover {
-            background: #0052a3;
-        }
-        
-        .btn-secondary {
-            background: #666;
-        }
-        
-        .btn-secondary:hover {
-            background: #555;
-        }
-        
-        .notice {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 4px;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .notice strong {
-            color: #856404;
-        }
-        
-        .purpose-list {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .purpose-list li {
-            padding: 0.5rem 0 0.5rem 2rem;
-            position: relative;
-        }
-        
-        .purpose-list li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #0066cc;
-            font-weight: bold;
-        }
-        
-        footer {
-            background: #1a1a1a;
-            color: #ccc;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-        
-        footer a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
-        }
-        
-        code {
-            background: #f4f4f4;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-        }
-        
-        .hash {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            background: #f0f0f0;
-            padding: 0.5rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            word-break: break-all;
-        }
-    </style>
+    <title>No Fate: Deterministic Boundary Framework</title>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>No Fate Ecosystem</h1>
-            <p class="subtitle">Deterministic Boundary Framework for Legal and Institutional Systems</p>
-            <span class="version">Version 1.0.0</span>
-        </div>
+        <h1>No Fate: Deterministic Boundary Framework</h1>
+        <p>Preserving human authority over interpretive and discretionary legal questions.</p>
     </header>
-    
+
     <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#documents">Canonical Documents</a></li>
-                <li><a href="#purpose">Purpose</a></li>
-                <li><a href="#verification">Verification</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#principles">Principles</a></li>
+            <li><a href="#documents">Documents</a></li>
+            <li><a href="#pages">All Pages</a></li>
+            <li><a href="#developers">For Developers</a></li>
+            <li><a href="#governance">Governance</a></li>
+            <li><a href="#repository">Repository</a></li>
+        </ul>
     </nav>
-    
-    <main class="container">
+
+    <main>
         <section id="about">
-            <h2>About No Fate</h2>
-            <p>The No Fate ecosystem provides canonical documents that define boundary architecture for deterministic classification systems. These documents do not interpret law, advise on law, or attempt to replace judicial or institutional authority. They identify where determinism is possible, where it is not, and where refusal is the correct and safe behavior.</p>
+            <h2>What is No Fate?</h2>
+            <p>No Fate is a deterministic boundary framework that distinguishes between questions AI systems can answer mechanically (deterministic outcomes) and questions requiring human judgment (interpretive or discretionary zones).</p>
+            <p>The framework establishes <strong>refusal as correctness</strong>: refusing to answer interpretive or discretionary questions is the normatively correct behavior, not a failure.</p>
+            <p><strong>Core Principle:</strong> Humans, not machines, hold final authority over interpretive and discretionary legal questions.</p>
             
-            <div class="notice">
-                <strong>Canonical Notice:</strong> All documents in this ecosystem are immutable once published, hash-verified for integrity, and cryptographically signed. No modifications, interpretations, or derivative works are permitted without explicit versioning.
-            </div>
-        </section>
-        
-        <section id="documents">
-            <h2>Canonical Documents</h2>
-            
-            <div class="document-grid">
-                <div class="document-card">
-                    <h4>The No Fate Contract v1.0.0</h4>
-                    <p>A boundary specification defining the allowed and disallowed behavior for deterministic systems interacting with law, policy, or enforcement.</p>
-                    <div class="document-links">
-                        <a href="canonical/no-fate-contract_v1.0.0.md" class="btn">Markdown</a>
-                        <a href="canonical/no-fate-contract_v1.0.0.pdf" class="btn btn-secondary">PDF</a>
-                    </div>
-                </div>
-                
-                <div class="document-card">
-                    <h4>Deterministic Map of Law v1.0.0</h4>
-                    <p>A complete and stable classification of where U.S. legal questions are deterministic, interpretive, discretionary, or procedural in nature.</p>
-                    <div class="document-links">
-                        <a href="canonical/Deterministic_Map_of_Law_v1_0_0.md" class="btn">Markdown</a>
-                        <a href="canonical/Deterministic_Map_of_Law_v1_0_0.pdf" class="btn btn-secondary">PDF</a>
-                    </div>
-                </div>
-                
-                <div class="document-card">
-                    <h4>Boundary Extensions v1.1.0</h4>
-                    <p>Supplement extending deterministic boundary classifications with additional domains and clarified edge cases.</p>
-                    <div class="document-links">
-                        <a href="canonical/No_Fate_Supplement_Deterministic_Boundary_Extensions_v1_1_0.md" class="btn">Markdown</a>
-                    </div>
-                </div>
-            </div>
-            
-            <h3>Supporting Documentation</h3>
+            <p><strong>Quick Links:</strong></p>
             <ul>
-                <li><a href="docs/No_Fate_Compliance_Guide.md">Compliance Guide</a> - Implementation framework for boundary-respecting systems</li>
-                <li><a href="docs/AI_Refusal_Specification_for_Deterministic_Systems.md">Refusal Specification</a> - Normative framework for refusal behavior</li>
-                <li><a href="docs/Deterministic_Boundary_Test_Suite_v1_0.md">Test Suite</a> - Structured validation framework (34 tests)</li>
-                <li><a href="docs/VERIFICATION.md">Verification Guide</a> - Hash and signature verification procedures</li>
-                <li><a href="docs/GPG_SIGNING_INSTRUCTIONS.md">GPG Signing</a> - Complete signing and verification instructions</li>
+                <li><a href="pages/mission.html">Read Our Mission</a></li>
+                <li><a href="The_Boundary_Manifesto.md">The Boundary Manifesto</a></li>
+                <li><a href="pages/problem-statement.html">The Problem We Solve</a></li>
+                <li><a href="pages/what-no-fate-is-not.html">What No Fate Is Not</a></li>
             </ul>
         </section>
-        
-        <section id="purpose">
-            <h2>Purpose</h2>
-            <p>The purpose of the No Fate ecosystem is to:</p>
-            <ul class="purpose-list">
-                <li>Provide deterministic boundaries, not deterministic outcomes</li>
-                <li>Separate mechanical logic from human judgment</li>
-                <li>Ensure AI systems remain within safe interpretive limits</li>
-                <li>Support pre-adjudicative classification without adjudication</li>
-                <li>Increase transparency by mapping nondeterministic zones</li>
-            </ul>
-            <p style="margin-top: 1rem;"><strong>No Fate aligns with institutional legitimacy by respecting and preserving human discretion.</strong></p>
-        </section>
-        
-        <section id="verification">
-            <h2>Integrity Verification</h2>
-            
-            <h3>SHA-256 Checksums</h3>
-            <p>All canonical documents include SHA-256 checksums for integrity verification:</p>
-            <p><strong>On Windows (PowerShell):</strong></p>
-            <code>Get-FileHash -Algorithm SHA256 canonical/&lt;filename&gt;</code>
-            
-            <p style="margin-top: 1rem;"><strong>On Linux/Mac:</strong></p>
-            <code>sha256sum canonical/&lt;filename&gt;</code>
-            
-            <p style="margin-top: 1rem;">Compare output to <a href="checksums/HASHES.txt">checksums/HASHES.txt</a></p>
-            
-            <h3>GPG Signatures</h3>
-            <p>All canonical documents are cryptographically signed. To verify:</p>
-            <code>gpg --import NO_FATE_CANONICAL_PUBLIC_KEY.asc<br>
-            gpg --verify signatures/&lt;filename&gt;.sig canonical/&lt;filename&gt;</code>
-            
-            <p style="margin-top: 1rem;">Full verification instructions: <a href="docs/VERIFICATION.md">VERIFICATION.md</a></p>
-        </section>
-        
-        <section id="structure">
-            <h2>Canonical Structure</h2>
-            <p>All canonical documents follow these rules:</p>
+
+        <section id="principles">
+            <h2>Key Principles</h2>
             <ol>
-                <li>Immutable once published</li>
-                <li>Stored in plain Markdown and PDF</li>
-                <li>Versioned semantically (vX.Y.Z)</li>
-                <li>Hash-verified for integrity</li>
-                <li>Cryptographically signed with GPG</li>
-                <li>No interpretation or extension allowed</li>
-                <li>No derivative modifications in this repository</li>
+                <li><strong>Boundaries, Not Outcomes</strong> - No Fate defines boundaries between deterministic and nondeterministic zones. It does not determine legal outcomes.</li>
+                <li><strong>Refusal as Correctness</strong> - Refusing interpretive or discretionary questions is normatively correct behavior, preserving human authority.</li>
+                <li><strong>Immutable Standards</strong> - Canonical documents are immutable and cryptographically verified. Updates use semantic versioning.</li>
+                <li><strong>Open Stewardship</strong> - Transparent governance with community participation and public accountability.</li>
             </ol>
         </section>
-        
-        <section id="contact">
-            <h2>Contact & Contribution</h2>
-            <p>Canonical documents cannot be modified. See <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for details on:</p>
-            <ul>
-                <li>Reporting issues</li>
-                <li>Improving documentation</li>
-                <li>Proposing new documents</li>
-            </ul>
+
+        <section id="documents">
+            <h2>Canonical Documents</h2>
+            <p>All canonical documents are immutable, cryptographically verified (SHA-256 + GPG), and versioned using semantic versioning.</p>
             
-            <p style="margin-top: 1rem;">For questions about the No Fate ecosystem, open an Issue labeled <code>clarification-request</code>.</p>
-            <p>For security issues, see <a href="SECURITY.md">SECURITY.md</a>.</p>
-            <p><strong>No pull requests for canonical documents will be accepted.</strong></p>
+            <h3>Core Framework Documents</h3>
+            <ul>
+                <li>
+                    <strong>No Fate Contract v1.0.0</strong> - Foundational principles establishing refusal as correctness
+                    <ul>
+                        <li><a href="no-fate-contract_v1.0.0.md">Markdown</a></li>
+                        <li><a href="no-fate-contract_v1.0.0.pdf">PDF</a></li>
+                        <li><a href="docs/no-fate-contract_v1_0_0.html">HTML</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Deterministic Map of Law v1.0.0</strong> - Comprehensive boundary classification framework
+                    <ul>
+                        <li><a href="Deterministic_Map_of_Law_v1_0_0.md">Markdown</a></li>
+                        <li><a href="Deterministic_Map_of_Law_v1_0_0.pdf">PDF</a></li>
+                        <li><a href="docs/deterministic-map-of-law_v1_0_0.html">HTML</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Boundary Extensions v1.1.0</strong> - Extended boundary classifications and edge cases
+                    <ul>
+                        <li><a href="canonical/No_Fate_Supplement_Deterministic_Boundary_Extensions_v1_1_0.md">Markdown</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Implementation Documents</h3>
+            <ul>
+                <li>
+                    <strong>AI Refusal Specification v1.0.0</strong> - Normative requirements for refusal behavior
+                    <ul>
+                        <li><a href="docs/AI_Refusal_Specification_for_Deterministic_Systems.md">Markdown</a></li>
+                        <li><a href="docs/ai-refusal-spec_v1_0_0.html">HTML</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Compliance Guide v1.0.0</strong> - Three-layer compliance model and audit template
+                    <ul>
+                        <li><a href="docs/No_Fate_Compliance_Guide.md">Markdown</a></li>
+                        <li><a href="docs/compliance-guide_v1_0_0.html">HTML</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Test Suite v1.0</strong> - 34 structured tests for boundary verification
+                    <ul>
+                        <li><a href="docs/Deterministic_Boundary_Test_Suite_v1_0.md">Markdown</a></li>
+                        <li><a href="docs/deterministic-boundary-test-suite_v1_0.html">HTML</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Verification</h3>
+            <ul>
+                <li><a href="HASHES.txt">SHA-256 Checksums</a></li>
+                <li><a href="VERIFICATION.md">Verification Instructions</a></li>
+                <li><a href="pages/integrity-verification.html">Integrity & Verification Guide</a></li>
+            </ul>
         </section>
-        
-        <section id="license">
-            <h2>License</h2>
-            <p><strong>Creative Commons Attribution–NoDerivatives 4.0 (CC BY-ND 4.0)</strong></p>
-            <p>This license permits redistribution but prohibits modification.</p>
-            <p>Full text: <a href="LICENSE.txt">LICENSE.txt</a></p>
+
+        <section id="pages">
+            <h2>All Website Pages</h2>
+            
+            <h3>Understanding No Fate</h3>
+            <ul>
+                <li><a href="pages/mission.html">Mission Statement</a></li>
+                <li><a href="pages/boundary-manifesto.html">Boundary Manifesto</a></li>
+                <li><a href="pages/problem-statement.html">Problem Statement</a></li>
+                <li><a href="pages/what-no-fate-is-not.html">What No Fate Is Not</a></li>
+                <li><a href="pages/faq.html">Frequently Asked Questions</a></li>
+                <li><a href="pages/glossary.html">Glossary of Terms</a></li>
+            </ul>
+
+            <h3>Governance & Process</h3>
+            <ul>
+                <li><a href="pages/governance-stewardship.html">Governance & Stewardship Model</a></li>
+                <li><a href="pages/integrity-verification.html">Integrity & Verification</a></li>
+                <li><a href="pages/versioning.html">Versioning Strategy</a></li>
+                <li><a href="pages/roadmap.html">Ecosystem Roadmap</a></li>
+            </ul>
+
+            <h3>For Developers</h3>
+            <ul>
+                <li><a href="pages/developer-integration.html">Developer Integration Guide</a></li>
+                <li><a href="pages/reference-implementations.html">Reference Implementations</a></li>
+                <li><a href="pages/playbooks.html">Implementation Playbooks</a></li>
+            </ul>
+
+            <h3>Community</h3>
+            <ul>
+                <li><a href="pages/contact.html">Contact & Stewardship Info</a></li>
+            </ul>
+        </section>
+
+        <section id="developers">
+            <h2>For Developers</h2>
+            <p>Implementing No Fate in your AI systems:</p>
+            <ul>
+                <li><a href="pages/developer-integration.html">Integration Guide</a> - Implementation patterns and pseudocode</li>
+                <li><a href="pages/reference-implementations.html">Reference Implementations</a> - Example code in multiple languages</li>
+                <li><a href="pages/playbooks.html">Implementation Playbooks</a> - Domain-specific guidance</li>
+                <li><a href="docs/Deterministic_Boundary_Test_Suite_v1_0.md">Test Suite</a> - Verify your implementation</li>
+            </ul>
+        </section>
+
+        <section id="governance">
+            <h2>Governance & Stewardship</h2>
+            <ul>
+                <li><a href="pages/governance-stewardship.html">Governance Model</a> - How canonical documents are maintained</li>
+                <li><a href="pages/integrity-verification.html">Integrity & Verification</a> - How to verify document authenticity</li>
+                <li><a href="pages/versioning.html">Versioning Policy</a> - Semantic versioning strategy</li>
+                <li><a href="CONTRIBUTING.md">Contributing Guidelines</a></li>
+                <li><a href="SECURITY.md">Security Policy</a></li>
+            </ul>
+        </section>
+
+        <section id="repository">
+            <h2>Open Source Repository</h2>
+            <p>Complete ecosystem source code, canonical documents, and community contributions:</p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/lastmanupinc-hub/no-fate-contract">github.com/lastmanupinc-hub/no-fate-contract</a></p>
+            <p>All canonical documents are licensed under <a href="LICENSE.txt">CC BY-ND 4.0</a> (Creative Commons Attribution-NoDerivatives 4.0 International).</p>
         </section>
     </main>
-    
+
     <footer>
-        <div class="container">
-            <p>&copy; 2025 No Fate Ecosystem</p>
-            <p>Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a></p>
-            <p><a href="https://github.com/lastmanupinc-hub/no-fate-contract">View on GitHub</a></p>
-        </div>
+        <hr>
+        <p>&copy; 2025 No Fate Project. All canonical documents licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a>.</p>
+        <p><strong>Disclaimer:</strong> This framework does not constitute legal advice. Consult qualified legal professionals for legal guidance.</p>
     </footer>
 </body>
 </html>
