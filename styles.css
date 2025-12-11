@@ -1,0 +1,280 @@
+/* No Fate Ecosystem - Global Styles */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f9f9f9;
+}
+
+/* Header */
+header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 4px solid #0066cc;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header .tagline {
+    font-size: 1.2rem;
+    color: #ccc;
+    font-weight: 300;
+}
+
+/* Navigation */
+nav {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+nav ul li {
+    margin: 0 1.5rem;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    display: block;
+    transition: color 0.3s, background 0.3s;
+}
+
+nav ul li a:hover {
+    color: #0066cc;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+section {
+    background: #fff;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    border-bottom: 2px solid #0066cc;
+    padding-bottom: 0.5rem;
+}
+
+section h3 {
+    font-size: 1.5rem;
+    margin: 1.5rem 0 0.75rem 0;
+    color: #333;
+}
+
+section p {
+    margin-bottom: 1rem;
+}
+
+/* CTA Buttons */
+.cta-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #0066cc;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #0052a3;
+}
+
+/* Grids */
+.principle-grid,
+.document-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.principle-card,
+.document-card {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #0066cc;
+}
+
+.principle-card h3,
+.document-card h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    color: #0066cc;
+}
+
+.document-card ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.document-card ul li {
+    margin-bottom: 0.5rem;
+}
+
+.document-card ul li a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.document-card ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Resource Grid */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.resource-column ul {
+    list-style: none;
+    margin-top: 0.75rem;
+}
+
+.resource-column ul li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.resource-column ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #0066cc;
+}
+
+.resource-column ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.resource-column ul li a:hover {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+/* Repository Link */
+.repo-link {
+    color: #0066cc;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+}
+
+.repo-link:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #1a1a1a;
+    color: #ccc;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    header .tagline {
+        font-size: 1rem;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav ul li {
+        margin: 0.5rem 0;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    section {
+        padding: 1.5rem;
+    }
+    
+    .cta-links {
+        flex-direction: column;
+    }
+    
+    .principle-grid,
+    .document-grid {
+        grid-template-columns: 1fr;
+    }
+}

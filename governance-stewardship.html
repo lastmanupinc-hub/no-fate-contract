@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Fate Governance & Stewardship</title>
+</head>
+<body>
+    <header>
+        <h1>No Fate: Deterministic Boundary Framework</h1>
+        <p>Governance & Stewardship</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="documents.html">Documents</a></li>
+            <li><a href="standards.html">Standards</a></li>
+            <li><a href="governance.html">Governance</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="purpose">
+            <h2>Purpose of Governance</h2>
+            <p>The governance model for the No Fate ecosystem ensures that canonical documents remain stable, verifiable, and trustworthy while allowing for evolution through transparent processes. Governance establishes clear procedures for version creation, community input, and stewardship responsibilities.</p>
+            <p>The primary objectives of governance are:</p>
+            <ul>
+                <li>Maintain the integrity and immutability of published canonical documents</li>
+                <li>Provide transparent processes for proposing and adopting new versions</li>
+                <li>Enable community participation while preserving authoritative stewardship</li>
+                <li>Ensure cryptographic verification of all canonical documents</li>
+                <li>Document decision-making rationale for all version increments</li>
+            </ul>
+            <p>Governance does not adjudicate interpretive questions, issue rulings, or provide authoritative determinations about specific cases. It maintains boundary classifications as documented standards.</p>
+        </section>
+
+        <section id="canonical-documents">
+            <h2>Canonical Documents</h2>
+            <p>Canonical documents are the authoritative specifications of deterministic boundaries, refusal requirements, and compliance standards within the No Fate ecosystem.</p>
+            
+            <h3>Immutability</h3>
+            <p>Once published, canonical documents are immutable. They cannot be modified, edited, or amended. This immutability ensures:</p>
+            <ul>
+                <li>Stable reference points for implementers</li>
+                <li>Prevention of retroactive changes to published standards</li>
+                <li>Cryptographic verifiability through hash consistency</li>
+                <li>Clear version history without ambiguity</li>
+            </ul>
+            <p>Changes to canonical content require publishing a new versioned document rather than modifying an existing one.</p>
+            
+            <h3>Versioning</h3>
+            <p>Canonical documents use semantic versioning with the format MAJOR.MINOR.PATCH:</p>
+            <ul>
+                <li><strong>MAJOR:</strong> Foundational changes or breaking revisions to boundary classifications</li>
+                <li><strong>MINOR:</strong> Backward-compatible extensions, supplements, or additional boundary specifications</li>
+                <li><strong>PATCH:</strong> Non-substantive corrections such as typographical errors or formatting fixes</li>
+            </ul>
+            <p>Each version is a distinct, immutable document with its own cryptographic verification.</p>
+            
+            <h3>Cryptographic Verification</h3>
+            <p>Every canonical document includes:</p>
+            <ul>
+                <li><strong>SHA-256 Hash:</strong> Verifies document integrity by producing a unique fingerprint. Any modification produces a different hash.</li>
+                <li><strong>GPG Signature:</strong> Verifies document authenticity by confirming it was signed by authorized stewards.</li>
+            </ul>
+            <p>Users can independently verify both integrity and authenticity using published hashes and public keys.</p>
+        </section>
+
+        <section id="versioning-policy">
+            <h2>Versioning Policy</h2>
+            <p>The versioning policy governs when and how version numbers are incremented.</p>
+            
+            <h3>MAJOR Version Increment</h3>
+            <p>A MAJOR version increment (e.g., v1.0.0 to v2.0.0) is required when:</p>
+            <ul>
+                <li>Foundational boundary classifications are revised or redefined</li>
+                <li>Core principles of the framework change in substantive ways</li>
+                <li>Breaking changes are introduced that are incompatible with previous versions</li>
+                <li>The compliance model undergoes fundamental restructuring</li>
+            </ul>
+            <p>MAJOR increments are rare and require extensive community review.</p>
+            
+            <h3>MINOR Version Increment</h3>
+            <p>A MINOR version increment (e.g., v1.0.0 to v1.1.0) is appropriate when:</p>
+            <ul>
+                <li>New boundary classifications are added without modifying existing ones</li>
+                <li>Domain-specific supplements extend the framework</li>
+                <li>Edge cases are clarified or additional refusal conditions are specified</li>
+                <li>Backward-compatible enhancements are introduced</li>
+            </ul>
+            <p>MINOR increments extend the framework without breaking compatibility with previous versions.</p>
+            
+            <h3>PATCH Version Increment</h3>
+            <p>A PATCH version increment (e.g., v1.0.0 to v1.0.1) is used for:</p>
+            <ul>
+                <li>Typographical error corrections</li>
+                <li>Formatting or stylistic fixes</li>
+                <li>Metadata corrections</li>
+                <li>Link updates or reference corrections</li>
+            </ul>
+            <p>PATCH increments do not change substantive content or boundary classifications.</p>
+        </section>
+
+        <section id="change-process">
+            <h2>Change Process</h2>
+            <p>New versions follow a structured process designed to ensure quality, community input, and transparency.</p>
+            
+            <h3>1. Proposal</h3>
+            <p>A proposal for a new version is initiated by:</p>
+            <ul>
+                <li>Identifying the need for new boundary classifications, clarifications, or corrections</li>
+                <li>Drafting proposed changes with rationale</li>
+                <li>Publishing the proposal in a public forum for community discussion</li>
+            </ul>
+            
+            <h3>2. Community Review Period</h3>
+            <p>Proposals undergo a minimum review period:</p>
+            <ul>
+                <li><strong>MAJOR versions:</strong> 30 days minimum</li>
+                <li><strong>MINOR versions:</strong> 14 days minimum</li>
+                <li><strong>PATCH versions:</strong> 7 days minimum</li>
+            </ul>
+            <p>During this period, community members provide feedback, identify concerns, and suggest improvements.</p>
+            
+            <h3>3. Revision</h3>
+            <p>Based on community input, the proposal is revised to address substantive concerns and incorporate improvements. Multiple revision cycles may occur for complex changes.</p>
+            
+            <h3>4. Steward Approval</h3>
+            <p>The steward reviews the revised proposal and determines whether to approve publication. Approval criteria include:</p>
+            <ul>
+                <li>Alignment with core framework principles</li>
+                <li>Adequate community review and input incorporation</li>
+                <li>Technical correctness and clarity</li>
+                <li>Appropriate version increment classification</li>
+            </ul>
+            
+            <h3>5. Publication</h3>
+            <p>Upon approval, the new version is published with:</p>
+            <ul>
+                <li>Assigned version number</li>
+                <li>SHA-256 hash generation</li>
+                <li>GPG signature creation</li>
+                <li>Publication date and changelog</li>
+                <li>Repository tag and release notes</li>
+            </ul>
+            
+            <h3>6. Verification Distribution</h3>
+            <p>Hashes and signatures are distributed through multiple channels to enable independent verification by users.</p>
+        </section>
+
+        <section id="steward-role">
+            <h2>Steward Role</h2>
+            <p>The steward is responsible for maintaining canonical documents and coordinating the governance process. The steward role is administrative and procedural, not interpretive or adjudicative.</p>
+            
+            <h3>Steward Responsibilities</h3>
+            <ul>
+                <li>Maintain the integrity of published canonical documents</li>
+                <li>Coordinate version proposal and review processes</li>
+                <li>Generate and distribute cryptographic verification materials</li>
+                <li>Document decision-making rationale for version increments</li>
+                <li>Facilitate community input and discussion</li>
+                <li>Ensure transparency in governance processes</li>
+                <li>Manage repository infrastructure and access controls</li>
+            </ul>
+            
+            <h3>What the Steward Does Not Do</h3>
+            <ul>
+                <li>Interpret ambiguous provisions in canonical documents</li>
+                <li>Adjudicate disputes about boundary classifications</li>
+                <li>Provide legal advice or determinations about specific cases</li>
+                <li>Exercise discretion over interpretive questions</li>
+                <li>Make unilateral substantive changes without community review</li>
+                <li>Modify published canonical documents</li>
+            </ul>
+            
+            <h3>Steward Accountability</h3>
+            <p>The steward is accountable to the community through:</p>
+            <ul>
+                <li>Public documentation of all governance decisions</li>
+                <li>Transparent version proposal and review processes</li>
+                <li>Community feedback mechanisms</li>
+                <li>Open repository with full change history</li>
+            </ul>
+        </section>
+
+        <section id="community-input">
+            <h2>Community Input</h2>
+            <p>Community participation is essential to the governance process. Multiple channels exist for submitting input.</p>
+            
+            <h3>Questions and Clarifications</h3>
+            <p>Questions about boundary classifications, framework application, or implementation guidance can be submitted through:</p>
+            <ul>
+                <li>Repository issue tracker for technical questions</li>
+                <li>Discussion forums for general inquiries</li>
+                <li>Email contact for governance-related questions</li>
+            </ul>
+            <p>Responses to questions do not constitute official interpretations or determinations. They provide clarification of documented classifications.</p>
+            
+            <h3>Proposals for New Versions</h3>
+            <p>Community members may propose new versions by:</p>
+            <ul>
+                <li>Identifying gaps or ambiguities in current canonical documents</li>
+                <li>Drafting proposed boundary classifications or clarifications</li>
+                <li>Submitting proposals through designated channels</li>
+                <li>Participating in review and revision processes</li>
+            </ul>
+            
+            <h3>Implementation Feedback</h3>
+            <p>Organizations implementing the framework are encouraged to share:</p>
+            <ul>
+                <li>Implementation experiences and lessons learned</li>
+                <li>Edge cases encountered in practice</li>
+                <li>Suggestions for test suite enhancements</li>
+                <li>Domain-specific boundary patterns</li>
+            </ul>
+            <p>This feedback informs future version proposals and framework evolution.</p>
+            
+            <h3>Contribution Guidelines</h3>
+            <p>Contributors must adhere to guidelines ensuring:</p>
+            <ul>
+                <li>Alignment with framework principles</li>
+                <li>Clear documentation and rationale</li>
+                <li>Respect for canonical document immutability</li>
+                <li>Constructive and professional communication</li>
+            </ul>
+        </section>
+
+        <section id="non-authority">
+            <h2>Non-Authority Statement</h2>
+            <p>The No Fate governance process maintains boundary classifications as documented standards. It does not constitute an authoritative body for interpretive or adjudicative determinations.</p>
+            
+            <h3>What Governance Does</h3>
+            <ul>
+                <li>Maintain canonical documents defining boundary classifications</li>
+                <li>Coordinate version proposal and review processes</li>
+                <li>Ensure cryptographic verification and immutability</li>
+                <li>Facilitate community input and participation</li>
+                <li>Document governance decisions transparently</li>
+            </ul>
+            
+            <h3>What Governance Does Not Do</h3>
+            <ul>
+                <li>Interpret laws, regulations, or legal provisions</li>
+                <li>Adjudicate disputes or controversies</li>
+                <li>Issue rulings or official determinations</li>
+                <li>Provide legal advice or guidance</li>
+                <li>Exercise discretion over interpretive questions</li>
+                <li>Claim authority to resolve nondeterministic questions</li>
+            </ul>
+            
+            <h3>Scope of Authority</h3>
+            <p>The governance process has authority only over:</p>
+            <ul>
+                <li>Version numbering and publication procedures</li>
+                <li>Cryptographic verification infrastructure</li>
+                <li>Repository management and access controls</li>
+                <li>Community process coordination</li>
+            </ul>
+            <p>All substantive boundary classifications are subject to community review. The steward does not have unilateral authority to determine what is or is not a deterministic boundary.</p>
+            
+            <h3>Disclaimer</h3>
+            <p>The No Fate framework, its canonical documents, and its governance processes do not constitute legal advice. Users must consult qualified legal professionals for guidance on specific legal questions. Boundary classifications documented in canonical documents are framework standards, not legal determinations.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 No Fate Project. All canonical documents licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a> (Creative Commons Attribution-NoDerivatives 4.0 International).</p>
+        <p>This framework does not constitute legal advice. Consult qualified legal professionals for legal guidance.</p>
+    </footer>
+</body>
+</html>

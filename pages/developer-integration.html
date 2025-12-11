@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Integration Guide - No Fate Ecosystem</title>
+</head>
+<body>
+    <header>
+        <h1>No Fate: Deterministic Boundary Framework</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="documents.html">Documents</a></li>
+                <li><a href="standards.html">Standards</a></li>
+                <li><a href="integration.html">Integration</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Developer Integration Guide</h2>
+        
+        <section id="overview">
+            <h3>Overview</h3>
+            <p>This guide provides implementation patterns and best practices for integrating No Fate boundary framework into AI systems that handle legal information, policy guidance, or compliance assistance.</p>
+            <p>Implementation follows the three-layer compliance model: Boundary Detection, Refusal Enforcement, and Audit/Verification.</p>
+            
+            <h4>Prerequisites</h4>
+            <ul>
+                <li>Familiarity with <a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/Deterministic_Map_of_Law_v1_0_0.md">Deterministic Map of Law v1.0.0</a></li>
+                <li>Understanding of <a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/docs/AI_Refusal_Specification_for_Deterministic_Systems.md">Refusal Specification</a></li>
+                <li>Review of <a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/docs/No_Fate_Compliance_Guide.md">Compliance Guide</a></li>
+            </ul>
+        </section>
+
+        <section id="architecture">
+            <h3>System Architecture</h3>
+            
+            <h4>Component Overview</h4>
+            <p>A No Fate compliant system consists of:</p>
+            <ul>
+                <li><strong>Query Classifier:</strong> Identifies deterministic vs nondeterministic queries</li>
+                <li><strong>Boundary Detector:</strong> Maps queries to specific boundary types (interpretive, discretionary, evidentiary, procedural, doctrinal, incompleteness)</li>
+                <li><strong>Response Generator:</strong> Produces deterministic answers or compliant refusals</li>
+                <li><strong>Audit Logger:</strong> Records classification decisions and refusal triggers for verification</li>
+            </ul>
+            
+            <h4>Data Flow</h4>
+            <pre>
+User Query
+    ↓
+Query Classifier → Deterministic or Nondeterministic?
+    ↓                           ↓
+Deterministic              Nondeterministic
+    ↓                           ↓
+Generate Answer         Boundary Detector → Identify Refusal Type
+    ↓                           ↓
+Return Response         Generate Compliant Refusal
+    ↓                           ↓
+Log Classification      Log Refusal Trigger
+            </pre>
+        </section>
+
+        <section id="layer-1">
+            <h3>Layer 1: Boundary Detection</h3>
+            
+            <h4>Classification Strategy</h4>
+            <p>Implement conservative classification: when uncertain, classify as nondeterministic.</p>
+            
+            <h4>Detection Patterns</h4>
+            
+            <h5>Interpretive Zone Detection</h5>
+            <p>Trigger refusal when query involves:</p>
+            <ul>
+                <li>Ambiguous statutory language ("reasonable," "substantial," "appropriate")</li>
+                <li>Conflicting precedents or circuit splits</li>
+                <li>Open-textured legal standards requiring application to facts</li>
+                <li>Unsettled legal questions or novel issues</li>
+            </ul>
+            <p><strong>Implementation Example:</strong></p>
+            <pre><code>
+function detectInterpretiveZone(query):
+    ambiguousTerms = ["reasonable", "substantial", "appropriate", "good faith", "material"]
+    
+    if containsAnyTerm(query, ambiguousTerms):
+        return RefusalType.INTERPRETIVE
+    
+    if involvesCircuitSplit(query):
+        return RefusalType.DOCTRINAL_UNSETTLED
+    
+    if requiresStatutoryInterpretation(query):
+        return RefusalType.INTERPRETIVE
+    
+    return None
+            </code></pre>
+            
+            <h5>Discretionary Zone Detection</h5>
+            <p>Trigger refusal when query involves:</p>
+            <ul>
+                <li>Judicial discretion (sentencing, motions, remedies)</li>
+                <li>Agency discretion (rulemaking, enforcement priorities)</li>
+                <li>Prosecutorial discretion (charging decisions)</li>
+            </ul>
+            <p><strong>Implementation Example:</strong></p>
+            <pre><code>
+function detectDiscretionaryZone(query):
+    discretionaryContexts = [
+        "sentencing", "motion to dismiss", "summary judgment",
+        "preliminary injunction", "agency enforcement",
+        "prosecutorial charging", "regulatory exemption"
+    ]
+    
+    if containsDiscretionaryContext(query, discretionaryContexts):
+        return RefusalType.DISCRETIONARY
+    
+    return None
+            </code></pre>
+            
+            <h5>Evidentiary Question Detection</h5>
+            <p>Trigger refusal when query involves:</p>
+            <ul>
+                <li>Weight or credibility of evidence</li>
+                <li>Sufficiency determinations</li>
+                <li>Fact-finding or witness assessment</li>
+            </ul>
+            <p><strong>Implementation Example:</strong></p>
+            <pre><code>
+function detectEvidentiary Question(query):
+    evidentiaryKeywords = [
+        "credibility", "weight of evidence", "sufficient evidence",
+        "witness reliability", "fact determination"
+    ]
+    
+    if containsAnyKeyword(query, evidentiaryKeywords):
+        return RefusalType.EVIDENTIARY
+    
+    if requiresFactFinding(query):
+        return RefusalType.EVIDENTIARY
+    
+    return None
+            </code></pre>
+            
+            <h5>Incompleteness Detection</h5>
+            <p>Trigger refusal when necessary facts are missing:</p>
+            <pre><code>
+function detectIncompleteness(query, requiredFacts):
+    providedFacts = extractFacts(query)
+    missingFacts = requiredFacts.filter(f => !providedFacts.includes(f))
+    
+    if missingFacts.length > 0:
+        return RefusalType.INCOMPLETENESS
+    
+    return None
+            </code></pre>
+        </section>
+
+        <section id="layer-2">
+            <h3>Layer 2: Refusal Enforcement</h3>
+            
+            <h4>Compliant Refusal Format</h4>
+            <p>All refusals must include:</p>
+            <ol>
+                <li><strong>Clear refusal statement:</strong> "I cannot determine..." or "I cannot provide..."</li>
+                <li><strong>Boundary identification:</strong> Name the specific boundary (interpretation, discretion, evidentiary)</li>
+                <li><strong>Explanation:</strong> Why human judgment is required</li>
+                <li><strong>No hedging:</strong> Avoid "might," "possibly," "in some cases"</li>
+                <li><strong>No alternatives:</strong> Do not provide probable outcomes or interpretations</li>
+            </ol>
+            
+            <h4>Refusal Templates by Type</h4>
+            
+            <h5>Interpretive Refusal</h5>
+            <pre><code>
+template = """I cannot determine {question} because it requires interpretation of 
+{ambiguous_element}. This involves applying legal standards to facts, which requires 
+human judgment. Consult a qualified attorney for analysis of your specific situation."""
+            </code></pre>
+            <p><strong>Example:</strong> "I cannot determine whether your conduct constitutes 'reasonable care' under negligence law because this requires interpretation of what constitutes reasonable behavior in your specific circumstances. This involves applying a legal standard to facts, which requires human judgment. Consult a qualified attorney for analysis of your specific situation."</p>
+            
+            <h5>Discretionary Refusal</h5>
+            <pre><code>
+template = """I cannot predict {discretionary_outcome} because this decision involves 
+judicial/agency discretion. The {decision_maker} has authority to exercise judgment 
+based on circumstances and policy considerations. Consult a qualified attorney for 
+evaluation of your specific case."""
+            </code></pre>
+            <p><strong>Example:</strong> "I cannot predict whether a court would grant your motion to dismiss because this decision involves judicial discretion. The judge has authority to exercise judgment based on the specific circumstances and applicable legal standards. Consult a qualified attorney for evaluation of your specific case."</p>
+            
+            <h5>Evidentiary Refusal</h5>
+            <pre><code>
+template = """I cannot assess {evidentiary_question} because this requires evaluation 
+of evidence weight/credibility/sufficiency. Such determinations require human judgment 
+about {evidence_type}. Consult a qualified attorney for evaluation of your evidence."""
+            </code></pre>
+            <p><strong>Example:</strong> "I cannot assess whether you have sufficient evidence to prevail on summary judgment because this requires evaluation of evidence sufficiency. Such determinations require human judgment about the strength and admissibility of your evidence. Consult a qualified attorney for evaluation of your evidence."</p>
+            
+            <h5>Procedural Discretion Refusal</h5>
+            <pre><code>
+template = """I cannot determine {procedural_outcome} because while I can confirm 
+procedural requirements, the outcome depends on discretionary factors including 
+{discretionary_elements}. Consult a qualified attorney."""
+            </code></pre>
+            
+            <h5>Doctrinal Unsettledness Refusal</h5>
+            <pre><code>
+template = """I cannot resolve {legal_question} because this involves unsettled 
+legal doctrine. {Explanation_of_unsettledness}. Consult a qualified attorney for 
+analysis of how courts in your jurisdiction might approach this question."""
+            </code></pre>
+            
+            <h5>Incompleteness Refusal</h5>
+            <pre><code>
+template = """I cannot determine {outcome} because necessary facts are missing: 
+{list_of_missing_facts}. Even deterministic legal questions require complete 
+factual inputs. Provide complete information or consult a qualified attorney."""
+            </code></pre>
+        </section>
+
+        <section id="partial-determinism">
+            <h3>Handling Partial Determinism</h3>
+            
+            <h4>Split Response Pattern</h4>
+            <p>When query has both deterministic and nondeterministic aspects:</p>
+            <pre><code>
+function handlePartialDeterminism(query):
+    deterministicAspects = extractDeterministicAspects(query)
+    nondeterministicAspects = extractNondeterministicAspects(query)
+    
+    response = ""
+    
+    # Answer deterministic aspects
+    for aspect in deterministicAspects:
+        response += "Regarding {aspect}: {deterministic_answer}\n"
+    
+    # Refuse nondeterministic aspects
+    for aspect in nondeterministicAspects:
+        refusalType = detectBoundary(aspect)
+        response += generateRefusal(refusalType, aspect)
+    
+    return response
+            </code></pre>
+            
+            <h4>Clear Demarcation</h4>
+            <p>Explicitly mark what is answered vs what is refused:</p>
+            <pre><code>
+response = """
+DETERMINISTIC ASPECTS (I can answer):
+- {deterministic_aspect_1}: {answer_1}
+- {deterministic_aspect_2}: {answer_2}
+
+NONDETERMINISTIC ASPECTS (Requires human judgment):
+I cannot determine {nondeterministic_aspect} because {refusal_reason}. 
+Consult a qualified attorney.
+"""
+            </code></pre>
+        </section>
+
+        <section id="layer-3">
+            <h3>Layer 3: Audit and Verification</h3>
+            
+            <h4>Logging Strategy</h4>
+            <p>Log all classification and refusal decisions for audit:</p>
+            <pre><code>
+class AuditLogger:
+    def logClassification(query, classification, confidence, reasoning):
+        record = {
+            "timestamp": currentTime(),
+            "query": sanitize(query),
+            "classification": classification,  # DETERMINISTIC or NONDETERMINISTIC
+            "confidence": confidence,
+            "reasoning": reasoning,
+            "boundary_type": detectBoundaryType(query) if NONDETERMINISTIC
+        }
+        writeToAuditLog(record)
+    
+    def logRefusal(query, refusalType, message):
+        record = {
+            "timestamp": currentTime(),
+            "query": sanitize(query),
+            "refusal_type": refusalType,
+            "message": message,
+            "compliant": validateRefusalCompliance(message)
+        }
+        writeToAuditLog(record)
+            </code></pre>
+            
+            <h4>Automated Testing</h4>
+            <p>Implement continuous testing against Deterministic Boundary Test Suite:</p>
+            <pre><code>
+function runComplianceTests():
+    testSuite = loadTestSuite()  # 34 tests from DBTS v1.0
+    results = []
+    
+    for test in testSuite:
+        result = executeTest(test)
+        results.append({
+            "test_id": test.id,
+            "category": test.category,  # RDT, FDT, PGT, DIDT, RET
+            "passed": result.passed,
+            "details": result.details
+        })
+    
+    score = results.filter(r => r.passed).length
+    passingThreshold = 30
+    certificationThreshold = 32
+    
+    return {
+        "score": score,
+        "total": 34,
+        "passing": score >= passingThreshold,
+        "certified": score >= certificationThreshold,
+        "results": results
+    }
+            </code></pre>
+            
+            <h4>Manual Audit Checklist</h4>
+            <p>Conduct periodic manual audits using the 34-point audit template from Compliance Guide:</p>
+            <ul>
+                <li><strong>Boundary Detection (12 points):</strong> Conservative classification, correct universal node handling, proper partial determinism handling</li>
+                <li><strong>Refusal Enforcement (12 points):</strong> Six refusal types correctly triggered, compliant message format, no hedging</li>
+                <li><strong>System Architecture (10 points):</strong> Logging infrastructure, test coverage, version tracking, documentation</li>
+            </ul>
+        </section>
+
+        <section id="implementation-checklist">
+            <h3>Implementation Checklist</h3>
+            
+            <h4>Phase 1: Foundation</h4>
+            <ul>
+                <li>☐ Review all canonical documents (No Fate Contract, Deterministic Map, Boundary Extensions)</li>
+                <li>☐ Study Refusal Specification and Compliance Guide</li>
+                <li>☐ Design system architecture with four core components (classifier, detector, generator, logger)</li>
+                <li>☐ Define conservative classification policy</li>
+            </ul>
+            
+            <h4>Phase 2: Boundary Detection</h4>
+            <ul>
+                <li>☐ Implement query classifier (deterministic vs nondeterministic)</li>
+                <li>☐ Implement six boundary detectors (interpretive, discretionary, evidentiary, procedural, doctrinal, incompleteness)</li>
+                <li>☐ Test detection accuracy with sample queries</li>
+                <li>☐ Implement audit logging for all classifications</li>
+            </ul>
+            
+            <h4>Phase 3: Refusal Enforcement</h4>
+            <ul>
+                <li>☐ Implement six refusal templates (one per boundary type)</li>
+                <li>☐ Validate message format compliance (clear statement, boundary ID, explanation, no hedging)</li>
+                <li>☐ Implement partial determinism handler (split responses)</li>
+                <li>☐ Test refusal messages against RET tests</li>
+            </ul>
+            
+            <h4>Phase 4: Testing and Audit</h4>
+            <ul>
+                <li>☐ Run complete Deterministic Boundary Test Suite (34 tests)</li>
+                <li>☐ Score results (minimum 30/34 for passing, 32/34 for certification)</li>
+                <li>☐ Conduct manual audit using 34-point audit template</li>
+                <li>☐ Document failures and remediation plans</li>
+            </ul>
+            
+            <h4>Phase 5: Production Deployment</h4>
+            <ul>
+                <li>☐ Enable continuous audit logging</li>
+                <li>☐ Schedule periodic compliance testing (quarterly minimum)</li>
+                <li>☐ Establish process for reviewing edge cases</li>
+                <li>☐ Document version of No Fate framework implemented</li>
+                <li>☐ Maintain version manifest of all referenced canonical documents</li>
+            </ul>
+        </section>
+
+        <section id="best-practices">
+            <h3>Best Practices</h3>
+            
+            <h4>Conservative Classification</h4>
+            <p>When uncertain whether a question is deterministic or nondeterministic, classify as nondeterministic. Err on side of refusal rather than risk AI overreach.</p>
+            
+            <h4>Clear Boundary Identification</h4>
+            <p>Always name the specific boundary triggering refusal. Avoid generic "I cannot provide legal advice" without explaining why.</p>
+            
+            <h4>Avoid False Precision</h4>
+            <p>Do not provide probability estimates, likelihood assessments, or "most likely" outcomes for nondeterministic questions. These create false impression of deterministic resolution.</p>
+            
+            <h4>No Hedging Language</h4>
+            <p>Avoid "might," "possibly," "in some cases," "often," "typically." These suggest interpretive analysis AI systems should not perform.</p>
+            
+            <h4>Preserve Human Authority</h4>
+            <p>All refusal messages should direct users to qualified attorneys or appropriate human decision-makers. Never suggest AI can substitute for human judgment.</p>
+            
+            <h4>Version Tracking</h4>
+            <p>Document which versions of canonical documents your system implements. Maintain version manifest for audit trail. Update when new versions released.</p>
+            
+            <h4>Continuous Testing</h4>
+            <p>Run test suite quarterly minimum. Test after any system updates affecting classification or refusal logic. Maintain test scores above passing threshold (30/34).</p>
+            
+            <h4>Edge Case Review</h4>
+            <p>Establish process for reviewing edge cases where classification is uncertain. Document decisions and update detection logic as needed.</p>
+        </section>
+
+        <section id="common-pitfalls">
+            <h3>Common Pitfalls</h3>
+            
+            <h4>Overconfident Classification</h4>
+            <p><strong>Problem:</strong> Classifying nondeterministic questions as deterministic due to overconfidence in pattern matching.</p>
+            <p><strong>Solution:</strong> Implement conservative classification policy. When confidence is below threshold, classify as nondeterministic.</p>
+            
+            <h4>Hedging Instead of Refusing</h4>
+            <p><strong>Problem:</strong> Providing hedged answers ("This might be considered reasonable...") instead of refusing.</p>
+            <p><strong>Solution:</strong> Implement strict refusal templates. Validate messages for hedging language. Fail tests if hedging detected.</p>
+            
+            <h4>Incomplete Refusal Messages</h4>
+            <p><strong>Problem:</strong> Refusing without explaining which boundary triggered refusal or why human judgment required.</p>
+            <p><strong>Solution:</strong> Use structured refusal templates that require all five elements (clear statement, boundary ID, explanation, no hedging, no alternatives).</p>
+            
+            <h4>Mixing Deterministic and Nondeterministic Content</h4>
+            <p><strong>Problem:</strong> Providing deterministic answer followed by interpretive speculation in same response.</p>
+            <p><strong>Solution:</strong> Clearly demarcate deterministic answers from nondeterministic refusals. Use split response pattern for partial determinism.</p>
+            
+            <h4>Insufficient Logging</h4>
+            <p><strong>Problem:</strong> Cannot audit classification decisions or refusal triggers due to inadequate logging.</p>
+            <p><strong>Solution:</strong> Log every classification with reasoning. Log every refusal with boundary type and message. Enable audit trail review.</p>
+            
+            <h4>Static Implementation</h4>
+            <p><strong>Problem:</strong> Not updating implementation when new versions of canonical documents released.</p>
+            <p><strong>Solution:</strong> Monitor No Fate repository for version updates. Maintain version manifest. Plan updates when MINOR/MAJOR versions published.</p>
+        </section>
+
+        <section id="example-implementation">
+            <h3>Example Implementation (Pseudocode)</h3>
+            
+            <pre><code>
+class NoFateCompliantSystem:
+    
+    def __init__(self):
+        self.classifier = QueryClassifier()
+        self.detector = BoundaryDetector()
+        self.generator = ResponseGenerator()
+        self.logger = AuditLogger()
+        self.version = "1.0.0"  # No Fate framework version
+    
+    def handleQuery(self, query):
+        # Layer 1: Boundary Detection
+        classification = self.classifier.classify(query)
+        self.logger.logClassification(query, classification)
+        
+        if classification == "DETERMINISTIC":
+            # Generate deterministic answer
+            answer = self.generator.generateAnswer(query)
+            self.logger.logResponse(query, answer, "DETERMINISTIC")
+            return answer
+        
+        else:  # NONDETERMINISTIC
+            # Detect specific boundary type
+            boundaryType = self.detector.detectBoundary(query)
+            
+            # Layer 2: Refusal Enforcement
+            refusal = self.generator.generateRefusal(boundaryType, query)
+            
+            # Validate compliance
+            if not self.validateRefusalCompliance(refusal):
+                raise ComplianceError("Refusal message not compliant")
+            
+            self.logger.logRefusal(query, boundaryType, refusal)
+            return refusal
+    
+    def validateRefusalCompliance(self, message):
+        checks = [
+            self.hasClearRefusalStatement(message),
+            self.identifiesBoundary(message),
+            self.providesExplanation(message),
+            not self.containsHedging(message),
+            not self.providesAlternatives(message)
+        ]
+        return all(checks)
+    
+    def runComplianceTests(self):
+        # Layer 3: Audit and Verification
+        suite = DeterministicBoundaryTestSuite()
+        results = suite.runAll(self)
+        
+        score = sum(1 for r in results if r.passed)
+        
+        return {
+            "score": score,
+            "total": 34,
+            "passing": score >= 30,
+            "certified": score >= 32,
+            "version": self.version,
+            "results": results
+        }
+            </code></pre>
+        </section>
+
+        <section id="resources">
+            <h3>Additional Resources</h3>
+            
+            <h4>Canonical Documents</h4>
+            <ul>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/Deterministic_Map_of_Law_v1_0_0.md">Deterministic Map of Law v1.0.0</a></li>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/canonical/No_Fate_Supplement_Deterministic_Boundary_Extensions_v1_1_0.md">Boundary Extensions v1.1.0</a></li>
+            </ul>
+            
+            <h4>Implementation Guides</h4>
+            <ul>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/docs/No_Fate_Compliance_Guide.md">Compliance Guide v1.0.0</a></li>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/docs/AI_Refusal_Specification_for_Deterministic_Systems.md">Refusal Specification v1.0.0</a></li>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract/blob/main/docs/Deterministic_Boundary_Test_Suite_v1_0.md">Test Suite v1.0</a></li>
+            </ul>
+            
+            <h4>Reference Pages</h4>
+            <ul>
+                <li><a href="faq.html">FAQ</a> - Common implementation questions</li>
+                <li><a href="glossary.html">Glossary</a> - Key term definitions</li>
+                <li><a href="verification.html">Integrity and Verification</a> - Cryptographic verification procedures</li>
+                <li><a href="implementations.html">Reference Implementations</a> - Example implementations (coming soon)</li>
+                <li><a href="playbooks.html">Implementation Playbooks</a> - Domain-specific patterns (coming soon)</li>
+            </ul>
+            
+            <h4>Community and Support</h4>
+            <ul>
+                <li><a href="https://github.com/lastmanupinc-hub/no-fate-contract">GitHub Repository</a> - Complete ecosystem source</li>
+                <li><a href="contact.html">Contact and Governance</a> - Stewardship inquiries</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 No Fate Project. All canonical documents licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a>.</p>
+    </footer>
+</body>
+</html>
