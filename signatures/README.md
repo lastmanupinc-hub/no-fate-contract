@@ -1,36 +1,82 @@
-# GPG Signatures
+# GPG Signatures for No Fate Canonical Documents
 
-This folder contains detached GPG signatures for all canonical documents.
+This directory contains detached GPG signatures for all canonical documents in the No Fate ecosystem.
+
+---
 
 ## Contents
 
-Each canonical document has a corresponding .asc signature file:
+Each canonical document has a corresponding `.asc` signature file:
 
-Document_Name_vX_Y_Z.md.asc
-Document_Name_vX_Y_Z.pdf.asc
+### v1.0.0 Signatures
+- `no-fate-contract_v1.0.0.md.asc` - Contract Markdown signature
+- `no-fate-contract_v1.0.0.pdf.asc` - Contract PDF signature
+- `Deterministic_Map_of_Law_v1_0_0.md.asc` - Map Markdown signature
+- `Deterministic_Map_of_Law_v1_0_0.pdf.asc` - Map PDF signature
+- `The_Boundary_Manifesto.md.asc` - Manifesto signature
 
-## Verification
+### Public Key
+- `no-fate-public-key.asc` - GPG public key for verification
 
-To verify a signature:
+---
 
-1. Import the public key:
+## How to Verify Signatures
 
-gpg --import NO_FATE_CANONICAL_PUBLIC_KEY.asc
+### Step 1: Import the Public Key
+```bash
+gpg --import signatures/no-fate-public-key.asc
+```
 
-2. Verify the signature:
+### Step 2: Verify a Document
+```bash
+gpg --verify signatures/no-fate-contract_v1.0.0.md.asc no-fate-contract_v1.0.0.md
+```
 
-gpg --verify Document_Name_vX_Y_Z.md.asc ../canonical/Document_Name_vX_Y_Z.md
+### Step 3: Confirm Good Signature
+You should see:
+```
+gpg: Good signature from "Steward Name (No Fate Ecosystem) <email@example.com>"
+```
 
-3. Confirm "Good signature" output
+---
 
-## Public Key
+## PowerShell Verification (Windows)
 
-The canonical public key is stored in the root directory:
+```powershell
+# Import public key
+gpg --import signatures/no-fate-public-key.asc
 
-NO_FATE_CANONICAL_PUBLIC_KEY.asc
+# Verify a document
+gpg --verify signatures/no-fate-contract_v1.0.0.md.asc no-fate-contract_v1.0.0.md
+```
+
+---
 
 ## Trust Model
 
-All signatures are generated using the No Fate Canonical Authority key. The public key fingerprint is published in the root README.md for verification.
+- All signatures are generated using the No Fate Ecosystem steward's GPG key
+- The public key fingerprint is published on the website for independent verification
+- Signatures ensure both **integrity** (document unchanged) and **authenticity** (signed by steward)
 
-See GPG_SIGNING.md in the docs folder for complete instructions.
+---
+
+## Key Fingerprint
+
+The public key fingerprint will be published here after key generation.
+
+To verify the fingerprint:
+```bash
+gpg --fingerprint <KEYID>
+```
+
+---
+
+## Additional Resources
+
+- Full verification guide: `/pages/integrity-verification.html`
+- GPG setup instructions: `/GPG_SETUP_GUIDE.md`
+- Checksums: `/checksums/checksums.txt`
+
+---
+
+**Status:** Ready for v1.0.0 signatures after GPG key generation
