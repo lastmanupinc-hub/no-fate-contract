@@ -1,0 +1,65 @@
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.log
+*.cache
+
+# Ignore build artifacts (if any)
+dist/
+build/
+*.pyc
+__pycache__/
+
+# Ignore GPG private keys (never commit these)
+*.key
+*.gpg
+!*.asc
+secring.gpg
+pubring.gpg
+
+# Ignore draft documents
+drafts/
+*.draft.md
+*.wip.md
+
+# Ignore local testing files
+test/
+scratch/
+sandbox/
+
+# Ignore npm/yarn/package manager files
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore Python virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Ignore local configuration
+.env
+.env.local
+config.local.*
+
+# Keep canonical documents and signatures
+!canonical/**
+!signatures/**
+!checksums/**

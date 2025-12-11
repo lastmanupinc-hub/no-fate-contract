@@ -1,0 +1,27 @@
+root = true
+
+# Canonical documents (no auto-formatting)
+[Deterministic_Map_of_Law_v1_0_0.md]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = false
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+[no-fate-contract_v1.0.0.md]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = false
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Default for other files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true

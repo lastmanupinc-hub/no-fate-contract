@@ -1,0 +1,12 @@
+# Treat canonical documents as binary for safety
+Deterministic_Map_of_Law_v1_0_0.md  binary
+no-fate-contract_v1.0.0.md          binary
+
+# Prevent end-of-line normalization for canonical files
+*.md -text
+
+# Mandatory LF for non-canonical files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
