@@ -1,0 +1,10 @@
+Form W-2
+Wage and Tax Statement
+Tax Year 2023
+
+Employer: ACME Corporation
+Employee: John Doe
+
+Wages, tips, other compensation: [REDACTED]
+Federal income tax withheld: [REDACTED]
+Social security wages: [REDACTED]

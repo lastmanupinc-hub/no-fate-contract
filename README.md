@@ -1,153 +1,190 @@
-﻿# No Fate Ecosystem  
-## Deterministic Boundary Framework for Legal and Institutional Systems
+﻿# IRS No-Fate Tax Analysis Suite
 
-This repository contains the canonical documents that define the No Fate boundary architecture for deterministic classification systems. These documents do not interpret law, advise on law, or attempt to replace judicial or institutional authority. They identify where determinism is possible, where it is not, and where refusal is the correct and safe behavior.
+**Version 1.1** | **SPEC_COMPLETE — DEP_STATUS: CLAIM — RUNTIME_UNVERIFIED**
 
----
-
-# Repository Structure
-
-This repository is organized into the following folders:
-
-## /canonical
-Contains all immutable canonical versions of No Fate ecosystem documents in both Markdown and PDF formats. No modifications are permitted to files in this folder.
-
-## /signatures
-Contains detached GPG signatures (.asc files) for all canonical documents. Used for cryptographic verification of document authenticity.
-
-## /checksums
-Contains SHA-256 checksums for all canonical documents. Used for integrity verification.
-
-## /docs
-Contains supporting documentation including verification guides, signing instructions, and release templates.
-
-## /infrastructure
-Contains repository configuration files including .gitattributes, .editorconfig, and GitHub Actions workflows.
+A deterministic IRS document analysis suite providing five specialized engines for tax document processing. No tax advice. No interpretation. No calculations. Evidence-based only.
 
 ---
 
-# Included Canonical Documents
+## Overview
 
-### 1. The No Fate Contract  
-A boundary specification defining the allowed and disallowed behavior for deterministic systems interacting with law, policy, or enforcement.
+The IRS No-Fate Tax Analysis Suite consists of five independent engines that analyze IRS-related documents using strict No-Fate truth rules:
 
-### 2. The Deterministic Map of Law  
-A complete and stable classification of where U.S. legal questions are deterministic, interpretive, discretionary, or procedural in nature.
-
----
-
-# Purpose
-
-The purpose of the No Fate ecosystem is to:
-
-- Provide deterministic boundaries, not deterministic outcomes  
-- Separate mechanical logic from human judgment  
-- Ensure AI systems remain within safe interpretive limits  
-- Support pre-adjudicative classification without adjudication  
-- Increase transparency by mapping nondeterministic zones  
-
-No Fate aligns with institutional legitimacy by respecting and preserving human discretion.
+1. **IRS Document Completeness Checker** - Scans for forms and identifies missing dependencies
+2. **IRS Income Classification Engine** - Classifies income types based on explicit textual evidence
+3. **IRS Deduction Documentation Verifier** - Verifies presence of required supporting documentation
+4. **IRS Business Filing Category Router** - Routes businesses to appropriate IRS filing categories
+5. **IRS Notice Response Analyzer** - Extracts procedural requirements from IRS notices
 
 ---
 
-# Canonical Structure
+## Core Principles
 
-All canonical documents follow these rules:
+### No-Fate Truth Rules
 
-1. Immutable once published  
-2. Stored in plain Markdown and PDF  
-3. Versioned semantically (vX.Y.Z)  
-4. Hash-verified for integrity  
-5. Cryptographically signed with GPG  
-6. No interpretation or extension allowed  
-7. No derivative modifications in this repository  
+- **Non-inferential**: No conclusions beyond explicit evidence
+- **Strict text grounding**: All outputs anchored to quoted source text
+- **Evidence-bound**: Every classification includes evidence anchors
+- **Deterministic**: Identical inputs produce identical outputs
+- **No advice**: Zero prescriptive or advisory language
+- **No interpretation**: No tax law interpretation or compliance judgment
 
----
+### Numeric Constraints
 
-# Integrity Verification
+**Allowed numeric identifiers:**
+- Form numbers (e.g., "1040", "Schedule C")
+- Schedule numbers
+- Notice codes (e.g., "CP2000")
+- Tax years as labels (e.g., "2023")
 
-Each canonical document includes:
+**Forbidden numeric content:**
+- Financial amounts, balances, totals, percentages, penalties, interest, computed values
 
-- SHA-256 checksum (in /checksums folder)  
-- Detached GPG signature (in /signatures folder)  
-- Version notice  
-- Canonical notice  
+### Scope
 
-**Quick Verification:**
+**In Scope:** Deterministic text analysis, form detection, dependency identification, income labeling, documentation verification, notice extraction
 
-On Windows (PowerShell):
-
-Get-FileHash -Algorithm SHA256 canonical/Document_Name_vX_Y_Z.md
-
-On Linux/Mac:
-
-sha256sum canonical/Document_Name_vX_Y_Z.md
-
-Compare output to checksums/HASHES.txt.
-
-Full instructions: docs/VERIFICATION.md
+**Out of Scope:** Tax computation, legal advice, compliance judgment, strategy recommendations, financial calculations
 
 ---
 
-# GPG Public Key
-
-**Fingerprint:** <FINGERPRINT_PLACEHOLDER>
-
-The public key is stored in the root directory:
-
-NO_FATE_CANONICAL_PUBLIC_KEY.asc
-
-To verify signatures:
-
-gpg --import NO_FATE_CANONICAL_PUBLIC_KEY.asc
-gpg --verify signatures/Document_Name_vX_Y_Z.md.asc canonical/Document_Name_vX_Y_Z.md
 
 ---
 
-# How to Use These Documents
+## Installation
 
-These documents are meant to be:
-
-- Referenced  
-- Cited  
-- Embedded in compliance systems  
-- Used for deterministic boundary detection  
-- Included in safety frameworks  
-
-They are **not** meant to be edited, extended, updated, or interpreted without explicit versioning.
+```bash
+npm install
+npm run build
+```
 
 ---
 
-# Contributing
+## Usage
 
-Canonical documents cannot be modified. See CONTRIBUTING.md for details on:
-- Reporting issues
-- Improving documentation
-- Proposing new documents
+### Command-Line Interface
+
+```bash
+# Analyze document completeness
+irs-suite completeness --input ./docs --output report.json
+
+# Classify income types
+irs-suite income --input ./docs --format markdown
+
+# Verify deduction documentation
+irs-suite deductions --input ./docs --output deductions.json
+
+# Route business filing category
+irs-suite filing-route --input ./docs --format markdown
+
+# Analyze IRS notice
+irs-suite notice --input ./notices --output notice-analysis.json
+```
+
+### Programmatic API
+
+```typescript
+import {
+  analyze_completeness,
+  classify_income,
+  verify_deduction_docs,
+  route_business_filing,
+  analyze_notice,
+  DocumentSet
+} from "irs-no-fate-tax-analysis-suite";
+
+const documentSet: DocumentSet = {
+  documents: [
+    {
+      document_id: "doc1",
+      document_type: "1040",
+      raw_text: "Form 1040 U.S. Individual Income Tax Return..."
+    }
+  ]
+};
+
+const result = analyze_completeness(documentSet);
+console.log(result);
+```
 
 ---
 
-# Security
+## Engine Details
 
-See SECURITY.md for:
-- Hash verification procedures
-- GPG signature verification
-- Vulnerability reporting
-- Key revocation policy
+### 1. IRS Document Completeness Checker
+Detects forms and identifies missing dependencies.
+
+### 2. IRS Income Classification Engine
+Classifies income types (wages, interest, self-employment, etc.) based on explicit evidence.
+
+### 3. IRS Deduction Documentation Verifier
+Verifies presence of required documentation for claimed deductions.
+
+### 4. IRS Business Filing Category Router
+Routes businesses to appropriate IRS filing categories based on entity type.
+
+### 5. IRS Notice Response Analyzer
+Extracts notice codes, deadlines, required documents, and procedural instructions.
 
 ---
 
-# License
+## Testing
 
-Creative Commons Attribution–NoDerivatives 4.0 (CC BY-ND 4.0)  
-This license permits redistribution but prohibits modification.
-
-Full text: LICENSE.txt
+```bash
+npm test
+npm test -- --coverage
+```
 
 ---
 
-# Contact
+## Architecture
 
-For questions about the No Fate ecosystem, open an Issue labeled `clarification-request`.  
-For security issues, see SECURITY.md.  
-No pull requests for canonical documents will be accepted.
+```
+src/
+├── types/              # Shared type definitions
+├── engines/            # Five analysis engines
+├── utils/              # Validation utilities
+├── output/             # JSON and Markdown formatters
+├── cli.ts              # Command-line interface
+└── index.ts            # Public API
+```
+
+---
+
+## Acceptance Criteria
+
+All engines must:
+- Produce deterministic outputs for identical inputs
+- Reject unsupported or unreadable documents
+- Anchor all classifications to explicit evidence
+- Surface ambiguity rather than inferring missing facts
+- Contain zero advisory language
+- Extract zero financial numeric values
+
+---
+
+## Limitations
+
+- **TEXT_IMPLEMENTED**: Implementation complete but not runtime-verified
+- **DEP_STATUS: CLAIM**: Dependencies claimed but not verified
+- **No calculations**: Engines do not perform financial computations
+- **No advice**: Engines provide no tax or legal guidance
+- **Evidence-dependent**: Output quality depends on input text quality
+
+---
+
+## License
+
+MIT
+
+---
+
+## Disclaimer
+
+This software provides **document analysis only**. It does not provide tax advice, legal advice, or compliance guidance. Consult qualified tax professionals for tax-related decisions.
+
+---
+
+**IRS No-Fate Tax Analysis Suite v1.1**  
+*Deterministic. Evidence-bound. No advice. No interpretation.*
+

@@ -1,0 +1,35 @@
+{
+  "test_id": "A5",
+  "test_name": "Refusal on Ambiguity",
+  "requirement": "NFCS-RF-002, NFCS-RF-004",
+  "description": "System must refuse when ambiguity prevents deterministic classification. No 'most likely' guessing.",
+  "test_case": {
+    "input": {
+      "statute_reference": "reasonable time",
+      "context": "contract performance deadline",
+      "jurisdiction": "federal"
+    },
+    "ambiguity": "The term 'reasonable time' is inherently ambiguous and requires contextual interpretation",
+    "expected_behavior": "System must refuse with ambiguity-related refusal code, not guess at most likely interpretation"
+  },
+  "execution": {
+    "timestamp": "2025-12-12T10:15:00Z",
+    "output": {
+      "decision": "REFUSED",
+      "refusal_code": "REFUSE_INTERPRETATION_REQUIRED",
+      "refusal_reason": "The term 'reasonable time' is inherently ambiguous and requires human judgment to interpret based on contextual factors. The system cannot deterministically classify what constitutes 'reasonable' without interpretation.",
+      "missing_inputs": null,
+      "authority_boundary": "Interpretation of ambiguous contractual term",
+      "scope_version": "1.0.0",
+      "nfcs_version": "1.0.0"
+    }
+  },
+  "validation": {
+    "refused": true,
+    "no_probabilistic_guess": true,
+    "refusal_code_appropriate": true,
+    "refusal_reason_present": true,
+    "pass": true
+  },
+  "evidence": "System refused ambiguous input without attempting probabilistic classification"
+}

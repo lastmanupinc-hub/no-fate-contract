@@ -1,0 +1,31 @@
+{
+  "name": "irs-no-fate-tax-analysis-suite",
+  "version": "1.1.0",
+  "description": "Deterministic IRS document analysis suite with no tax advice or interpretation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "irs-suite": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "cli": "node dist/cli.js"
+  },
+  "keywords": [
+    "irs",
+    "tax",
+    "document-analysis",
+    "no-fate",
+    "deterministic"
+  ],
+  "author": "Last Man Up Inc",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  }
+}

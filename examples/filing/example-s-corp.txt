@@ -1,0 +1,10 @@
+Business Entity Information
+Tax Year 2023
+
+Entity Type: S Corporation
+Business Name: Tech Solutions Inc.
+EIN: XX-XXXXXXX
+
+Form 1120-S required for S Corporation filing.
+
+Shareholders will receive Schedule K-1 forms.
