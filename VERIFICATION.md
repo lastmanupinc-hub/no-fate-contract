@@ -33,25 +33,55 @@ sha256sum -c HASHES.txt
 
 All authority-bearing artifacts MUST have detached GPG signatures in `signatures/`.
 
-**Command**:
+#### Signature Authority Chain
+
+**Original Authority (RETIRED)**:
+- **Key ID**: `E5C802E139E7A96FBD1831C053E6B751C1708A73`
+- **Status**: RETIRED (passphrase unavailable, see `KEY_RETIREMENT.md`)
+- **Public Key**: `signatures/no-fate-public-key.asc`
+- **Valid Signatures**: All pre-existing signatures remain authoritative
+- **Scope**: Original contract, Map of Law, Boundary Manifesto
+
+**Successor Authority (ACTIVE)**:
+- **Key ID**: `AC078631BEE763111D3F4A972BA98D09A801EF31`
+- **Status**: ACTIVE (see `KEY_SUCCESSION.md`)
+- **Public Key**: `signatures/no-fate-successor-public-key.asc`
+- **Scope**: Governance artifacts, integrity surfaces, future specifications
+- **Effective Date**: 2025-12-13
+
+#### Verify Original Documents (Retired Key)
+
 ```bash
-# Import public key first
+# Import retired key's public key
 gpg --import signatures/no-fate-public-key.asc
 
-# Verify single signature
-gpg --verify signatures/governance_genesis.signed.json.asc governance/governance_genesis.signed.json
+# Verify contract signature
+gpg --verify signatures/no-fate-contract_v1.0.0.md.asc no-fate-contract_v1.0.0.md
 
-# Verify all signatures
-for sig in signatures/*.asc; do
-  file=$(basename "$sig" .asc)
-  gpg --verify "$sig" "$file" || echo "❌ SIGNATURE FAILED: $file"
-done
+# Expected: Good signature from retired key (still valid)
+```
+
+#### Verify Governance Artifacts (Successor Key)
+
+```bash
+# Import successor key's public key
+gpg --import signatures/no-fate-successor-public-key.asc
+
+# Verify checksums signature
+gpg --verify signatures/HASHES.txt.asc checksums/HASHES.txt
+
+# Verify verification document signature
+gpg --verify signatures/VERIFICATION.md.asc VERIFICATION.md
+
+# Expected: Good signature from successor key
 ```
 
 **Expected Output**:
 ```
-gpg: Good signature from "No-Fate Governance Authority"
+gpg: Good signature from "No-Fate Governance Authority (Successor Key)"
 ```
+
+**Note**: Some governance artifacts may not have signatures if they were committed before successor key activation. Signature absence does NOT invalidate artifacts - checksums remain authoritative.
 
 ### Step 3: Verify Authority Chain
 
