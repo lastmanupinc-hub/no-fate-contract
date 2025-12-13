@@ -43,6 +43,11 @@ import {
  * 
  * Complete output from solver pipeline.
  * Contains all intermediate artifacts (blueprint, audit) plus final certificate.
+ * 
+ * BYTE-IDENTITY REQUIREMENT:
+ * - NO solver_id field (would violate byte-identity)
+ * - NO solver_version field (would violate byte-identity)
+ * - ALL fields must be deterministic from canonical intent only
  */
 export interface SolverResult {
   success: boolean;
@@ -52,10 +57,6 @@ export interface SolverResult {
   outcome?: CertificateOutcome;
   errors: string[];
   warnings: string[];
-  
-  // Solver identity (for competing solver tracking)
-  solver_id: string;
-  solver_version: string;
 }
 
 /**
@@ -94,9 +95,7 @@ export class DBGOReferenceSolver {
           success: false,
           outcome: 'INVALID_INPUT',
           errors: validation.errors,
-          warnings: validation.warnings,
-          solver_id: this.solverId,
-          solver_version: this.solverVersion
+          warnings: validation.warnings
         };
       }
       
@@ -108,9 +107,7 @@ export class DBGOReferenceSolver {
         return {
           success: false,
           errors: blueprintResult.errors,
-          warnings: [...warnings, ...blueprintResult.warnings],
-          solver_id: this.solverId,
-          solver_version: this.solverVersion
+          warnings: [...warnings, ...blueprintResult.warnings]
         };
       }
       
@@ -124,9 +121,7 @@ export class DBGOReferenceSolver {
           success: false,
           blueprint,
           errors: auditResult.errors,
-          warnings: [...warnings, ...auditResult.warnings],
-          solver_id: this.solverId,
-          solver_version: this.solverVersion
+          warnings: [...warnings, ...auditResult.warnings]
         };
       }
       
@@ -146,9 +141,7 @@ export class DBGOReferenceSolver {
           blueprint,
           audit,
           errors: certificateResult.errors,
-          warnings: [...warnings, ...certificateResult.warnings],
-          solver_id: this.solverId,
-          solver_version: this.solverVersion
+          warnings: [...warnings, ...certificateResult.warnings]
         };
       }
       
@@ -162,9 +155,7 @@ export class DBGOReferenceSolver {
         audit,
         outcome: certificate.outcome,
         errors: [],
-        warnings,
-        solver_id: this.solverId,
-        solver_version: this.solverVersion
+        warnings
       };
       
     } catch (error) {
@@ -172,9 +163,7 @@ export class DBGOReferenceSolver {
       return {
         success: false,
         errors,
-        warnings,
-        solver_id: this.solverId,
-        solver_version: this.solverVersion
+        warnings
       };
     }
   }

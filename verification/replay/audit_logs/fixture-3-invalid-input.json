@@ -1,0 +1,8 @@
+{
+  "fixture": "fixture-3-invalid-input",
+  "timestamp": "1970-01-01T00:00:00.000Z",
+  "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+  "solvers_executed": 4,
+  "consensus_reached": true,
+  "outcome": "INVALID_INPUT"
+}

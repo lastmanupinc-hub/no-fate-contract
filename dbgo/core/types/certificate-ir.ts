@@ -118,13 +118,19 @@ export interface PolicyComplianceRecord {
  * - If any policy violated → certificate = INVALID
  * - If evidence incomplete → outcome = INDETERMINATE
  * - If replay fails → outcome = INDETERMINATE
+ * 
+ * BYTE-IDENTITY REQUIREMENT:
+ * - certificate_id MUST be deterministic (hash of intent, not random UUID)
+ * - issued_at MUST be deterministic constant (0, not wall-clock time)
+ * - NO solver-specific fields in certificate output
+ * - ALL fields must be derivable from canonical intent bundle
  */
 export interface CertificateIR {
-  // Certificate metadata
-  certificate_id: string; // uuid
+  // Certificate metadata - DETERMINISTIC ONLY
+  certificate_id: string; // sha256(intent) - NOT uuid, NOT solver-specific
   certificate_version: string; // 1.0.0
-  issued_at: string; // ISO 8601
-  expires_at?: string; // ISO 8601 (optional - some certificates don't expire)
+  issued_at: number; // Deterministic constant: 0 (not wall-clock timestamp)
+  expires_at?: number; // Deterministic constant: 0 (if present)
 
   // Links to pipeline artifacts
   intent_id: string; // CanonicalIntentBundle
@@ -281,11 +287,14 @@ export function generateCertificate(
       reasoning: 'Evidence from audit trail'
     }));
 
-    // Create certificate
+    // Create certificate - ALL FIELDS DETERMINISTIC
+    // certificate_id = hash of intent (not UUID, not solver-specific)
+    // issued_at = 0 (not wall-clock time)
+    // NO solver identity in output
     const certificate: CertificateIR = {
-      certificate_id: `cert-${audit.intent_id}`,
+      certificate_id: audit.replay_hash, // Deterministic: hash of canonical intent
       certificate_version: '1.0.0',
-      issued_at: new Date().toISOString(),
+      issued_at: 0, // Deterministic constant: epoch zero
       intent_id: audit.intent_id,
       blueprint_id: audit.blueprint_id,
       audit_id: audit.audit_id,

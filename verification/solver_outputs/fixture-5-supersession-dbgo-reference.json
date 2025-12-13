@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "outcome": "PASS",
+  "solver_id": "COMPETING_SOLVER_CONSENSUS",
+  "solver_version": "1.0.0",
+  "certificate": {
+    "certificate_id": "sha256:f8814e140ebb86008ae7b08cb51f69d1321923cd5b0014706d796c0c0d2fd085",
+    "intent_id": "fixture-5-supersession",
+    "outcome": "PASS",
+    "evidence_chain": {
+      "blueprint_id": "blueprint-fixture-5-supersession",
+      "audit_id": "audit-fixture-5-supersession",
+      "audit_replay_hash": "4c4cd06ed7b6f143385dd357b9e94243314c66f6b529a9d1ea5d5e61f04fbe17",
+      "rule_hash": "sha256:test-rules"
+    },
+    "domain": "governance",
+    "pillar": "regulatory",
+    "requested_action": "TEST_ACTION",
+    "policy_compliance": {
+      "competing_solvers": {
+        "policy_version": "1.0.0",
+        "solvers_agreed": true,
+        "divergences": [],
+        "enforcement": "HARD",
+        "violations": []
+      },
+      "dispute_resolution": {
+        "policy_version": "1.0.0",
+        "replay_verified": true,
+        "allowed_outcomes_only": true,
+        "enforcement": "HARD",
+        "violations": []
+      },
+      "controlled_supersession": {
+        "policy_version": "1.0.0",
+        "append_only": true,
+        "supersession_approved": false,
+        "enforcement": "HARD",
+        "violations": []
+      },
+      "decentralized_operations": {
+        "policy_version": "1.0.0",
+        "distributed_verification": true,
+        "no_single_authority": true,
+        "enforcement": "HARD",
+        "violations": []
+      }
+    },
+    "issued_at": 0,
+    "valid_until": 0,
+    "issuing_authority": "COMPETING_SOLVER_CONSENSUS",
+    "governance_binding": {
+      "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+      "authority_role": "solver-authority",
+      "policy_version": "1.0.0"
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "deterministic": true,
+  "replayable": true,
+  "executed_at": 0
+}

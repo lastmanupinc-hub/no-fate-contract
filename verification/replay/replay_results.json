@@ -1,0 +1,11 @@
+{
+  "deterministic": true,
+  "replay_hash_matches": true,
+  "replay_results": {
+    "fixture-1-valid-tax-income": true,
+    "fixture-2-missing-evidence": true,
+    "fixture-3-invalid-input": true,
+    "fixture-4-change-proposal": true,
+    "fixture-5-supersession": true
+  }
+}

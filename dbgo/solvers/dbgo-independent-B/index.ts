@@ -37,7 +37,7 @@ export class IndependentSolverB {
   private readonly VERSION = '1.0.0';
   
   execute(intent: CanonicalIntentBundle): SolverResult {
-    const pipeline = new Pipeline(intent, this.SOLVER_NAME, this.VERSION);
+    const pipeline = new Pipeline(intent);
     return pipeline.run();
   }
 }
@@ -49,9 +49,7 @@ class Pipeline {
   private audit?: AuditIR;
   
   constructor(
-    private intent: CanonicalIntentBundle,
-    private solverId: string,
-    private solverVer: string
+    private intent: CanonicalIntentBundle
   ) {}
   
   run(): SolverResult {
@@ -150,9 +148,7 @@ class Pipeline {
       audit: this.audit,
       outcome: result.certificate.outcome,
       errors: [],
-      warnings: this.warnings,
-      solver_id: this.solverId,
-      solver_version: this.solverVer
+      warnings: this.warnings
     };
   }
   
@@ -163,9 +159,7 @@ class Pipeline {
       blueprint: this.blueprint,
       audit: this.audit,
       errors: this.errors,
-      warnings: this.warnings,
-      solver_id: this.solverId,
-      solver_version: this.solverVer
+      warnings: this.warnings
     };
   }
 }

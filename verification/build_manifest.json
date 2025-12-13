@@ -1,11 +1,11 @@
 {
   "manifest_version": "1.0.0",
-  "build_timestamp": "2025-12-13T00:00:00.000Z",
+  "build_timestamp": "1970-01-01T00:00:00.000Z",
   "repository": {
     "name": "no-fate-contract",
     "owner": "lastmanupinc-hub",
     "branch": "main",
-    "commit_hash": "PENDING_GIT_COMMIT",
+    "commit_hash": "3f37cca1b14a9782dee8058dad2c0a064a94d685",
     "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
   },
   "system_state": {
@@ -18,79 +18,79 @@
   "implementation_files": {
     "core_types": {
       "dbgo/core/types/intent-ir.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:3113c43392508ca7b21ece66c2c3a7296e4fe83c1b074b5238cdde006cc3e1d5",
         "lines": 350,
         "purpose": "CanonicalIntentBundle format and validation"
       },
       "dbgo/core/types/blueprint-audit-ir.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:34b225bd42b9cf93227bdb8d6192e64d7cdb5ff220060310264af6f1923fa6dc",
         "lines": 330,
         "purpose": "BlueprintIR and AuditIR with determinism guarantees"
       },
       "dbgo/core/types/certificate-ir.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:658291c22c0b53ac5446068207b1e59bb1f3498af88a2ab0f96a08cd224273e7",
         "lines": 420,
         "purpose": "CertificateIR with policy compliance tracking"
       }
     },
     "solvers": {
       "dbgo/solvers/dbgo-reference/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:51d7f3b4f735f5dfc31e646b84b474e2a95c2483ca79489f12684640006ff381",
         "lines": 260,
         "purpose": "Reference solver implementation"
       },
       "dbgo/solvers/dbgo-independent-A/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:be26fdadb9ffd3438118d9ef984abee36f28ff05f7819fae139d9057917e80a0",
         "lines": 155,
         "purpose": "Independent solver A"
       },
       "dbgo/solvers/dbgo-independent-B/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:0efaf942b9c6c1d28581465034993eaa1bb6cc8af46d617dace5dcbdbe992e49",
         "lines": 140,
         "purpose": "Independent solver B (pipeline-style)"
       },
       "dbgo/solvers/dbgo-independent-C/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:2b45360e2d24383114daa166148bbdfa495976bc945a8b0730c3c691b0da8017",
         "lines": 210,
         "purpose": "Independent solver C (functional composition)"
       }
     },
     "harness": {
       "dbgo/harness/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:854849627cdec41a5b632eed5dcfd64feb4e5a16eb29a20b457ccd83965a2bbf",
         "lines": 390,
         "purpose": "Competing solver harness - PRIMARY ENFORCEMENT"
       }
     },
     "enforcement": {
       "dbgo/enforcement/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:a9fdac706cf13ee4c9db27f13bf41026e80d85a35b44bc9410e48c171e5f778c",
         "lines": 430,
         "purpose": "Policy enforcement module"
       }
     },
     "adapters": {
       "dbgo/adapters/governance/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:9b612fd1ceec1ad94d183c0c6d580ff6c1c69d4fbe59bbcb4d90fa2daf32acc6",
         "lines": 360,
         "purpose": "Governance operations adapter"
       },
       "dbgo/adapters/regulatory/tax/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:6a89eec8bba9b0339456cc1389f6275fed1a110dfed26b894573a5749134ecc4",
         "lines": 250,
         "purpose": "Tax domain adapter"
       }
     },
     "actions": {
       "dbgo/actions/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:bf1aedbd1d7811e0cfb413c8aea10e41b9374363fdf6a64e2f374be471b8adac",
         "lines": 950,
         "purpose": "Complete action space - 8 moves"
       }
     },
     "exports": {
       "dbgo/index.ts": {
-        "hash": "PENDING_COMPUTATION",
+        "hash": "sha256:5223f609d70f8eccbddee7f40c8e176e82799848ea900521f4968b826ca74a81",
         "lines": 28,
         "purpose": "Centralized exports"
       }
@@ -98,32 +98,32 @@
   },
   "dependencies": {
     "package.json": {
-      "hash": "PENDING_COMPUTATION",
+      "hash": "sha256:9cf9be594ca470d7f034e30df93740388023ef6a6de7a06b1b10be147987d4b7",
       "lockfile": "package-lock.json",
-      "lockfile_hash": "PENDING_COMPUTATION"
+      "lockfile_hash": "sha256:31a3230fa54daf039cedd149df75a50709715719a3c45e862f7dc0f166d5b9c0"
     },
     "tsconfig.json": {
-      "hash": "PENDING_COMPUTATION"
+      "hash": "sha256:31b2ec9ac8b216f19a523d04c05cd1dd97fed9d15d8d6272d27889583ca94ad1"
     }
   },
   "governance_policies": {
     "governance/COMPETING_SOLVERS_POLICY.md": {
-      "hash": "PENDING_COMPUTATION",
+      "hash": "sha256:5e8de46130f0cf8228c4fae5b34e32fbcfba57a60bd4387bd0c24e90b3d162bb",
       "version": "1.0.0",
       "enforcement": "HARD"
     },
     "governance/DISPUTE_RESOLUTION_POLICY.md": {
-      "hash": "PENDING_COMPUTATION",
+      "hash": "sha256:ea2bfc56c1b0e744d3fda1eb7b99c30a4d21451b0b736bec21d124f57092aa5b",
       "version": "1.0.0",
       "enforcement": "HARD"
     },
     "governance/CONTROLLED_SUPERSESSION_POLICY.md": {
-      "hash": "PENDING_COMPUTATION",
+      "hash": "sha256:848742abe215d63922a759714a3603a66a888b3e291c5465b7004d5026fbe1a3",
       "version": "1.0.0",
       "enforcement": "HARD"
     },
     "governance/DECENTRALIZED_OPERATIONS_POLICY.md": {
-      "hash": "PENDING_COMPUTATION",
+      "hash": "sha256:c72c9b405f6a8220c142c741eaa040a06b3a9ce80dd54c82d4fa2664d99f0ab5",
       "version": "1.0.0",
       "enforcement": "HARD"
     }

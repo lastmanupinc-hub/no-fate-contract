@@ -78,9 +78,7 @@ export class IndependentSolverA {
         success: false,
         blueprint: plan,
         errors: runResult.errors,
-        warnings: [...warns, ...runResult.warnings],
-        solver_id: this.id,
-        solver_version: this.ver
+        warnings: [...warns, ...runResult.warnings]
       };
     }
     const trace = runResult.audit;
@@ -113,9 +111,7 @@ export class IndependentSolverA {
         blueprint: plan,
         audit: trace,
         errors: certResult.errors,
-        warnings: [...warns, ...certResult.warnings],
-        solver_id: this.id,
-        solver_version: this.ver
+        warnings: [...warns, ...certResult.warnings]
       };
     }
     
@@ -126,9 +122,7 @@ export class IndependentSolverA {
       audit: trace,
       outcome: certResult.certificate.outcome,
       errors: [],
-      warnings: warns,
-      solver_id: this.id,
-      solver_version: this.ver
+      warnings: warns
     };
   }
   
@@ -141,9 +135,7 @@ export class IndependentSolverA {
       success: false,
       outcome,
       errors: errors || [],
-      warnings: warnings || [],
-      solver_id: this.id,
-      solver_version: this.ver
+      warnings: warnings || []
     };
   }
 }

@@ -37,7 +37,7 @@ export class IndependentSolverC {
   private readonly VER = '1.0.0';
   
   compute(intentBundle: CanonicalIntentBundle): SolverResult {
-    return functionalSolve(intentBundle, this.ID, this.VER);
+    return functionalSolve(intentBundle);
   }
 }
 
@@ -45,11 +45,9 @@ export class IndependentSolverC {
  * Functional pipeline: validate → blueprint → audit → certify
  */
 function functionalSolve(
-  bundle: CanonicalIntentBundle,
-  id: string,
-  ver: string
+  bundle: CanonicalIntentBundle
 ): SolverResult {
-  const ctx: Context = { warnings: [], errors: [], id, ver };
+  const ctx: Context = { warnings: [], errors: [] };
   
   const validationResult = performValidation(bundle, ctx);
   if (!validationResult.valid) {
@@ -82,8 +80,6 @@ function functionalSolve(
 interface Context {
   warnings: string[];
   errors: string[];
-  id: string;
-  ver: string;
 }
 
 interface ValidationResult {
@@ -188,9 +184,7 @@ function buildSuccessResult(
     audit: aud,
     outcome: cert.outcome,
     errors: [],
-    warnings: ctx.warnings,
-    solver_id: ctx.id,
-    solver_version: ctx.ver
+    warnings: ctx.warnings
   };
 }
 
@@ -206,9 +200,7 @@ function buildFailureResult(
     blueprint: bp,
     audit: aud,
     errors: ctx.errors,
-    warnings: ctx.warnings,
-    solver_id: ctx.id,
-    solver_version: ctx.ver
+    warnings: ctx.warnings
   };
 }
 

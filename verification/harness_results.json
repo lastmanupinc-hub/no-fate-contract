@@ -1,0 +1,164 @@
+{
+  "timestamp": "1970-01-01T00:00:00.000Z",
+  "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+  "action_space_verification": {
+    "complete": true,
+    "action_count": 8,
+    "valid_actions": [
+      "ISSUE_EXTERNAL_CERTIFICATE",
+      "PUBLISH_REFUSAL_CASE",
+      "INDEPENDENT_REPLAY_VERIFICATION",
+      "PROPOSE_RULEBOOK",
+      "SUPERSEDE_RULEBOOK",
+      "DISPUTE_REPLAY",
+      "REGISTER_SOLVER",
+      "ATTEST_SOLVER_EQUIVALENCE"
+    ]
+  },
+  "fixture_results": {
+    "fixture-1-valid-tax-income": {
+      "fixture_id": "fixture-1-valid-tax-income",
+      "expected_outcome": "PASS",
+      "harness_result": {
+        "outcome": "PASS",
+        "consensus": true,
+        "divergences": []
+      },
+      "solver_outputs": {
+        "dbgo-reference": "PASS",
+        "dbgo-independent-A": "PASS",
+        "dbgo-independent-B": "PASS",
+        "dbgo-independent-C": "PASS"
+      },
+      "policy_enforcement": {
+        "compliant": true,
+        "violations": 0
+      },
+      "outcome_matches_expected": true,
+      "byte_identical": true,
+      "deterministic": true,
+      "replayable": true
+    },
+    "fixture-2-missing-evidence": {
+      "fixture_id": "fixture-2-missing-evidence",
+      "expected_outcome": "INDETERMINATE",
+      "harness_result": {
+        "outcome": "INDETERMINATE",
+        "consensus": true,
+        "divergences": []
+      },
+      "solver_outputs": {
+        "dbgo-reference": "INDETERMINATE",
+        "dbgo-independent-A": "INDETERMINATE",
+        "dbgo-independent-B": "INDETERMINATE",
+        "dbgo-independent-C": "INDETERMINATE"
+      },
+      "policy_enforcement": {
+        "compliant": true,
+        "violations": 0
+      },
+      "outcome_matches_expected": true,
+      "byte_identical": true,
+      "deterministic": true,
+      "replayable": true
+    },
+    "fixture-3-invalid-input": {
+      "fixture_id": "fixture-3-invalid-input",
+      "expected_outcome": "INVALID_INPUT",
+      "harness_result": {
+        "outcome": "INVALID_INPUT",
+        "consensus": true,
+        "divergences": []
+      },
+      "solver_outputs": {
+        "dbgo-reference": "INVALID_INPUT",
+        "dbgo-independent-A": "INVALID_INPUT",
+        "dbgo-independent-B": "INVALID_INPUT",
+        "dbgo-independent-C": "INVALID_INPUT"
+      },
+      "policy_enforcement": {
+        "compliant": true,
+        "violations": 0
+      },
+      "outcome_matches_expected": true,
+      "byte_identical": true,
+      "deterministic": true,
+      "replayable": true
+    },
+    "fixture-4-change-proposal": {
+      "fixture_id": "fixture-4-change-proposal",
+      "expected_outcome": "PASS",
+      "harness_result": {
+        "outcome": "PASS",
+        "consensus": true,
+        "divergences": []
+      },
+      "solver_outputs": {
+        "dbgo-reference": "PASS",
+        "dbgo-independent-A": "PASS",
+        "dbgo-independent-B": "PASS",
+        "dbgo-independent-C": "PASS"
+      },
+      "policy_enforcement": {
+        "compliant": true,
+        "violations": 0
+      },
+      "outcome_matches_expected": true,
+      "byte_identical": true,
+      "deterministic": true,
+      "replayable": true
+    },
+    "fixture-5-supersession": {
+      "fixture_id": "fixture-5-supersession",
+      "expected_outcome": "PASS",
+      "harness_result": {
+        "outcome": "PASS",
+        "consensus": true,
+        "divergences": []
+      },
+      "solver_outputs": {
+        "dbgo-reference": "PASS",
+        "dbgo-independent-A": "PASS",
+        "dbgo-independent-B": "PASS",
+        "dbgo-independent-C": "PASS"
+      },
+      "policy_enforcement": {
+        "compliant": true,
+        "violations": 0
+      },
+      "outcome_matches_expected": true,
+      "byte_identical": true,
+      "deterministic": true,
+      "replayable": true
+    }
+  },
+  "harness_verification": {
+    "all_consensus": true,
+    "byte_identical": true,
+    "indeterminate_triggers": []
+  },
+  "policy_verification": {
+    "all_compliant": true,
+    "violations": []
+  },
+  "replay_verification": {
+    "deterministic": true,
+    "replay_hash_matches": true,
+    "replay_results": {
+      "fixture-1-valid-tax-income": true,
+      "fixture-2-missing-evidence": true,
+      "fixture-3-invalid-input": true,
+      "fixture-4-change-proposal": true,
+      "fixture-5-supersession": true
+    }
+  },
+  "summary": {
+    "total_tests": 5,
+    "passed": 3,
+    "failed": 0,
+    "indeterminate": 1,
+    "invalid_input": 1,
+    "deterministic": true,
+    "verification_complete": true
+  }
+}

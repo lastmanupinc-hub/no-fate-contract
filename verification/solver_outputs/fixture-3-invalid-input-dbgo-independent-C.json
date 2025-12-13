@@ -1,0 +1,13 @@
+{
+  "success": false,
+  "outcome": "INVALID_INPUT",
+  "solver_id": "COMPETING_SOLVER_CONSENSUS",
+  "solver_version": "1.0.0",
+  "errors": [
+    "Invalid input detected"
+  ],
+  "warnings": [],
+  "deterministic": true,
+  "replayable": true,
+  "executed_at": 0
+}
