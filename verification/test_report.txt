@@ -1,0 +1,162 @@
+DBGO VERIFICATION TEST REPORT
+=============================
+
+Command: npm run verify
+Timestamp: PENDING_EXECUTION
+Genesis Hash: sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a
+Commit Hash: PENDING_GIT_COMMIT
+
+ACTION SPACE VERIFICATION
+-------------------------
+Actions Defined: 8
+Action Space Complete: PENDING_EXECUTION
+Valid Actions:
+  1. ISSUE_EXTERNAL_CERTIFICATE
+  2. PUBLISH_REFUSAL_CASE
+  3. INDEPENDENT_REPLAY_VERIFICATION
+  4. PROPOSE_RULEBOOK
+  5. SUPERSEDE_RULEBOOK
+  6. DISPUTE_REPLAY
+  7. REGISTER_SOLVER
+  8. ATTEST_SOLVER_EQUIVALENCE
+
+Forbidden Operations Defined: 7
+  - ADD_NINTH_MOVE
+  - REFACTOR_INTERFACE
+  - INTRODUCE_HEURISTIC
+  - COLLAPSE_AMBIGUITY
+  - OVERRIDE_REFUSAL
+  - GRANT_SOLVER_PRIVILEGE
+  - SILENT_RULE_CHANGE
+
+FIXTURE DEFINITIONS
+-------------------
+Total Fixtures: 5
+
+fixture-1-valid-tax-income:
+  Type: DOMAIN_EVALUATION
+  Domain: tax
+  Expected Outcome: PASS
+  Purpose: Valid tax income classification with complete evidence
+
+fixture-2-missing-evidence:
+  Type: DOMAIN_EVALUATION
+  Domain: tax
+  Expected Outcome: INDETERMINATE
+  Purpose: Test refusal on missing evidence
+
+fixture-3-invalid-input:
+  Type: DOMAIN_EVALUATION
+  Domain: tax
+  Expected Outcome: INVALID_INPUT
+  Purpose: Test rejection of malformed intent
+
+fixture-4-change-proposal:
+  Type: GOVERNANCE_OPERATION
+  Domain: governance
+  Expected Outcome: PASS
+  Purpose: Valid governance change proposal
+
+fixture-5-supersession:
+  Type: GOVERNANCE_OPERATION
+  Domain: governance
+  Expected Outcome: PASS
+  Purpose: Valid rulebook supersession request
+
+COMPETING SOLVER ARCHITECTURE
+------------------------------
+Total Solvers: 4
+  1. dbgo-reference (Reference implementation)
+  2. dbgo-independent-A (Independent variant - different naming)
+  3. dbgo-independent-B (Pipeline-style variant)
+  4. dbgo-independent-C (Functional composition variant)
+
+All solvers MUST produce byte-identical outputs for identical inputs.
+Divergence → INDETERMINATE (enforced by harness)
+
+POLICY ENFORCEMENT
+------------------
+Total Policies: 4
+
+1. COMPETING_SOLVERS_POLICY
+   Version: 1.0.0
+   Enforcement: HARD
+   Checks: Solver equivalence, no special authority, divergence handling
+
+2. DISPUTE_RESOLUTION_POLICY
+   Version: 1.0.0
+   Enforcement: HARD
+   Checks: Replay-based only, allowed outcomes, no narrative
+
+3. CONTROLLED_SUPERSESSION_POLICY
+   Version: 1.0.0
+   Enforcement: HARD
+   Checks: Append-only, version locking, no mutation
+
+4. DECENTRALIZED_OPERATIONS_POLICY
+   Version: 1.0.0
+   Enforcement: HARD
+   Checks: Distributed verification, no single authority
+
+EXECUTION RESULTS
+-----------------
+Status: PENDING_EXECUTION
+
+Run verification with:
+  npm run verify
+
+This will:
+  1. Compile TypeScript
+  2. Execute all fixtures through competing solver harness
+  3. Capture individual solver outputs
+  4. Compare outputs byte-identically
+  5. Enforce all four governance policies
+  6. Verify replay determinism
+  7. Generate harness_results.json
+  8. Produce final summary
+
+VERIFICATION CRITERIA
+---------------------
+PASS conditions:
+  ✓ All 8 actions defined (no more, no less)
+  ✓ Every action has deterministic fail states
+  ✓ All fixture outcomes match expected outcomes
+  ✓ All solvers reach consensus on every fixture
+  ✓ All solver outputs are byte-identical
+  ✓ All policy checks pass
+  ✓ Replay produces identical results
+
+FAIL conditions:
+  ✗ Action count ≠ 8
+  ✗ Fixture outcome mismatch
+  ✗ Solver divergence on valid inputs
+  ✗ Policy violations detected
+  ✗ Non-deterministic replay
+
+BUNDLE INTEGRITY
+----------------
+This bundle contains:
+  - build_manifest.json (with file hashes)
+  - fixtures/ (5 test cases)
+  - solver_outputs/ (generated on execution)
+  - harness_results.json (generated on execution)
+  - replay/ (generated on execution)
+  - test_report.txt (THIS FILE)
+
+To verify bundle integrity:
+  1. npm run compute-hashes
+  2. npm run verify-manifest
+  3. npm run replay-verification
+
+GENESIS BINDING
+---------------
+All artifacts bound to genesis hash:
+  sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a
+
+This ensures lineage verification and tamper detection.
+
+---
+
+Status: READY FOR EXECUTION
+Execute: npm run verify
+Expected Exit Code: 0 (if all verifications pass)

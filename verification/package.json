@@ -1,0 +1,11 @@
+{
+  "name": "no-fate-contract",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "verify": "npm run build && node dist/verification/run_verification.js",
+    "compute-hashes": "node scripts/compute-hashes.js",
+    "verify-manifest": "node scripts/verify-manifest.js",
+    "replay-verification": "npm run build && npm run verify"
+  }
+}

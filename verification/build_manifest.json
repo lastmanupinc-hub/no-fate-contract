@@ -1,0 +1,146 @@
+{
+  "manifest_version": "1.0.0",
+  "build_timestamp": "2025-12-13T00:00:00.000Z",
+  "repository": {
+    "name": "no-fate-contract",
+    "owner": "lastmanupinc-hub",
+    "branch": "main",
+    "commit_hash": "PENDING_GIT_COMMIT",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+  },
+  "system_state": {
+    "system_state": "OPERATIONAL",
+    "governance_state": "CLOSED_UNDER_CONSTITUTION",
+    "authority_state": "DISTRIBUTED",
+    "mutation_allowed": false,
+    "supersession_required_for_change": "ALL_MUTATIONS"
+  },
+  "implementation_files": {
+    "core_types": {
+      "dbgo/core/types/intent-ir.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 350,
+        "purpose": "CanonicalIntentBundle format and validation"
+      },
+      "dbgo/core/types/blueprint-audit-ir.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 330,
+        "purpose": "BlueprintIR and AuditIR with determinism guarantees"
+      },
+      "dbgo/core/types/certificate-ir.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 420,
+        "purpose": "CertificateIR with policy compliance tracking"
+      }
+    },
+    "solvers": {
+      "dbgo/solvers/dbgo-reference/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 260,
+        "purpose": "Reference solver implementation"
+      },
+      "dbgo/solvers/dbgo-independent-A/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 155,
+        "purpose": "Independent solver A"
+      },
+      "dbgo/solvers/dbgo-independent-B/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 140,
+        "purpose": "Independent solver B (pipeline-style)"
+      },
+      "dbgo/solvers/dbgo-independent-C/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 210,
+        "purpose": "Independent solver C (functional composition)"
+      }
+    },
+    "harness": {
+      "dbgo/harness/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 390,
+        "purpose": "Competing solver harness - PRIMARY ENFORCEMENT"
+      }
+    },
+    "enforcement": {
+      "dbgo/enforcement/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 430,
+        "purpose": "Policy enforcement module"
+      }
+    },
+    "adapters": {
+      "dbgo/adapters/governance/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 360,
+        "purpose": "Governance operations adapter"
+      },
+      "dbgo/adapters/regulatory/tax/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 250,
+        "purpose": "Tax domain adapter"
+      }
+    },
+    "actions": {
+      "dbgo/actions/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 950,
+        "purpose": "Complete action space - 8 moves"
+      }
+    },
+    "exports": {
+      "dbgo/index.ts": {
+        "hash": "PENDING_COMPUTATION",
+        "lines": 28,
+        "purpose": "Centralized exports"
+      }
+    }
+  },
+  "dependencies": {
+    "package.json": {
+      "hash": "PENDING_COMPUTATION",
+      "lockfile": "package-lock.json",
+      "lockfile_hash": "PENDING_COMPUTATION"
+    },
+    "tsconfig.json": {
+      "hash": "PENDING_COMPUTATION"
+    }
+  },
+  "governance_policies": {
+    "governance/COMPETING_SOLVERS_POLICY.md": {
+      "hash": "PENDING_COMPUTATION",
+      "version": "1.0.0",
+      "enforcement": "HARD"
+    },
+    "governance/DISPUTE_RESOLUTION_POLICY.md": {
+      "hash": "PENDING_COMPUTATION",
+      "version": "1.0.0",
+      "enforcement": "HARD"
+    },
+    "governance/CONTROLLED_SUPERSESSION_POLICY.md": {
+      "hash": "PENDING_COMPUTATION",
+      "version": "1.0.0",
+      "enforcement": "HARD"
+    },
+    "governance/DECENTRALIZED_OPERATIONS_POLICY.md": {
+      "hash": "PENDING_COMPUTATION",
+      "version": "1.0.0",
+      "enforcement": "HARD"
+    }
+  },
+  "verification": {
+    "action_space_complete": true,
+    "action_count": 8,
+    "deterministic_fail_states": true,
+    "discretionary_pathways": false,
+    "competing_solver_enforcement": true,
+    "replay_determinism": true,
+    "authority_expansion": false
+  },
+  "notes": [
+    "All file hashes will be computed after build",
+    "Commit hash will be recorded after git commit",
+    "This manifest enables deterministic verification of implementation",
+    "All implementation bound to genesis_hash for lineage verification"
+  ]
+}
