@@ -1,0 +1,161 @@
+{
+  "replay_inputs_specification": {
+    "specification_version": "1.0.0",
+    "created_at": "2025-12-13T04:08:29.198Z",
+    "purpose": "Explicitly closed set of inputs for governance replay verification",
+    "guarantee": "Replay is deterministic and reproducible using ONLY these inputs"
+  },
+  
+  "canonicalization_rules": {
+    "standard": "JCS (JSON Canonicalization Scheme) - RFC 8785 subset",
+    "implementation": "Node.js JSON.stringify with lexicographically sorted keys",
+    "key_sorting": "lexicographic (Unicode code point order)",
+    "whitespace": "compact (no spaces, no newlines in canonical form)",
+    "unicode_normalization": "UTF-8 encoding",
+    "number_formatting": "IEEE 754 double precision"
+  },
+  
+  "hash_algorithm": {
+    "algorithm": "SHA-256",
+    "implementation": "Node.js crypto.createHash('sha256')",
+    "output_format": "hexadecimal lowercase",
+    "prefix": "sha256:",
+    "example": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43"
+  },
+  
+  "input_artifacts": {
+    "genesis": {
+      "artifact_path": "governance/governance_genesis.signed.json",
+      "artifact_type": "nfgs.genesis",
+      "canonical_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+      "signature": "dcedc8945626a2560d36454935978836d7d99fc2929ca116ff822133e8d386ec7fb9c205ddd4e7673dd94cbd42c17dafd723d81ee2ab2743e0d2f4ce4c5ac700",
+      "signed_by": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+      "description": "Root governance genesis artifact"
+    },
+    
+    "schemas": [
+      {
+        "schema_id": "bundle.schema.json",
+        "artifact_path": "schemas/bundle.schema.json",
+        "canonical_hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43",
+        "canonical_length": 2960,
+        "governed_by": "schema-authority"
+      },
+      {
+        "schema_id": "output.schema.json",
+        "artifact_path": "schemas/output.schema.json",
+        "canonical_hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073",
+        "canonical_length": 1506,
+        "governed_by": "schema-authority"
+      },
+      {
+        "schema_id": "emergy.schema.json",
+        "artifact_path": "schemas/emergy.schema.json",
+        "canonical_hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1",
+        "canonical_length": 3333,
+        "governed_by": "schema-authority"
+      },
+      {
+        "schema_id": "attestation.schema.json",
+        "artifact_path": "schemas/attestation.schema.json",
+        "canonical_hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310",
+        "canonical_length": 2088,
+        "governed_by": "auditor-authority"
+      }
+    ],
+    
+    "binding_registry": {
+      "artifact_path": "governance/governance_binding_registry.json",
+      "artifact_type": "nfgs.binding_registry",
+      "description": "Registry of all artifacts bound to governance"
+    }
+  },
+  
+  "external_dependencies": {
+    "node_runtime": {
+      "runtime": "Node.js",
+      "version": "v20.x",
+      "crypto_module": "built-in Node.js crypto"
+    },
+    "filesystem": {
+      "access": "read-only",
+      "allowed_paths": [
+        "governance/governance_genesis.signed.json",
+        "schemas/*.schema.json",
+        "governance/governance_binding_registry.json"
+      ],
+      "prohibited_paths": [
+        "network access",
+        "environment variables (except NODE_ENV)",
+        "system time (except for report timestamps)",
+        "external APIs",
+        "user input during replay"
+      ]
+    }
+  },
+  
+  "replay_determinism_requirements": {
+    "input_immutability": "All input artifacts MUST be immutable during replay",
+    "no_side_effects": "Replay MUST NOT modify any input artifacts",
+    "no_external_state": "Replay MUST NOT depend on external state (network, time, random)",
+    "reproducibility": "Same inputs MUST produce byte-identical state hash",
+    "closed_inputs": "MUST use ONLY artifacts listed in this specification"
+  },
+  
+  "verification_procedure": [
+    {
+      "step": 1,
+      "action": "Load genesis artifact from governance/governance_genesis.signed.json"
+    },
+    {
+      "step": 2,
+      "action": "Verify genesis signature using public key ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d"
+    },
+    {
+      "step": 3,
+      "action": "Replay governance events: roles → keys → schemas → policies → artifacts"
+    },
+    {
+      "step": 4,
+      "action": "Verify schema hashes match canonical computation"
+    },
+    {
+      "step": 5,
+      "action": "Compute governance state hash (SHA-256 of canonical state)"
+    },
+    {
+      "step": 6,
+      "action": "Repeat steps 1-5 and verify state hash is identical (determinism test)"
+    },
+    {
+      "step": 7,
+      "action": "Emit replay report with closed input set and state hash"
+    }
+  ],
+  
+  "expected_output": {
+    "governance_state_hash": "TBD - computed during replay",
+    "roles_count": 5,
+    "keys_count": 1,
+    "schemas_count": 4,
+    "policies_count": 4,
+    "artifacts_count": 3
+  },
+  
+  "proof_of_closure": {
+    "all_inputs_listed": true,
+    "no_implicit_dependencies": true,
+    "no_network_access": true,
+    "no_external_apis": true,
+    "deterministic_computation": true,
+    "reproducible_state": true
+  },
+  
+  "failure_modes": {
+    "error: implicit_input_detected": "Replay accessed input not listed in this specification",
+    "error: non_deterministic_replay": "Multiple replays produced different state hashes",
+    "error: schema_hash_mismatch": "Computed schema hash does not match specification",
+    "error: signature_verification_failed": "Genesis signature invalid",
+    "error: external_dependency_detected": "Replay accessed network or external state"
+  }
+}

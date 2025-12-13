@@ -1,0 +1,322 @@
+{
+  "report_type": "governance_replay_test",
+  "replay_version": "2.0.0",
+  "generated_at": "2025-12-13T04:12:18.384Z",
+  "genesis_ref": "C:\\Users\\lastm\\no-fate-contract\\governance\\governance_genesis.signed.json",
+  "governance_version": "1.0.0",
+  "closed_inputs": {
+    "specification": "C:\\Users\\lastm\\no-fate-contract\\governance\\replay_inputs_closed.json",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "schema_hashes": [
+      {
+        "schema_id": "bundle.schema.json",
+        "hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43"
+      },
+      {
+        "schema_id": "output.schema.json",
+        "hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073"
+      },
+      {
+        "schema_id": "emergy.schema.json",
+        "hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1"
+      },
+      {
+        "schema_id": "attestation.schema.json",
+        "hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310"
+      }
+    ],
+    "canonicalization": "JCS (JSON Canonicalization Scheme) - RFC 8785 subset",
+    "hash_algorithm": "SHA-256",
+    "inputs_closed": true
+  },
+  "test_results": {
+    "determinism_test": true,
+    "authority_resolution_test": true,
+    "replay_complete": true,
+    "inputs_verified": true
+  },
+  "final_state": {
+    "roles": {
+      "schema-authority": {
+        "role_id": "schema-authority",
+        "permissions": [
+          "approve_schema_change",
+          "publish_schema_version",
+          "register_schema"
+        ],
+        "scope": "global",
+        "description": "Authority over all No-Fate schemas (bundle, output, emergy, attestation)",
+        "created_at": "2025-12-12T00:00:00Z",
+        "created_by": "genesis"
+      },
+      "rule-authority": {
+        "role_id": "rule-authority",
+        "permissions": [
+          "approve_rule_change",
+          "publish_conformance_spec",
+          "register_validation_rule"
+        ],
+        "scope": "global",
+        "description": "Authority over conformance rules (NFSCS) and validation logic",
+        "created_at": "2025-12-12T00:00:00Z",
+        "created_by": "genesis"
+      },
+      "solver-authority": {
+        "role_id": "solver-authority",
+        "permissions": [
+          "certify_solver",
+          "revoke_solver_certification",
+          "publish_solver_requirements"
+        ],
+        "scope": "global",
+        "description": "Authority over solver certification and conformance determination",
+        "created_at": "2025-12-12T00:00:00Z",
+        "created_by": "genesis"
+      },
+      "auditor-authority": {
+        "role_id": "auditor-authority",
+        "permissions": [
+          "issue_attestation",
+          "publish_audit_report",
+          "verify_compliance"
+        ],
+        "scope": "global",
+        "description": "Authority to issue Avery attestations and audit reports",
+        "created_at": "2025-12-12T00:00:00Z",
+        "created_by": "genesis"
+      },
+      "governance-authority": {
+        "role_id": "governance-authority",
+        "permissions": [
+          "approve_governance_change",
+          "issue_authority_key",
+          "modify_roles",
+          "publish_governance_version",
+          "revoke_authority_key"
+        ],
+        "scope": "global",
+        "description": "Authority over NFGS itself - governance of governance",
+        "created_at": "2025-12-12T00:00:00Z",
+        "created_by": "genesis"
+      }
+    },
+    "authorityKeys": {
+      "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d": {
+        "key_id": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+        "role_id": "governance-authority",
+        "valid_from": "2025-12-12T00:00:00Z",
+        "valid_to": "2026-12-12T00:00:00Z",
+        "revocation_status": "active",
+        "description": "Genesis governance authority key - signs this genesis artifact",
+        "key_generation_method": "ed25519",
+        "key_purpose": "genesis_signing",
+        "issued_at": "2025-12-12T00:00:00Z",
+        "issued_by": "genesis"
+      }
+    },
+    "schemas": {
+      "bundle.schema.json": {
+        "schema_id": "bundle.schema.json",
+        "schema_version": "1.0.0",
+        "schema_hash": "sha256:0de8f88a855ee2e70943f35a822f8cf898a10ad08762bfe4ad298ddb5dcccea0",
+        "schema_url": "https://nofate.org/schemas/bundle.schema.json",
+        "freeze_date": "2025-12-12",
+        "freeze_policy": "immutable_execution_law",
+        "governed_by": "schema-authority",
+        "description": "Canonical input bundle schema",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      },
+      "output.schema.json": {
+        "schema_id": "output.schema.json",
+        "schema_version": "1.0.0",
+        "schema_hash": "sha256:f63b54ce118365922b255a03350321a73416c0e773589b48ce08a163f8b5c7bb",
+        "schema_url": "https://nofate.org/schemas/output.schema.json",
+        "freeze_date": "2025-12-12",
+        "freeze_policy": "immutable_execution_law",
+        "governed_by": "schema-authority",
+        "description": "Solver output schema",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      },
+      "emergy.schema.json": {
+        "schema_id": "emergy.schema.json",
+        "schema_version": "1.0.0",
+        "schema_hash": "sha256:0b6be6457d8179f8492e53afd6242af4b4549516ac610f2b40b5d4360f2d3abe",
+        "schema_url": "https://nofate.org/schemas/emergy.schema.json",
+        "freeze_date": "2025-12-12",
+        "freeze_policy": "immutable_execution_law",
+        "governed_by": "schema-authority",
+        "description": "Emergy decision trace schema - WHY interface",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      },
+      "attestation.schema.json": {
+        "schema_id": "attestation.schema.json",
+        "schema_version": "1.0.0",
+        "schema_hash": "sha256:06b17e66fb41d7acc416c446ae65c03fff743b31ce1510a41f7f4c7321329fe",
+        "schema_url": "https://nofate.org/schemas/attestation.schema.json",
+        "freeze_date": "2025-12-12",
+        "freeze_policy": "immutable_execution_law",
+        "governed_by": "schema-authority",
+        "description": "Avery attestation schema - cryptographic proof",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      }
+    },
+    "policies": {
+      "schema-freeze-notice": {
+        "policy_id": "schema-freeze-notice",
+        "policy_version": "1.0.0",
+        "policy_type": "immutability",
+        "applies_to": "schemas",
+        "effective_from": "2025-12-12T00:00:00Z",
+        "authority": "schema-authority",
+        "document_ref": "SCHEMA_FREEZE_NOTICE.md",
+        "description": "Schemas are immutable execution law - no changes without new major version",
+        "published_at": "2025-12-12T00:00:00Z",
+        "published_by": "genesis"
+      },
+      "emergy-why-interface": {
+        "policy_id": "emergy-why-interface",
+        "policy_version": "1.0.0",
+        "policy_type": "mandatory_artifact",
+        "applies_to": "solvers",
+        "effective_from": "2025-12-12T00:00:00Z",
+        "authority": "rule-authority",
+        "document_ref": "EMERGY_WHY_INTERFACE_POLICY.md",
+        "description": "Emergy is mandatory first-class artifact - output without emergy is invalid",
+        "published_at": "2025-12-12T00:00:00Z",
+        "published_by": "genesis"
+      },
+      "avery-gate": {
+        "policy_id": "avery-gate",
+        "policy_version": "1.0.0",
+        "policy_type": "non_bypassable_verification",
+        "applies_to": "all_artifacts",
+        "effective_from": "2025-12-12T00:00:00Z",
+        "authority": "auditor-authority",
+        "document_ref": "AVERY_GATE_POLICY.md",
+        "description": "Avery verification is non-bypassable - no manual overrides permitted",
+        "published_at": "2025-12-12T00:00:00Z",
+        "published_by": "genesis"
+      },
+      "conformance-expansion-plan": {
+        "policy_id": "conformance-expansion-plan",
+        "policy_version": "1.0.0",
+        "policy_type": "expansion_governance",
+        "applies_to": "system_expansion",
+        "effective_from": "2025-12-12T00:00:00Z",
+        "authority": "governance-authority",
+        "document_ref": "CONFORMANCE_EXPANSION_PLAN.md",
+        "description": "15 conformance vectors required before expansion work (ZKPs, MPC, blockchain, WASM)",
+        "published_at": "2025-12-12T00:00:00Z",
+        "published_by": "genesis"
+      }
+    },
+    "artifacts": {
+      "nfgs-specification": {
+        "artifact_id": "nfgs-specification",
+        "artifact_version": "1.0.0",
+        "artifact_type": "governance_specification",
+        "document_ref": "governance/NFGS_SPECIFICATION.md",
+        "authority": "governance-authority",
+        "status": "canonical",
+        "description": "No-Fate Governance System specification",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      },
+      "nfscs-specification": {
+        "artifact_id": "nfscs-specification",
+        "artifact_version": "1.0.0",
+        "artifact_type": "conformance_specification",
+        "document_ref": "conformance/NFSCS_SPECIFICATION.md",
+        "authority": "rule-authority",
+        "status": "canonical",
+        "description": "No-Fate Solver Conformance System specification",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      },
+      "baseline-determinism-vector": {
+        "artifact_id": "baseline-determinism-vector",
+        "artifact_version": "1.0.0",
+        "artifact_type": "conformance_test",
+        "document_ref": "conformance/baseline/BASELINE_DETERMINISM_VECTOR.md",
+        "authority": "rule-authority",
+        "status": "canonical",
+        "description": "Baseline determinism golden test",
+        "registered_at": "2025-12-12T00:00:00Z",
+        "registered_by": "genesis"
+      }
+    },
+    "eventLog": [
+      {
+        "event_id": "replay-roles",
+        "event_type": "roles_initialized",
+        "timestamp": "2025-12-12T00:00:00Z",
+        "count": 5
+      },
+      {
+        "event_id": "replay-keys",
+        "event_type": "keys_issued",
+        "timestamp": "2025-12-12T00:00:00Z",
+        "count": 1
+      },
+      {
+        "event_id": "replay-schemas",
+        "event_type": "schemas_registered",
+        "timestamp": "2025-12-12T00:00:00Z",
+        "count": 4
+      },
+      {
+        "event_id": "replay-policies",
+        "event_type": "policies_published",
+        "timestamp": "2025-12-12T00:00:00Z",
+        "count": 4
+      },
+      {
+        "event_id": "replay-artifacts",
+        "event_type": "artifacts_registered",
+        "timestamp": "2025-12-12T00:00:00Z",
+        "count": 3
+      }
+    ],
+    "stateHash": "f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+  },
+  "checkpoints": [
+    {
+      "label": "Initial Replay Complete",
+      "timestamp": "2025-12-13T04:12:18.374Z",
+      "stateHash": "f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+    },
+    {
+      "label": "First Replay Complete",
+      "timestamp": "2025-12-13T04:12:18.379Z",
+      "stateHash": "f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+    },
+    {
+      "label": "Second Replay Complete",
+      "timestamp": "2025-12-13T04:12:18.382Z",
+      "stateHash": "f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+    }
+  ],
+  "governance_summary": {
+    "total_roles": 5,
+    "total_keys": 1,
+    "total_schemas": 4,
+    "total_policies": 4,
+    "total_artifacts": 3,
+    "total_events": 5
+  },
+  "classification": {
+    "status": "GOVERNANCE_VALID (TEXT_ONLY)",
+    "justification": [
+      "Genesis signed with production Ed25519 key",
+      "Schema hashes computed from canonical bytes (JCS)",
+      "Replay uses closed input set (no implicit dependencies)",
+      "Deterministic state reconstruction verified (byte-identical)",
+      "Authority resolution unambiguous"
+    ],
+    "operational_status": "READY - Governance is authoritative"
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "nfgs.binding_registry",
+  "registry_version": "1.0.0",
+  "created_at": "2025-12-12T00:00:00Z",
+  "description": "Registry binding all No-Fate artifacts to governance authority",
+  "governance_version": "1.0.0",
+  "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+  "bound_schemas": [
+    {
+      "schema_id": "bundle.schema.json",
+      "schema_version": "1.0.0",
+      "schema_path": "schemas/bundle.schema.json",
+      "schema_hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43",
+      "governed_by": "schema-authority",
+      "freeze_date": "2025-12-12",
+      "governance_binding_status": "BOUND",
+      "attestation_scope": [
+        "bundle_validation",
+        "constraint_checking",
+        "solver_input"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0"
+    },
+    {
+      "schema_id": "output.schema.json",
+      "schema_version": "1.0.0",
+      "schema_path": "schemas/output.schema.json",
+      "schema_hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073",
+      "governed_by": "schema-authority",
+      "freeze_date": "2025-12-12",
+      "governance_binding_status": "BOUND",
+      "attestation_scope": [
+        "output_validation",
+        "plan_verification",
+        "solver_result"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0"
+    },
+    {
+      "schema_id": "emergy.schema.json",
+      "schema_version": "1.0.0",
+      "schema_path": "schemas/emergy.schema.json",
+      "schema_hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1",
+      "governed_by": "schema-authority",
+      "freeze_date": "2025-12-12",
+      "governance_binding_status": "BOUND",
+      "attestation_scope": [
+        "emergy_validation",
+        "decision_trace",
+        "why_interface",
+        "replay_verification"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0 - Emergy WHY Interface Policy",
+      "policy_ref": "EMERGY_WHY_INTERFACE_POLICY.md"
+    },
+    {
+      "schema_id": "attestation.schema.json",
+      "schema_version": "1.0.0",
+      "schema_path": "schemas/attestation.schema.json",
+      "schema_hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310",
+      "governed_by": "auditor-authority",
+      "freeze_date": "2025-12-12",
+      "governance_binding_status": "BOUND",
+      "attestation_scope": [
+        "attestation_issuance",
+        "cryptographic_proof",
+        "verification_binding"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0 - Avery Gate Policy",
+      "policy_ref": "AVERY_GATE_POLICY.md"
+    }
+  ],
+  "bound_specifications": [
+    {
+      "spec_id": "nfgs-specification",
+      "spec_version": "1.0.0",
+      "spec_path": "governance/NFGS_SPECIFICATION.md",
+      "spec_type": "governance_specification",
+      "governed_by": "governance-authority",
+      "status": "canonical",
+      "governance_binding_status": "BOUND",
+      "description": "No-Fate Governance System specification"
+    },
+    {
+      "spec_id": "nfscs-specification",
+      "spec_version": "1.0.0",
+      "spec_path": "conformance/NFSCS_SPECIFICATION.md",
+      "spec_type": "conformance_specification",
+      "governed_by": "rule-authority",
+      "status": "canonical",
+      "governance_binding_status": "BOUND",
+      "description": "No-Fate Solver Conformance System specification"
+    }
+  ],
+  "bound_policies": [
+    {
+      "policy_id": "schema-freeze-notice",
+      "policy_version": "1.0.0",
+      "policy_path": "SCHEMA_FREEZE_NOTICE.md",
+      "policy_type": "immutability",
+      "governed_by": "schema-authority",
+      "applies_to": "schemas",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Schemas are immutable execution law"
+    },
+    {
+      "policy_id": "emergy-why-interface",
+      "policy_version": "1.0.0",
+      "policy_path": "EMERGY_WHY_INTERFACE_POLICY.md",
+      "policy_type": "mandatory_artifact",
+      "governed_by": "rule-authority",
+      "applies_to": "solvers",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Emergy is mandatory first-class artifact"
+    },
+    {
+      "policy_id": "avery-gate",
+      "policy_version": "1.0.0",
+      "policy_path": "AVERY_GATE_POLICY.md",
+      "policy_type": "non_bypassable_verification",
+      "governed_by": "auditor-authority",
+      "applies_to": "all_artifacts",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Avery verification is non-bypassable"
+    },
+    {
+      "policy_id": "conformance-expansion-plan",
+      "policy_version": "1.0.0",
+      "policy_path": "CONFORMANCE_EXPANSION_PLAN.md",
+      "policy_type": "expansion_governance",
+      "governed_by": "governance-authority",
+      "applies_to": "system_expansion",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "15 conformance vectors required before expansion"
+    },
+    {
+      "policy_id": "baseline-determinism-vector",
+      "policy_version": "1.0.0",
+      "policy_path": "conformance/baseline/BASELINE_DETERMINISM_VECTOR.md",
+      "policy_type": "conformance_test",
+      "governed_by": "rule-authority",
+      "applies_to": "solvers",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Baseline golden test proving determinism"
+    },
+    {
+      "policy_id": "trust-boundary-key-management",
+      "policy_version": "1.0.0",
+      "policy_path": "TRUST_BOUNDARY_AND_KEY_MANAGEMENT.md",
+      "policy_type": "trust_model",
+      "governed_by": "governance-authority",
+      "applies_to": "cryptographic_keys",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Trust model and key management policy"
+    },
+    {
+      "policy_id": "expansion-governance",
+      "policy_version": "1.0.0",
+      "policy_path": "EXPANSION_GOVERNANCE.md",
+      "policy_type": "change_control",
+      "governed_by": "governance-authority",
+      "applies_to": "system_expansion",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Master governance checklist for expansion"
+    },
+    {
+      "policy_id": "change-control-engine",
+      "policy_version": "1.0.0",
+      "policy_path": "governance/CHANGE_CONTROL_ENGINE.md",
+      "policy_type": "change_control",
+      "governed_by": "governance-authority",
+      "applies_to": "all_governance_artifacts",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "governance_binding_status": "BOUND",
+      "description": "Change Control Engine enforcing approval workflows"
+    }
+  ],
+  "bound_specifications": [
+    {
+      "spec_id": "nfgs-specification",
+      "spec_version": "1.0.0",
+      "spec_path": "governance/NFGS_SPECIFICATION.md",
+      "spec_type": "governance_specification",
+      "governed_by": "governance-authority",
+      "status": "canonical",
+      "governance_binding_status": "BOUND",
+      "description": "No-Fate Governance System specification"
+    },
+    {
+      "spec_id": "nfscs-specification",
+      "spec_version": "1.0.0",
+      "spec_path": "conformance/NFSCS_SPECIFICATION.md",
+      "spec_type": "conformance_specification",
+      "governed_by": "rule-authority",
+      "status": "canonical",
+      "governance_binding_status": "BOUND",
+      "description": "No-Fate Solver Conformance System specification"
+    },
+    {
+      "spec_id": "nfdfqp-specification",
+      "spec_version": "1.0.0",
+      "spec_path": "delivery/NFDFQP_SPECIFICATION.md",
+      "spec_type": "delivery_pipeline_specification",
+      "governed_by": "governance-authority",
+      "status": "canonical",
+      "governance_binding_status": "BOUND",
+      "description": "No-Fate Delivery, Frontend, and Quality Pipeline specification"
+    }
+  ],
+  "bound_verification_rules": [
+    {
+      "rule_id": "avery-verification",
+      "rule_version": "1.0.0",
+      "rule_type": "verification_engine",
+      "governed_by": "auditor-authority",
+      "implementation_ref": "tools/avery/verify/",
+      "governance_binding_status": "BOUND",
+      "capabilities": [
+        "bundle_validation",
+        "output_validation",
+        "emergy_validation",
+        "constraint_checking",
+        "hash_verification"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0",
+      "policy_ref": "AVERY_GATE_POLICY.md"
+    },
+    {
+      "rule_id": "avery-attestation",
+      "rule_version": "1.0.0",
+      "rule_type": "attestation_issuer",
+      "governed_by": "auditor-authority",
+      "implementation_ref": "tools/avery/attest/",
+      "governance_binding_status": "BOUND",
+      "capabilities": [
+        "attestation_issuance",
+        "ed25519_signing",
+        "cryptographic_binding"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0",
+      "policy_ref": "AVERY_GATE_POLICY.md"
+    },
+    {
+      "rule_id": "avery-replay",
+      "rule_version": "1.0.0",
+      "rule_type": "replay_engine",
+      "governed_by": "auditor-authority",
+      "implementation_ref": "tools/avery/replay/",
+      "governance_binding_status": "BOUND",
+      "capabilities": [
+        "deterministic_replay",
+        "emergy_reconstruction",
+        "output_reproduction"
+      ],
+      "conformance_requirement": "NFSCS v1.0.0",
+      "policy_ref": "AVERY_GATE_POLICY.md"
+    }
+  ],
+  "bound_solvers": [
+    {
+      "solver_id": "nofate-solve-reference",
+      "solver_version": "1.0.0",
+      "solver_type": "reference_implementation",
+      "governed_by": "solver-authority",
+      "implementation_ref": "tools/solve/",
+      "governance_binding_status": "BOUND",
+      "certification_status": "PENDING",
+      "conformance_requirement": "NFSCS v1.0.0",
+      "emergy_compliance": "MANDATORY",
+      "determinism_requirement": "REQUIRED",
+      "description": "Reference forward search solver"
+    }
+  ],
+  "binding_verification": {
+    "all_schemas_bound": true,
+    "all_policies_bound": true,
+    "all_specifications_bound": true,
+    "governance_chain_complete": true,
+    "authority_roles_defined": true,
+    "genesis_signed": true,
+    "replay_test_passed": false,
+    "binding_complete": false,
+    "pending_actions": [
+      "Run governance replay test with closed inputs",
+      "Verify all schema hashes match canonical computation",
+      "Certify reference solver via NFSCS"
+    ]
+  },
+  "audit_trail": [
+    {
+      "event_id": "binding-001",
+      "event_type": "schema_bound_to_governance",
+      "timestamp": "2025-12-12T00:00:00Z",
+      "actor": "system",
+      "description": "Bound 4 schemas to governance version 1.0.0",
+      "schemas": [
+        "bundle",
+        "output",
+        "emergy",
+        "attestation"
+      ]
+    },
+    {
+      "event_id": "binding-002",
+      "event_type": "policies_bound_to_governance",
+      "timestamp": "2025-12-12T00:00:00Z",
+      "actor": "system",
+      "description": "Bound 7 policies to governance authority",
+      "policies": [
+        "schema-freeze-notice",
+        "emergy-why-interface",
+        "avery-gate",
+        "conformance-expansion-plan",
+        "baseline-determinism-vector",
+        "trust-boundary-key-management",
+        "expansion-governance"
+      ]
+    },
+    {
+      "event_id": "binding-003",
+      "event_type": "verification_rules_bound",
+      "timestamp": "2025-12-12T00:00:00Z",
+      "actor": "system",
+      "description": "Bound Avery verification, attestation, and replay engines",
+      "rules": [
+        "avery-verification",
+        "avery-attestation",
+        "avery-replay"
+      ]
+    },
+    {
+      "event_id": "000binding-4",
+      "event_type": "schema_hashes_recomputed",
+      "timestamp": "2025-12-13T04:09:59.644Z",
+      "actor": "recompute-schema-hashes.js",
+      "description": "Recomputed all schema hashes using JCS canonicalization",
+      "genesis_ref": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+    }
+  ],
+  "canonical_ordering": {
+    "bound_schemas": "sorted by schema_id",
+    "bound_specifications": "sorted by spec_id",
+    "bound_policies": "sorted by policy_id",
+    "bound_verification_rules": "sorted by rule_id",
+    "bound_solvers": "sorted by solver_id",
+    "audit_trail": "chronologically ordered by timestamp"
+  }
+}

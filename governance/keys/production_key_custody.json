@@ -1,0 +1,86 @@
+{
+  "key_custody_record": {
+    "record_type": "production_root_key",
+    "created_at": "2025-12-13T04:08:29.198Z",
+    "key_id": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+    "key_algorithm": "Ed25519",
+    "key_purpose": "genesis_signing",
+    "role": "governance-authority",
+    
+    "creation_method": {
+      "generator": "Node.js crypto.generateKeyPairSync",
+      "algorithm": "ed25519",
+      "encoding": {
+        "public": "spki/pem",
+        "private": "pkcs8/pem"
+      },
+      "script": "scripts/generate-genesis-key.js",
+      "node_version": "v20.x",
+      "creation_timestamp": "2025-12-13T04:08:29.198Z"
+    },
+    
+    "custody_statement": {
+      "current_location": "governance/keys/genesis-governance-authority.private.pem",
+      "permissions": "chmod 600 (owner read-write only)",
+      "security_level": "DEVELOPMENT",
+      "production_requirements": [
+        "MUST store in Hardware Security Module (HSM)",
+        "MUST enable key rotation after 12 months",
+        "MUST implement multi-signature approval for key usage",
+        "MUST maintain air-gapped backup",
+        "MUST log all signing operations"
+      ],
+      "compromise_procedure": [
+        "Immediately revoke key in governance registry",
+        "Issue new genesis with replacement key",
+        "Mark compromised genesis as superseded",
+        "Re-sign all artifacts with new key",
+        "Audit all operations performed with compromised key"
+      ]
+    },
+    
+    "public_key": {
+      "key_id": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+      "hex": "9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+      "pem_location": "governance/keys/genesis-governance-authority.public.pem",
+      "verification_capable": true
+    },
+    
+    "private_key": {
+      "pem_location": "governance/keys/genesis-governance-authority.private.pem",
+      "permissions": "0600",
+      "signing_capable": true,
+      "warning": "CRITICAL: This key has root authority over entire governance system"
+    },
+    
+    "signed_artifacts": [
+      {
+        "artifact": "governance/governance_genesis.signed.json",
+        "canonical_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+        "signature": "dcedc8945626a2560d36454935978836d7d99fc2929ca116ff822133e8d386ec7fb9c205ddd4e7673dd94cbd42c17dafd723d81ee2ab2743e0d2f4ce4c5ac700",
+        "signed_at": "2025-12-13T04:08:29.198Z"
+      }
+    ],
+    
+    "validity": {
+      "valid_from": "2025-12-12T00:00:00Z",
+      "valid_to": "2026-12-12T00:00:00Z",
+      "revocation_status": "active",
+      "rotation_required_before": "2026-12-12T00:00:00Z"
+    },
+    
+    "audit_trail": [
+      {
+        "event": "key_generated",
+        "timestamp": "2025-12-13T04:08:29.198Z",
+        "method": "Node.js crypto.generateKeyPairSync('ed25519')"
+      },
+      {
+        "event": "genesis_signed",
+        "timestamp": "2025-12-13T04:08:29.198Z",
+        "artifact": "governance_genesis.signed.json",
+        "canonical_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    ]
+  }
+}

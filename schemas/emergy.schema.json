@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nofate.org/schemas/emergy.schema.json",
+  "title": "No Fate Emergy Schema v1.0.0",
+  "description": "Emergy record - deterministic, replayable decision trace explaining WHY outcomes were selected",
+  "$comment": "FROZEN: 2025-12-12. This schema is immutable execution law. Emergy is the canonical WHY interface. Any changes require a new version (v2.0.0) with conformance tests proving backward compatibility or explicit breaking change documentation.",
+  "type": "object",
+  "required": [
+    "nofate_version",
+    "emergy_version",
+    "bundle_hash",
+    "output_hash",
+    "decision_graph",
+    "determinism"
+  ],
+  "properties": {
+    "nofate_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "No Fate specification version"
+    },
+    "emergy_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Emergy format version - MUST match schema version"
+    },
+    "bundle_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 hash of canonical input bundle"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 hash of canonical output"
+    },
+    "decision_graph": {
+      "type": "array",
+      "description": "Sequence of decision nodes showing search/planning trace",
+      "items": {
+        "type": "object",
+        "required": [
+          "node",
+          "state_hash",
+          "candidates",
+          "evaluations",
+          "chosen"
+        ],
+        "properties": {
+          "node": {
+            "type": "string",
+            "description": "Unique node identifier in decision graph"
+          },
+          "state_hash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$",
+            "description": "Hash of world state at this node"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Action IDs considered at this node"
+          },
+          "evaluations": {
+            "type": "object",
+            "description": "Constraint/policy evaluations for each candidate",
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "hard",
+                    "soft"
+                  ]
+                },
+                "passed": {
+                  "type": "boolean",
+                  "description": "For hard constraints: did it pass?"
+                },
+                "penalty": {
+                  "type": "number",
+                  "description": "For soft policies: penalty value"
+                },
+                "evidence": {
+                  "type": "string",
+                  "description": "Evidence/reasoning for this evaluation"
+                }
+              }
+            }
+          },
+          "chosen": {
+            "type": "string",
+            "description": "Action ID that was chosen"
+          },
+          "tie_break": {
+            "type": "object",
+            "description": "Tie-breaking information if multiple actions had same score",
+            "properties": {
+              "applied": {
+                "type": "boolean",
+                "description": "Was tie-breaking needed?"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Why this action won the tie-break"
+              }
+            }
+          }
+        }
+      }
+    },
+    "rejections": {
+      "type": "array",
+      "description": "Actions that were considered but rejected (with reasons)",
+      "items": {
+        "type": "object",
+        "required": [
+          "action_id",
+          "because"
+        ],
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "description": "Action that was rejected"
+          },
+          "because": {
+            "type": "array",
+            "description": "Constraints/policies that caused rejection",
+            "items": {
+              "type": "object",
+              "required": [
+                "constraint_id",
+                "evidence"
+              ],
+              "properties": {
+                "constraint_id": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "determinism": {
+      "type": "object",
+      "required": [
+        "canonicalization",
+        "tie_break"
+      ],
+      "description": "Determinism guarantees and replay information",
+      "properties": {
+        "canonicalization": {
+          "type": "string",
+          "enum": [
+            "JCS"
+          ],
+          "description": "Canonicalization scheme used"
+        },
+        "tie_break": {
+          "type": "string",
+          "description": "Tie-breaking strategy that was applied"
+        },
+        "engine_build": {
+          "type": "string",
+          "description": "Solver engine build identifier (e.g., git commit hash)"
+        }
+      }
+    }
+  },
+  "governance_binding": {
+    "governance_version": "1.0.0",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "schema_hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1",
+    "governed_by": "schema-authority",
+    "attestation_scope": [
+      "emergy_validation",
+      "decision_trace",
+      "why_interface",
+      "replay_verification"
+    ],
+    "conformance_requirement": "NFSCS v1.0.0 - Emergy WHY Interface Policy",
+    "freeze_policy": "immutable_execution_law",
+    "binding_status": "BOUND",
+    "binding_rationale": "Emergy is mandatory first-class artifact per governance policy",
+    "policy_ref": "EMERGY_WHY_INTERFACE_POLICY.md"
+  }
+}

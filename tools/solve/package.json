@@ -1,0 +1,32 @@
+{
+  "name": "@nofate/solve",
+  "version": "1.0.0",
+  "description": "No Fate solver - deterministic planning with emergy decision traces",
+  "main": "dist/index.js",
+  "bin": {
+    "nofate-solve": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "nofate",
+    "solver",
+    "planning",
+    "emergy",
+    "deterministic"
+  ],
+  "author": "Jonathan Arvay",
+  "license": "MIT",
+  "dependencies": {
+    "@nofate/canon": "file:../canon"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  }
+}

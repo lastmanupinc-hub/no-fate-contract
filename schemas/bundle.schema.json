@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nofate.org/schemas/bundle.schema.json",
+  "title": "No Fate Bundle Schema v1.0.0",
+  "description": "Canonical input bundle defining initial state, actions, constraints, and solver configuration",
+  "$comment": "FROZEN: 2025-12-12. This schema is immutable execution law. Any changes require a new version (v2.0.0) with conformance tests proving backward compatibility or explicit breaking change documentation.",
+  "type": "object",
+  "required": [
+    "nofate_version",
+    "bundle_id",
+    "state",
+    "actions",
+    "constraints",
+    "solver_pins"
+  ],
+  "properties": {
+    "nofate_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "No Fate specification version"
+    },
+    "bundle_id": {
+      "type": "string",
+      "description": "Unique identifier (UUID or content hash)"
+    },
+    "state": {
+      "type": "object",
+      "description": "Initial world state (arbitrary JSON object)",
+      "additionalProperties": true
+    },
+    "actions": {
+      "type": "array",
+      "description": "Available actions with preconditions and effects",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "pre",
+          "eff"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique action identifier"
+          },
+          "pre": {
+            "type": "array",
+            "description": "Preconditions (array of conditions)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "eff": {
+            "type": "array",
+            "description": "Effects (state changes)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cost": {
+            "type": "number",
+            "description": "Action cost (for optimization)"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Action duration in time units"
+          },
+          "resources": {
+            "type": "object",
+            "description": "Resource requirements (arbitrary key-value pairs)",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "Hard constraints that MUST be satisfied",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "expr"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique constraint identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "hard"
+            ],
+            "description": "Constraint type (only 'hard' in v1)"
+          },
+          "expr": {
+            "type": "string",
+            "description": "Constraint expression (implementation-defined)"
+          }
+        }
+      }
+    },
+    "policies": {
+      "type": "array",
+      "description": "Soft policies with weights for optimization",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "weight",
+          "expr"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique policy identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "soft"
+            ],
+            "description": "Policy type (only 'soft' in v1)"
+          },
+          "weight": {
+            "type": "number",
+            "description": "Policy weight for scoring"
+          },
+          "expr": {
+            "type": "string",
+            "description": "Policy expression (implementation-defined)"
+          }
+        }
+      }
+    },
+    "solver_pins": {
+      "type": "object",
+      "required": [
+        "contract_semantics",
+        "tie_break"
+      ],
+      "description": "Determinism guarantees through pinned solver configuration",
+      "properties": {
+        "contract_semantics": {
+          "type": "string",
+          "description": "Semantic version of contract interpretation (e.g., 'nofate-1.0.0')"
+        },
+        "tie_break": {
+          "type": "string",
+          "description": "Tie-breaking strategy (e.g., 'f,g,depth,action_id,state_hash')"
+        },
+        "seed": {
+          "type": "string",
+          "description": "Optional random seed for deterministic behavior"
+        }
+      }
+    }
+  },
+  "governance_binding": {
+    "governance_version": "1.0.0",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "schema_hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43",
+    "governed_by": "schema-authority",
+    "attestation_scope": [
+      "bundle_validation",
+      "constraint_checking",
+      "solver_input"
+    ],
+    "conformance_requirement": "NFSCS v1.0.0",
+    "freeze_policy": "immutable_execution_law",
+    "binding_status": "BOUND",
+    "binding_rationale": "Any bundle without valid governance binding is out-of-governance"
+  }
+}

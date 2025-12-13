@@ -1,0 +1,32 @@
+{
+  "name": "@nofate/avery-replay",
+  "version": "1.0.0",
+  "description": "Avery replay tool - re-runs solver to verify deterministic outputs",
+  "main": "dist/index.js",
+  "bin": {
+    "avery-replay": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "nofate",
+    "avery",
+    "replay",
+    "determinism"
+  ],
+  "author": "Jonathan Arvay",
+  "license": "MIT",
+  "dependencies": {
+    "@nofate/canon": "file:../../canon",
+    "@nofate/solve": "file:../../solve"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "nofate_version": "1.0.0",
+  "bundle_id": "test-001-simple-blocks",
+  "state": {
+    "on_table_a": true,
+    "on_table_b": true,
+    "on_table_c": true,
+    "clear_a": true,
+    "clear_b": true,
+    "clear_c": true,
+    "holding": null
+  },
+  "actions": [
+    {
+      "id": "pickup_a",
+      "pre": ["on_table_a", "clear_a", "holding_null"],
+      "eff": ["holding_a", "!on_table_a", "!clear_a"]
+    },
+    {
+      "id": "putdown_a",
+      "pre": ["holding_a"],
+      "eff": ["on_table_a", "clear_a", "!holding_a", "holding_null"]
+    },
+    {
+      "id": "stack_a_on_b",
+      "pre": ["holding_a", "clear_b"],
+      "eff": ["on_a_b", "clear_a", "!holding_a", "!clear_b", "holding_null"]
+    }
+  ],
+  "constraints": [
+    {
+      "id": "no_flying_blocks",
+      "type": "hard",
+      "expr": "every block must be either on_table or on another block"
+    }
+  ],
+  "policies": [
+    {
+      "id": "minimize_steps",
+      "type": "soft",
+      "weight": 1.0,
+      "expr": "prefer shorter plans"
+    }
+  ],
+  "solver_pins": {
+    "contract_semantics": "nofate-1.0.0",
+    "tie_break": "f,g,depth,action_id,state_hash",
+    "seed": "0"
+  }
+}

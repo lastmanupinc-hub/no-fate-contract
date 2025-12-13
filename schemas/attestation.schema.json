@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nofate.org/schemas/attestation.schema.json",
+  "title": "Avery Attestation Schema v1.0.0",
+  "description": "Avery's cryptographic attestation tying inputs → emergy → outputs",
+  "$comment": "FROZEN: 2025-12-12. This schema is immutable execution law. Attestations are cryptographic proof. Any changes require a new version (v2.0.0) with conformance tests proving backward compatibility or explicit breaking change documentation.",
+  "type": "object",
+  "required": [
+    "type",
+    "nofate_version",
+    "issued_at",
+    "issuer",
+    "claims"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "avery.attestation",
+      "description": "Attestation type identifier"
+    },
+    "nofate_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "No Fate specification version"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of attestation issuance"
+    },
+    "issuer": {
+      "type": "object",
+      "required": [
+        "name",
+        "key_id"
+      ],
+      "description": "Attestation issuer information",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Issuer name (e.g., 'Avery')"
+        },
+        "key_id": {
+          "type": "string",
+          "pattern": "^ed25519:[a-f0-9]{64}$",
+          "description": "Ed25519 public key identifier"
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "required": [
+        "bundle_hash",
+        "output_hash",
+        "emergy_hash",
+        "conformance",
+        "verification"
+      ],
+      "description": "Cryptographic claims about the computation",
+      "properties": {
+        "bundle_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 hash of canonical input bundle"
+        },
+        "output_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 hash of canonical output"
+        },
+        "emergy_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA-256 hash of canonical emergy record"
+        },
+        "conformance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specifications this computation conforms to (e.g., ['nofate-1.0.0', 'emergy-1.0.0'])"
+        },
+        "verification": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "constraints_satisfied",
+              "explanations_consistent",
+              "deterministic_replay",
+              "schema_valid"
+            ]
+          },
+          "description": "Verification checks that passed"
+        }
+      }
+    }
+  },
+  "governance_binding": {
+    "governance_version": "1.0.0",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "schema_hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310",
+    "governed_by": "auditor-authority",
+    "attestation_scope": [
+      "attestation_issuance",
+      "cryptographic_proof",
+      "verification_binding"
+    ],
+    "conformance_requirement": "NFSCS v1.0.0 - Avery Gate Policy",
+    "freeze_policy": "immutable_execution_law",
+    "binding_status": "BOUND",
+    "binding_rationale": "Attestations are cryptographically bound to verification results",
+    "policy_ref": "AVERY_GATE_POLICY.md"
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "type": "nfgs.audit_report",
+  "audit_version": "1.0.0",
+  "audit_timestamp": "2025-12-13T05:03:43.205Z",
+  "audit_scope": [
+    "governance_baseline_integrity",
+    "binding_registry_completeness",
+    "schema_hash_consistency",
+    "authority_chain_validity",
+    "replay_determinism"
+  ],
+  "audit_result": "PASSED",
+  "findings_summary": {
+    "total": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "checks_passed": 23,
+  "findings": [],
+  "passed_checks": [
+    {
+      "check": "baseline_frozen",
+      "evidence": {
+        "status": "FROZEN"
+      }
+    },
+    {
+      "check": "genesis_hash_canonical",
+      "evidence": {
+        "hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    },
+    {
+      "check": "replay_hash_canonical",
+      "evidence": {
+        "hash": "sha256:f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+      }
+    },
+    {
+      "check": "fork_prevention_active",
+      "evidence": {
+        "policy": "Any attempt to create alternative genesis or replay state is formally out-of-governance"
+      }
+    },
+    {
+      "check": "schema_bound_bundle.schema.json",
+      "evidence": {
+        "schema_hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43"
+      }
+    },
+    {
+      "check": "schema_bound_output.schema.json",
+      "evidence": {
+        "schema_hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073"
+      }
+    },
+    {
+      "check": "schema_bound_emergy.schema.json",
+      "evidence": {
+        "schema_hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1"
+      }
+    },
+    {
+      "check": "schema_bound_attestation.schema.json",
+      "evidence": {
+        "schema_hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310"
+      }
+    },
+    {
+      "check": "schema_hash_bundle.schema.json",
+      "evidence": {
+        "hash": "sha256:acebe894af4983360cfef52a440faac6875a6b13028f703074d0e89d731e0f43"
+      }
+    },
+    {
+      "check": "schema_genesis_bundle.schema.json",
+      "evidence": {
+        "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    },
+    {
+      "check": "schema_hash_output.schema.json",
+      "evidence": {
+        "hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073"
+      }
+    },
+    {
+      "check": "schema_genesis_output.schema.json",
+      "evidence": {
+        "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    },
+    {
+      "check": "schema_hash_emergy.schema.json",
+      "evidence": {
+        "hash": "sha256:5ea0be19e07f6b823b3703ea048ba6f5b1256d73b477c3251150bea48c46f9e1"
+      }
+    },
+    {
+      "check": "schema_genesis_emergy.schema.json",
+      "evidence": {
+        "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    },
+    {
+      "check": "schema_hash_attestation.schema.json",
+      "evidence": {
+        "hash": "sha256:d908445287b929b2544c8bdb1f17ff410ffbd26e6520e513ca59dcd31acef310"
+      }
+    },
+    {
+      "check": "schema_genesis_attestation.schema.json",
+      "evidence": {
+        "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a"
+      }
+    },
+    {
+      "check": "authority_valid_bundle.schema.json",
+      "evidence": {
+        "authority": "schema-authority"
+      }
+    },
+    {
+      "check": "authority_valid_output.schema.json",
+      "evidence": {
+        "authority": "schema-authority"
+      }
+    },
+    {
+      "check": "authority_valid_emergy.schema.json",
+      "evidence": {
+        "authority": "schema-authority"
+      }
+    },
+    {
+      "check": "authority_valid_attestation.schema.json",
+      "evidence": {
+        "authority": "auditor-authority"
+      }
+    },
+    {
+      "check": "replay_deterministic",
+      "evidence": {
+        "checkpoint_count": 3,
+        "state_hash": "f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+      }
+    },
+    {
+      "check": "replay_inputs_closed",
+      "evidence": {}
+    },
+    {
+      "check": "replay_state_hash_matches_baseline",
+      "evidence": {
+        "state_hash": "sha256:f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da"
+      }
+    }
+  ],
+  "governance_binding": {
+    "governance_version": "1.0.0",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "authority_role": "auditor-authority",
+    "audit_engine": "governance-audit-engine",
+    "audit_engine_version": "1.0.0"
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "nfgs.genesis",
+  "governance_version": "1.0.0",
+  "genesis_timestamp": "2025-12-12T00:00:00Z",
+  "genesis_event": "No-Fate Governance System Genesis",
+  "description": "Root of trust for No-Fate governance. All authority chains derive from this artifact.",
+  "initial_roles": [
+    {
+      "role_id": "schema-authority",
+      "permissions": [
+        "approve_schema_change",
+        "publish_schema_version",
+        "register_schema"
+      ],
+      "scope": "global",
+      "description": "Authority over all No-Fate schemas (bundle, output, emergy, attestation)"
+    },
+    {
+      "role_id": "rule-authority",
+      "permissions": [
+        "approve_rule_change",
+        "publish_conformance_spec",
+        "register_validation_rule"
+      ],
+      "scope": "global",
+      "description": "Authority over conformance rules (NFSCS) and validation logic"
+    },
+    {
+      "role_id": "solver-authority",
+      "permissions": [
+        "certify_solver",
+        "revoke_solver_certification",
+        "publish_solver_requirements"
+      ],
+      "scope": "global",
+      "description": "Authority over solver certification and conformance determination"
+    },
+    {
+      "role_id": "auditor-authority",
+      "permissions": [
+        "issue_attestation",
+        "publish_audit_report",
+        "verify_compliance"
+      ],
+      "scope": "global",
+      "description": "Authority to issue Avery attestations and audit reports"
+    },
+    {
+      "role_id": "governance-authority",
+      "permissions": [
+        "approve_governance_change",
+        "issue_authority_key",
+        "modify_roles",
+        "publish_governance_version",
+        "revoke_authority_key"
+      ],
+      "scope": "global",
+      "description": "Authority over NFGS itself - governance of governance"
+    }
+  ],
+  "initial_authority_keys": [
+    {
+      "key_id": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+      "role_id": "governance-authority",
+      "valid_from": "2025-12-12T00:00:00Z",
+      "valid_to": "2026-12-12T00:00:00Z",
+      "revocation_status": "active",
+      "description": "Genesis governance authority key - signs this genesis artifact",
+      "key_generation_method": "ed25519",
+      "key_purpose": "genesis_signing"
+    }
+  ],
+  "initial_schemas": [
+    {
+      "schema_id": "bundle.schema.json",
+      "schema_version": "1.0.0",
+      "schema_hash": "sha256:0de8f88a855ee2e70943f35a822f8cf898a10ad08762bfe4ad298ddb5dcccea0",
+      "schema_url": "https://nofate.org/schemas/bundle.schema.json",
+      "freeze_date": "2025-12-12",
+      "freeze_policy": "immutable_execution_law",
+      "governed_by": "schema-authority",
+      "description": "Canonical input bundle schema"
+    },
+    {
+      "schema_id": "output.schema.json",
+      "schema_version": "1.0.0",
+      "schema_hash": "sha256:f63b54ce118365922b255a03350321a73416c0e773589b48ce08a163f8b5c7bb",
+      "schema_url": "https://nofate.org/schemas/output.schema.json",
+      "freeze_date": "2025-12-12",
+      "freeze_policy": "immutable_execution_law",
+      "governed_by": "schema-authority",
+      "description": "Solver output schema"
+    },
+    {
+      "schema_id": "emergy.schema.json",
+      "schema_version": "1.0.0",
+      "schema_hash": "sha256:0b6be6457d8179f8492e53afd6242af4b4549516ac610f2b40b5d4360f2d3abe",
+      "schema_url": "https://nofate.org/schemas/emergy.schema.json",
+      "freeze_date": "2025-12-12",
+      "freeze_policy": "immutable_execution_law",
+      "governed_by": "schema-authority",
+      "description": "Emergy decision trace schema - WHY interface"
+    },
+    {
+      "schema_id": "attestation.schema.json",
+      "schema_version": "1.0.0",
+      "schema_hash": "sha256:06b17e66fb41d7acc416c446ae65c03fff743b31ce1510a41f7f4c7321329fe",
+      "schema_url": "https://nofate.org/schemas/attestation.schema.json",
+      "freeze_date": "2025-12-12",
+      "freeze_policy": "immutable_execution_law",
+      "governed_by": "schema-authority",
+      "description": "Avery attestation schema - cryptographic proof"
+    }
+  ],
+  "initial_policies": [
+    {
+      "policy_id": "schema-freeze-notice",
+      "policy_version": "1.0.0",
+      "policy_type": "immutability",
+      "applies_to": "schemas",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "authority": "schema-authority",
+      "document_ref": "SCHEMA_FREEZE_NOTICE.md",
+      "description": "Schemas are immutable execution law - no changes without new major version"
+    },
+    {
+      "policy_id": "emergy-why-interface",
+      "policy_version": "1.0.0",
+      "policy_type": "mandatory_artifact",
+      "applies_to": "solvers",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "authority": "rule-authority",
+      "document_ref": "EMERGY_WHY_INTERFACE_POLICY.md",
+      "description": "Emergy is mandatory first-class artifact - output without emergy is invalid"
+    },
+    {
+      "policy_id": "avery-gate",
+      "policy_version": "1.0.0",
+      "policy_type": "non_bypassable_verification",
+      "applies_to": "all_artifacts",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "authority": "auditor-authority",
+      "document_ref": "AVERY_GATE_POLICY.md",
+      "description": "Avery verification is non-bypassable - no manual overrides permitted"
+    },
+    {
+      "policy_id": "conformance-expansion-plan",
+      "policy_version": "1.0.0",
+      "policy_type": "expansion_governance",
+      "applies_to": "system_expansion",
+      "effective_from": "2025-12-12T00:00:00Z",
+      "authority": "governance-authority",
+      "document_ref": "CONFORMANCE_EXPANSION_PLAN.md",
+      "description": "15 conformance vectors required before expansion work (ZKPs, MPC, blockchain, WASM)"
+    }
+  ],
+  "governance_artifacts": [
+    {
+      "artifact_id": "nfgs-specification",
+      "artifact_version": "1.0.0",
+      "artifact_type": "governance_specification",
+      "document_ref": "governance/NFGS_SPECIFICATION.md",
+      "authority": "governance-authority",
+      "status": "canonical",
+      "description": "No-Fate Governance System specification"
+    },
+    {
+      "artifact_id": "nfscs-specification",
+      "artifact_version": "1.0.0",
+      "artifact_type": "conformance_specification",
+      "document_ref": "conformance/NFSCS_SPECIFICATION.md",
+      "authority": "rule-authority",
+      "status": "canonical",
+      "description": "No-Fate Solver Conformance System specification"
+    },
+    {
+      "artifact_id": "baseline-determinism-vector",
+      "artifact_version": "1.0.0",
+      "artifact_type": "conformance_test",
+      "document_ref": "conformance/baseline/BASELINE_DETERMINISM_VECTOR.md",
+      "authority": "rule-authority",
+      "status": "canonical",
+      "description": "Baseline determinism golden test"
+    }
+  ],
+  "trust_model": {
+    "model_version": "centralized-v1",
+    "description": "Centralized trust model - single governance authority",
+    "key_holder": "genesis-governance-authority",
+    "federation": "none",
+    "multi_org": false,
+    "document_ref": "TRUST_BOUNDARY_AND_KEY_MANAGEMENT.md"
+  },
+  "replay_requirements": {
+    "replay_mandatory": true,
+    "replay_from": "genesis",
+    "replay_produces": "byte_identical_state",
+    "replay_test_required": true,
+    "description": "Governance state must be replayable from this genesis artifact"
+  },
+  "governance_event_log": [
+    {
+      "event_id": "genesis-001",
+      "event_type": "genesis_created",
+      "timestamp": "2025-12-12T00:00:00Z",
+      "actor": "system",
+      "description": "Governance genesis artifact created",
+      "changes": [
+        "5 roles defined",
+        "1 genesis key issued",
+        "4 schemas registered",
+        "4 policies established",
+        "3 governance artifacts published"
+      ]
+    }
+  ],
+  "next_governance_actions": [
+    "Generate production Ed25519 keypair for governance-authority",
+    "Sign governance_genesis.json with governance-authority key",
+    "Compute canonical hash of signed genesis artifact",
+    "Bind all existing artifacts to governance_version: 1.0.0",
+    "Execute governance replay test from genesis",
+    "Issue authority keys for remaining roles (schema, rule, solver, auditor)"
+  ],
+  "canonical_ordering": {
+    "initial_roles": "sorted by role_id",
+    "initial_authority_keys": "sorted by key_id",
+    "initial_schemas": "sorted by schema_id",
+    "initial_policies": "sorted by policy_id",
+    "governance_artifacts": "sorted by artifact_id",
+    "governance_event_log": "chronologically ordered by timestamp",
+    "next_governance_actions": "priority order"
+  },
+  "genesis_signature": {
+    "signed_by": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+    "signature_algorithm": "ed25519",
+    "signature": "dcedc8945626a2560d36454935978836d7d99fc2929ca116ff822133e8d386ec7fb9c205ddd4e7673dd94cbd42c17dafd723d81ee2ab2743e0d2f4ce4c5ac700",
+    "canonical_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "signed_at": "2025-12-13T04:08:29.198Z",
+    "description": "This signature establishes the root of trust for all No-Fate governance"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "nfgs.governance_baseline",
+  "baseline_version": "1.0.0",
+  "baseline_timestamp": "2025-12-12T00:00:00Z",
+  "baseline_status": "FROZEN",
+  "description": "Canonical governance baseline. All authority chains derive from this frozen state. Any deviation is out-of-governance.",
+  
+  "canonical_genesis": {
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "genesis_location": "governance/governance_genesis.signed.json",
+    "genesis_version": "1.0.0",
+    "genesis_timestamp": "2025-12-12T00:00:00Z",
+    "signing_key": "ed25519:9e52007912020962176b8de314ff37311f14c90c34a14ef0266f8f5da145426d",
+    "signature": "dcedc8945626a2560d36454935978836d7d99fc2929ca116ff822133e8d386ec7fb9c205ddd4e7673dd94cbd42c17dafd723d81ee2ab2743e0d2f4ce4c5ac700",
+    "canonical_status": "AUTHORITATIVE",
+    "root_of_trust": true
+  },
+  
+  "canonical_replay_state": {
+    "replay_state_hash": "sha256:f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da",
+    "replay_inputs_hash": "sha256:TBD_AFTER_HASHING_CLOSED_INPUTS",
+    "replay_report_location": "governance/governance_replay_report.json",
+    "replay_report_version": "2.0.0",
+    "replay_timestamp": "2025-12-12T00:00:00Z",
+    "determinism_verified": true,
+    "authority_resolution_verified": true,
+    "closed_inputs_verified": true,
+    "canonical_status": "DETERMINISTIC"
+  },
+  
+  "superseded_artifacts": [
+    {
+      "artifact_type": "genesis",
+      "artifact_hash": "sha256:TBD_OLD_GENESIS_HASH",
+      "artifact_location": "governance/governance_genesis.json",
+      "superseded_at": "2025-12-13T04:08:29.198Z",
+      "superseded_by": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+      "superseded_reason": "Placeholder key replaced with production Ed25519 key",
+      "canonical_status": "SUPERSEDED",
+      "usage_allowed": false,
+      "reference_only": true
+    }
+  ],
+  
+  "fork_prevention": {
+    "re_genesis_allowed": false,
+    "genesis_mutation_allowed": false,
+    "replay_state_mutation_allowed": false,
+    "baseline_freeze_policy": "Any attempt to create alternative genesis or replay state is formally out-of-governance",
+    "violation_classification": "GOVERNANCE_FORK",
+    "enforcement_mechanism": "All downstream systems MUST verify genesis_hash matches canonical value"
+  },
+  
+  "baseline_guarantees": [
+    "Single root of trust (no competing genesis artifacts)",
+    "Deterministic replay from genesis to current state",
+    "Immutable governance baseline (frozen, not mutable)",
+    "All authority chains traceable to canonical genesis",
+    "Fork detection via hash mismatch"
+  ],
+  
+  "verification_protocol": {
+    "step_1": "Load governance_baseline.json",
+    "step_2": "Verify canonical_genesis.genesis_hash = sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "step_3": "Verify canonical_replay_state.replay_state_hash = sha256:f64436c2bee406672caf1d5868f09b0cec145869198d37dfbbca90dce24267da",
+    "step_4": "Reject any artifact referencing superseded genesis",
+    "step_5": "Reject any artifact with governance_binding missing or mismatched"
+  },
+  
+  "change_control_requirement": {
+    "baseline_modification": "PROHIBITED",
+    "schema_modification": "Requires schema-authority approval + new major version",
+    "policy_modification": "Requires governance-authority approval + audit trail",
+    "specification_modification": "Requires rule-authority approval + conformance verification",
+    "enforcement": "All changes go through Change Control Engine (to be implemented)"
+  }
+}

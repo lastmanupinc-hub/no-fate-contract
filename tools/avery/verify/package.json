@@ -1,0 +1,31 @@
+{
+  "name": "@nofate/avery-verify",
+  "version": "1.0.0",
+  "description": "Avery verification tool - validates No Fate computations",
+  "main": "dist/index.js",
+  "bin": {
+    "avery-verify": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "nofate",
+    "avery",
+    "verification",
+    "attestation"
+  ],
+  "author": "Jonathan Arvay",
+  "license": "MIT",
+  "dependencies": {
+    "@nofate/canon": "file:../../canon"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  }
+}

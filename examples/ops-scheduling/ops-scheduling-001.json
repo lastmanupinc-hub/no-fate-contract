@@ -1,0 +1,103 @@
+{
+  "nofate_version": "1.0.0",
+  "bundle_id": "ops-scheduling-001",
+  "state": {
+    "time": 0,
+    "servers": {
+      "srv1": { "cpu": 16, "mem": 64, "available": true },
+      "srv2": { "cpu": 16, "mem": 64, "available": true },
+      "srv3": { "cpu": 8, "mem": 32, "available": true }
+    },
+    "tasks": {
+      "backup_db": { "status": "pending", "priority": "high" },
+      "train_model": { "status": "pending", "priority": "medium" },
+      "sync_logs": { "status": "pending", "priority": "low" }
+    }
+  },
+  "actions": [
+    {
+      "id": "schedule_backup_on_srv1",
+      "pre": ["task_backup_pending", "srv1_available"],
+      "eff": ["task_backup_running", "srv1_busy"],
+      "cost": 1,
+      "duration": 60,
+      "resources": { "cpu": 4, "mem": 8 }
+    },
+    {
+      "id": "schedule_backup_on_srv2",
+      "pre": ["task_backup_pending", "srv2_available"],
+      "eff": ["task_backup_running", "srv2_busy"],
+      "cost": 1,
+      "duration": 60,
+      "resources": { "cpu": 4, "mem": 8 }
+    },
+    {
+      "id": "schedule_backup_on_srv3",
+      "pre": ["task_backup_pending", "srv3_available"],
+      "eff": ["task_backup_running", "srv3_busy"],
+      "cost": 2,
+      "duration": 90,
+      "resources": { "cpu": 4, "mem": 8 }
+    },
+    {
+      "id": "schedule_training_on_srv1",
+      "pre": ["task_training_pending", "srv1_available"],
+      "eff": ["task_training_running", "srv1_busy"],
+      "cost": 1,
+      "duration": 180,
+      "resources": { "cpu": 16, "mem": 32 }
+    },
+    {
+      "id": "schedule_training_on_srv2",
+      "pre": ["task_training_pending", "srv2_available"],
+      "eff": ["task_training_running", "srv2_busy"],
+      "cost": 1,
+      "duration": 180,
+      "resources": { "cpu": 16, "mem": 32 }
+    },
+    {
+      "id": "schedule_sync_on_srv3",
+      "pre": ["task_sync_pending", "srv3_available"],
+      "eff": ["task_sync_running", "srv3_busy"],
+      "cost": 0.5,
+      "duration": 30,
+      "resources": { "cpu": 2, "mem": 4 }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "cpu_capacity",
+      "type": "hard",
+      "expr": "allocated CPU <= server capacity"
+    },
+    {
+      "id": "mem_capacity",
+      "type": "hard",
+      "expr": "allocated memory <= server capacity"
+    },
+    {
+      "id": "priority_order",
+      "type": "hard",
+      "expr": "high priority tasks before low priority"
+    }
+  ],
+  "policies": [
+    {
+      "id": "minimize_cost",
+      "type": "soft",
+      "weight": 2.0,
+      "expr": "prefer lower-cost schedules"
+    },
+    {
+      "id": "balance_load",
+      "type": "soft",
+      "weight": 1.0,
+      "expr": "distribute tasks evenly across servers"
+    }
+  ],
+  "solver_pins": {
+    "contract_semantics": "nofate-1.0.0",
+    "tie_break": "f,g,depth,action_id,state_hash",
+    "seed": "42"
+  }
+}

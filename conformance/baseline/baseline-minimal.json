@@ -1,0 +1,34 @@
+{
+  "nofate_version": "1.0.0",
+  "bundle_id": "baseline-minimal-001",
+  "state": {
+    "x": 0,
+    "goal_reached": false
+  },
+  "actions": [
+    {
+      "id": "increment_x",
+      "pre": ["x_is_zero"],
+      "eff": ["x_is_one", "!x_is_zero"],
+      "cost": 1.0
+    },
+    {
+      "id": "reach_goal",
+      "pre": ["x_is_one"],
+      "eff": ["goal_reached"],
+      "cost": 1.0
+    }
+  ],
+  "constraints": [
+    {
+      "id": "must_reach_goal",
+      "type": "hard",
+      "expr": "final state must have goal_reached = true"
+    }
+  ],
+  "solver_pins": {
+    "contract_semantics": "nofate-1.0.0",
+    "tie_break": "action_id",
+    "seed": "baseline-2025-12-12"
+  }
+}

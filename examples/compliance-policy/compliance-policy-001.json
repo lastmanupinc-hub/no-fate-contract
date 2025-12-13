@@ -1,0 +1,96 @@
+{
+  "nofate_version": "1.0.0",
+  "bundle_id": "compliance-policy-001",
+  "state": {
+    "user_request": {
+      "action": "deploy_service",
+      "target": "production",
+      "service": "payment-processor",
+      "requested_by": "user123"
+    },
+    "policies": {
+      "require_approval": true,
+      "require_security_scan": true,
+      "require_backup": true
+    },
+    "context": {
+      "approvals": [],
+      "security_scan_passed": false,
+      "backup_exists": false
+    }
+  },
+  "actions": [
+    {
+      "id": "get_approval_manager",
+      "pre": ["no_approvals"],
+      "eff": ["has_manager_approval"],
+      "cost": 1
+    },
+    {
+      "id": "get_approval_security",
+      "pre": ["no_approvals"],
+      "eff": ["has_security_approval"],
+      "cost": 1
+    },
+    {
+      "id": "run_security_scan",
+      "pre": ["not_scanned"],
+      "eff": ["security_scan_passed"],
+      "cost": 2
+    },
+    {
+      "id": "create_backup",
+      "pre": ["no_backup"],
+      "eff": ["backup_exists"],
+      "cost": 3
+    },
+    {
+      "id": "deploy_to_production",
+      "pre": ["has_manager_approval", "has_security_approval", "security_scan_passed", "backup_exists"],
+      "eff": ["deployed"],
+      "cost": 1
+    },
+    {
+      "id": "reject_request",
+      "pre": [],
+      "eff": ["rejected"],
+      "cost": 0
+    }
+  ],
+  "constraints": [
+    {
+      "id": "require_dual_approval",
+      "type": "hard",
+      "expr": "production deployments require manager AND security approval"
+    },
+    {
+      "id": "require_clean_scan",
+      "type": "hard",
+      "expr": "no deployment without passing security scan"
+    },
+    {
+      "id": "require_backup",
+      "type": "hard",
+      "expr": "backup must exist before deployment"
+    }
+  ],
+  "policies": [
+    {
+      "id": "minimize_delay",
+      "type": "soft",
+      "weight": 1.5,
+      "expr": "prefer faster approval paths"
+    },
+    {
+      "id": "security_first",
+      "type": "soft",
+      "weight": 2.0,
+      "expr": "prioritize security checks early"
+    }
+  ],
+  "solver_pins": {
+    "contract_semantics": "nofate-1.0.0",
+    "tie_break": "f,g,depth,action_id,state_hash",
+    "seed": "compliance-2025"
+  }
+}

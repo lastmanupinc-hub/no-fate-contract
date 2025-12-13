@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nofate.org/schemas/output.schema.json",
+  "title": "No Fate Output Schema v1.0.0",
+  "description": "Solver output containing plan, schedule, or decisions",
+  "$comment": "FROZEN: 2025-12-12. This schema is immutable execution law. Any changes require a new version (v2.0.0) with conformance tests proving backward compatibility or explicit breaking change documentation.",
+  "type": "object",
+  "required": [
+    "result"
+  ],
+  "properties": {
+    "result": {
+      "type": "string",
+      "enum": [
+        "solved",
+        "unsolvable",
+        "timeout",
+        "error"
+      ],
+      "description": "Solver result status"
+    },
+    "plan": {
+      "type": "array",
+      "description": "Ordered sequence of actions (present if result='solved')",
+      "items": {
+        "type": "object",
+        "required": [
+          "step",
+          "action_id"
+        ],
+        "properties": {
+          "step": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Step number in plan sequence"
+          },
+          "action_id": {
+            "type": "string",
+            "description": "Action identifier from bundle"
+          },
+          "start": {
+            "type": "number",
+            "description": "Start time (for scheduling)"
+          },
+          "end": {
+            "type": "number",
+            "description": "End time (for scheduling)"
+          },
+          "resources": {
+            "type": "object",
+            "description": "Resource allocations",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "objective": {
+      "type": "object",
+      "description": "Objective function values (present if result='solved')",
+      "properties": {
+        "cost": {
+          "type": "number",
+          "description": "Total plan cost"
+        },
+        "policy_score": {
+          "type": "number",
+          "description": "Aggregated policy score"
+        }
+      }
+    },
+    "reason": {
+      "type": "string",
+      "description": "Explanation for unsolvable/timeout/error results"
+    }
+  },
+  "governance_binding": {
+    "governance_version": "1.0.0",
+    "genesis_hash": "sha256:45162862f5360bfd2dfebd5646caa97cc3a400c38e9563e4bea142e43ae70f1a",
+    "schema_hash": "sha256:c7c9b6521a7b35c19c9de1cf0f3dadd70f4b8887e554adff1df62acefa7d8073",
+    "governed_by": "schema-authority",
+    "attestation_scope": [
+      "output_validation",
+      "plan_verification",
+      "solver_result"
+    ],
+    "conformance_requirement": "NFSCS v1.0.0",
+    "freeze_policy": "immutable_execution_law",
+    "binding_status": "BOUND",
+    "binding_rationale": "Any output without valid governance binding is out-of-governance"
+  }
+}
