@@ -22,15 +22,12 @@ AD8FFC58FE63AFDE87AC2A4F351BEAB9BBDBA9BA4D5EA7E46D9F32DD81BF2973
 
 CRYPTOGRAPHIC SIGNATURE
 -----------------------
-[TO BE ADDED: Ed25519 signature of this record]
 
 Algorithm: Ed25519
-Public Key: [TO BE ADDED]
-Signature: [TO BE ADDED]
+Public Key: E17AEEC630B001A336D0EC943F2DF8DF96BD4FB4B6074E6975E52589FC9D76C6
+Signature: 44E2B5AEC9DEB9D1DCF4BBAC299A89CD83EDB6C29F0C85358BAC0C552470CC2B035150DA3A13F20EA2116FCF807A2F92A00ABF604886D9ED13F1C86F9CFA4508
 
-INSTRUCTIONS FOR SIGNATURE GENERATION
---------------------------------------
-1. Sign the bundle hash using Ed25519 private key
-2. Replace [TO BE ADDED] fields above with actual values
-3. Commit this file to git repository
-4. Do not modify any other content after signature is added
+SIGNATURE VERIFICATION
+----------------------
+The signature above authenticates the bundle hash using Ed25519.
+To verify: confirm that the signature matches the bundle hash signed with the private key corresponding to the public key above.
