@@ -1,0 +1,707 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NoFate Coin Interface Protocol Surface",
+  "version": "0.1.0-draft2",
+  "status": "DRAFT",
+  "description": "Complete protocol surface specification for NoFate Coin blockchain. Defines all state objects, actions, invariants, and boundaries.",
+  
+  "section_0_global_law": {
+    "description": "Universal rules governing all protocol operations",
+    
+    "allowed_outcomes": {
+      "values": ["PASS", "FAIL", "INDETERMINATE", "INVALID_INPUT"],
+      "description": "Closed set of all possible action outcomes. No other outcomes may be added.",
+      "enforcement": "Exhaustive match required in all implementations"
+    },
+    
+    "determinism_invariant": {
+      "statement": "For identical (state_pre, action, block_context), the protocol MUST produce identical (outcome, canonical_receipt, state_post_commitment)",
+      "ordering_rule": "Independent actions within a block are processed in deterministic canonical order (lexicographic by action_hash). Dependent actions (same account nonce sequence) are strictly ordered by nonce. Out-of-order execution is refused with FAIL.",
+      "no_randomness": true,
+      "no_time_dependency": "Block timestamp only, no system time",
+      "no_external_io": true
+    },
+    
+    "block_context": {
+      "description": "Canonical block execution context required for deterministic action processing",
+      "required_fields": {
+        "height": {
+          "type": "integer",
+          "description": "Sequential block number"
+        },
+        "timestamp": {
+          "type": "integer",
+          "description": "Unix timestamp in seconds (monotonically increasing)"
+        },
+        "validator_set_hash": {
+          "type": "string",
+          "format": "hex64",
+          "description": "SHA-256 commitment to active validator set and stakes"
+        },
+        "protocol_version": {
+          "type": "string",
+          "format": "semver",
+          "description": "Active protocol version at this block"
+        },
+        "parent_block_hash": {
+          "type": "string",
+          "format": "hex64",
+          "description": "Hash of previous block for chain continuity"
+        }
+      },
+      "forbidden_fields": [
+        "randomness",
+        "external_data",
+        "oracle_inputs"
+      ],
+      "enforcement": "Only fields defined above are admissible in block_context. Any additional fields cause INVALID_INPUT."
+    },
+    
+    "no_admin_override": {
+      "statement": "No privileged key, admin account, or emergency mechanism may bypass protocol rules",
+      "enforcement": "Any action claiming admin privilege returns INVALID_INPUT",
+      "immutable": true
+    },
+    
+    "closed_action_space": {
+      "statement": "The set of valid actions is closed and enumerated in this specification",
+      "new_actions": "May only be added via formal supersession protocol",
+      "unknown_actions": "Return INVALID_INPUT"
+    }
+  },
+  
+  "section_1_canonical_serialization": {
+    "description": "Rules for deterministic serialization and commitment generation",
+    
+    "canonical_json_encoding": {
+      "rules": [
+        "UTF-8 encoding",
+        "No whitespace between tokens",
+        "Object keys sorted lexicographically",
+        "No trailing commas",
+        "Numbers in standard decimal notation (no scientific notation for integers)",
+        "Strings escaped per RFC 8159",
+        "No locale-specific formatting"
+      ],
+      "purpose": "Prevent hash divergence across implementations"
+    },
+    
+    "hash_function": {
+      "algorithm": "SHA-256",
+      "output_encoding": "lowercase hexadecimal",
+      "supersession_note": "Hash function is fixed for v0 and may only be changed via supersession protocol. Any hash function change requires full protocol upgrade.",
+      "rationale": "SHA-256 provides adequate security for v0 with universal implementation support"
+    },
+    
+    "canonical_receipt": {
+      "description": "Deterministic proof of action execution",
+      "required_fields": {
+        "action_hash": {
+          "type": "string",
+          "format": "hex64",
+          "description": "SHA-256 of canonical action encoding"
+        },
+        "block_height": {
+          "type": "integer",
+          "description": "Block in which action was executed"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "INDETERMINATE", "INVALID_INPUT"]
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "SUCCESS",
+            "INSUFFICIENT_BALANCE",
+            "INVALID_SIGNATURE",
+            "NONCE_MISMATCH",
+            "INVALID_PROOF",
+            "DOUBLE_SPEND_NULLIFIER",
+            "VALIDATOR_NOT_FOUND",
+            "VALIDATOR_ALREADY_SLASHED",
+            "INSUFFICIENT_STAKE",
+            "PROPOSAL_NOT_FOUND",
+            "PROPOSAL_ALREADY_ACTIVATED",
+            "ACTIVATION_CONDITIONS_NOT_MET",
+            "EVIDENCE_INVALID",
+            "MALFORMED_ACTION",
+            "UNKNOWN_ACTION_TYPE"
+          ],
+          "description": "Specific reason for outcome. Closed enum prevents semantic drift."
+        },
+        "state_root_post": {
+          "type": "string",
+          "format": "hex64",
+          "description": "State commitment after action execution"
+        }
+      },
+      "optional_fields": {},
+      "note": "event_commitment removed in v0-draft2 due to ambiguous semantics. May be reintroduced in future version with explicit definition."
+    }
+  },
+  
+  "section_2_state_objects": {
+    "description": "All mutable state accessible to protocol actions",
+    
+    "ledger_model": {
+      "type": "hybrid",
+      "components": ["account_based", "shielded_pool"],
+      "design_note": "Account-based model chosen for v0 to simplify state management. Reduces parallelism vs UTXO model but acceptable for initial deployment."
+    },
+    
+    "account": {
+      "description": "Transparent account state",
+      "fields": {
+        "address": {
+          "type": "string",
+          "format": "bech32",
+          "immutable": true
+        },
+        "balance": {
+          "type": "integer",
+          "min": 0,
+          "description": "Transparent balance in base units"
+        },
+        "nonce": {
+          "type": "integer",
+          "min": 0,
+          "description": "Strictly incrementing transaction counter. Prevents replay and enforces ordering."
+        },
+        "code_hash": {
+          "type": "string",
+          "format": "hex64",
+          "nullable": true,
+          "description": "Reserved for future smart contract support. Null for v0."
+        }
+      }
+    },
+    
+    "shielded_pool": {
+      "description": "Privacy-preserving value pool using commitment trees",
+      "fields": {
+        "commitment_tree_root": {
+          "type": "string",
+          "format": "hex64",
+          "description": "Merkle root of all note commitments"
+        },
+        "total_shielded_supply": {
+          "type": "integer",
+          "description": "Sum of all shielded values (maintained for auditability)"
+        }
+      }
+    },
+    
+    "nullifier_set": {
+      "description": "Set of spent note nullifiers to prevent double-spends",
+      "implementation": "Merkle tree or deterministic hash set",
+      "fields": {
+        "nullifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "hex64"
+          }
+        }
+      }
+    },
+    
+    "validator": {
+      "description": "Validator state for consensus participation",
+      "fields": {
+        "validator_id": {
+          "type": "string",
+          "format": "bech32"
+        },
+        "stake": {
+          "type": "integer",
+          "min": 0
+        },
+        "is_active": {
+          "type": "boolean"
+        },
+        "is_slashed": {
+          "type": "boolean"
+        }
+      },
+      "note": "No commission_rate field in v0. Validators earn zero rewards (fees and slashing are burned)."
+    },
+    
+    "protocol_version": {
+      "description": "Current protocol version and scheduled supersessions",
+      "mutation_actions": ["PROPOSE_SUPERSESSION", "ACTIVATE_SUPERSESSION"],
+      "mutation_note": "This state object is ONLY mutated by supersession actions. No other actions may modify protocol version.",
+      "fields": {
+        "current_version": {
+          "type": "string",
+          "format": "semver"
+        },
+        "supersession_schedule": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["proposal_hash", "activation_height", "status"],
+            "properties": {
+              "proposal_hash": {
+                "type": "string",
+                "format": "hex64"
+              },
+              "activation_height": {
+                "type": "integer",
+                "description": "Block height at which this version activates"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["PROPOSED", "ACTIVATED", "REJECTED"]
+              },
+              "proposed_at_height": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "section_3_actions": {
+    "description": "Closed set of all valid protocol actions",
+    
+    "transaction_actions": {
+      "TRANSFER_TRANSPARENT": {
+        "description": "Transfer value between transparent accounts",
+        "inputs": {
+          "from": "address",
+          "to": "address",
+          "amount": "integer",
+          "nonce": "integer",
+          "signature": "bytes"
+        },
+        "pass_conditions": [
+          "Valid signature",
+          "nonce == account.nonce + 1",
+          "balance >= amount"
+        ],
+        "fail_conditions": [
+          "Invalid signature → FAIL(INVALID_SIGNATURE)",
+          "Nonce mismatch → FAIL(NONCE_MISMATCH)",
+          "Insufficient balance → FAIL(INSUFFICIENT_BALANCE)"
+        ],
+        "state_mutations": [
+          "from.balance -= amount",
+          "to.balance += amount",
+          "from.nonce += 1"
+        ]
+      },
+      
+      "SHIELD": {
+        "description": "Move value from transparent to shielded pool",
+        "inputs": {
+          "from": "address",
+          "amount": "integer",
+          "note_commitment": "hex64",
+          "nonce": "integer",
+          "signature": "bytes"
+        },
+        "pass_conditions": [
+          "Valid signature",
+          "nonce == account.nonce + 1",
+          "balance >= amount"
+        ],
+        "state_mutations": [
+          "from.balance -= amount",
+          "shielded_pool.total_shielded_supply += amount",
+          "Add note_commitment to commitment_tree",
+          "from.nonce += 1"
+        ]
+      },
+      
+      "UNSHIELD": {
+        "description": "Move value from shielded to transparent pool",
+        "inputs": {
+          "to": "address",
+          "amount": "integer",
+          "nullifier": "hex64",
+          "proof": "bytes"
+        },
+        "pass_conditions": [
+          "Valid zero-knowledge proof",
+          "Nullifier not in nullifier_set",
+          "Commitment exists in tree"
+        ],
+        "fail_conditions": [
+          "Invalid proof → FAIL(INVALID_PROOF)",
+          "Nullifier already used → FAIL(DOUBLE_SPEND_NULLIFIER)"
+        ],
+        "state_mutations": [
+          "to.balance += amount",
+          "shielded_pool.total_shielded_supply -= amount",
+          "Add nullifier to nullifier_set"
+        ]
+      },
+      
+      "SHIELDED_TRANSFER": {
+        "description": "Private transfer within shielded pool",
+        "inputs": {
+          "input_nullifiers": "array<hex64>",
+          "output_commitments": "array<hex64>",
+          "proof": "bytes"
+        },
+        "pass_conditions": [
+          "Valid zero-knowledge proof",
+          "All nullifiers not in nullifier_set",
+          "Value balance preserved (proven in ZKP)"
+        ],
+        "state_mutations": [
+          "Add all input_nullifiers to nullifier_set",
+          "Add all output_commitments to commitment_tree"
+        ]
+      }
+    },
+    
+    "consensus_staking_actions": {
+      "STAKE": {
+        "description": "Lock tokens to become validator",
+        "inputs": {
+          "validator_id": "address",
+          "amount": "integer",
+          "nonce": "integer",
+          "signature": "bytes"
+        },
+        "note": "No commission_rate parameter. Validators earn zero block rewards in v0 (fees and slashing are burned).",
+        "pass_conditions": [
+          "Valid signature",
+          "amount >= MIN_VALIDATOR_STAKE",
+          "validator_id not already staked"
+        ],
+        "state_mutations": [
+          "Create or update validator record",
+          "account.balance -= amount",
+          "validator.stake += amount"
+        ]
+      },
+      
+      "UNSTAKE": {
+        "description": "Begin unbonding period for staked tokens",
+        "inputs": {
+          "validator_id": "address",
+          "nonce": "integer",
+          "signature": "bytes"
+        },
+        "pass_conditions": [
+          "Valid signature",
+          "Validator exists",
+          "Validator not slashed"
+        ],
+        "state_mutations": [
+          "validator.is_active = false",
+          "Schedule stake return after unbonding period"
+        ]
+      },
+      
+      "SLASH_VALIDATOR": {
+        "description": "Punish validator for provable misbehavior",
+        "evidence_types": {
+          "closed_enum": true,
+          "allowed_types": [
+            "DOUBLE_SIGN",
+            "INVALID_BLOCK_PROPOSAL",
+            "CENSORSHIP_PROOF"
+          ],
+          "note": "Evidence schema is closed. Future evidence types require protocol supersession."
+        },
+        "inputs": {
+          "validator_id": "address",
+          "evidence_type": "string (enum above)",
+          "evidence_data": "bytes",
+          "proof": "bytes"
+        },
+        "pass_conditions": [
+          "Evidence type is in allowed_types enum",
+          "Evidence cryptographically valid",
+          "Validator not already slashed"
+        ],
+        "fail_conditions": [
+          "Unknown evidence type → INVALID_INPUT",
+          "Invalid evidence → FAIL(EVIDENCE_INVALID)",
+          "Validator already slashed → FAIL(VALIDATOR_ALREADY_SLASHED)"
+        ],
+        "state_mutations": [
+          "validator.is_slashed = true",
+          "validator.stake = 0",
+          "Slash amount distributed to reporters or burned"
+        ]
+      }
+    },
+    
+    "governance_actions": {
+      "note": "Supersession is the ONLY governance mechanism. No parameter changes without full protocol upgrade.",
+      
+      "PROPOSE_SUPERSESSION": {
+        "description": "Propose new protocol version",
+        "permission": "Permissionless - any account may propose",
+        "inputs": {
+          "new_version": "semver string",
+          "activation_height": "integer",
+          "specification_hash": "hex64",
+          "proposer": "address",
+          "nonce": "integer",
+          "signature": "bytes"
+        },
+        "pass_conditions": [
+          "Valid signature",
+          "activation_height > current_height + MIN_PROPOSAL_DELAY",
+          "new_version > current_version"
+        ],
+        "state_mutations": [
+          "Add proposal to protocol_version.supersession_schedule",
+          "Status = PROPOSED"
+        ]
+      },
+      
+      "ACTIVATE_SUPERSESSION": {
+        "description": "Mechanically activate approved supersession",
+        "activation_rule": "Purely mechanical - activates when block_height >= activation_height AND proposal exists",
+        "inputs": {
+          "proposal_hash": "hex64"
+        },
+        "pass_conditions": [
+          "Proposal exists in schedule",
+          "current_height >= activation_height",
+          "Status == PROPOSED"
+        ],
+        "fail_conditions": [
+          "Proposal not found → FAIL(PROPOSAL_NOT_FOUND)",
+          "Too early → FAIL(ACTIVATION_CONDITIONS_NOT_MET)",
+          "Already activated → FAIL(PROPOSAL_ALREADY_ACTIVATED)"
+        ],
+        "state_mutations": [
+          "protocol_version.current_version = new_version",
+          "Update proposal status to ACTIVATED"
+        ],
+        "note": "Activation is deterministic and automatic when height is reached. No voting or discretion."
+      }
+    }
+  },
+  
+  "section_4_finality_boundary": {
+    "description": "Rules defining when state is irreversible",
+    
+    "finality_rule": {
+      "type": "threshold_based",
+      "threshold": "2/3 of staked validators",
+      "finality_delay": "2 blocks minimum",
+      "stronger_than": "Bitcoin probabilistic finality",
+      "note": "Once finalized, state is cryptographically committed and cannot be reversed"
+    },
+    
+    "finality_checkpoint": {
+      "description": "Cryptographic structure proving irreversible finality",
+      "required_fields": {
+        "block_height": {
+          "type": "integer",
+          "description": "Height of finalized block"
+        },
+        "block_hash": {
+          "type": "string",
+          "format": "hex64",
+          "description": "Hash of finalized block"
+        },
+        "state_root": {
+          "type": "string",
+          "format": "hex64",
+          "description": "State commitment at finalized height"
+        },
+        "validator_signatures": {
+          "type": "array",
+          "items": {
+            "validator_id": "string",
+            "signature": "bytes",
+            "stake_weight": "integer"
+          },
+          "description": "Aggregated signatures from validators representing ≥2/3 of total stake"
+        },
+        "cumulative_stake": {
+          "type": "integer",
+          "description": "Sum of stake from signing validators (must be ≥2/3 of total active stake)"
+        }
+      },
+      "verification_rule": "Each signature must be valid for message = SHA-256(block_height || block_hash || state_root). Total stake of valid signatures must meet or exceed 2/3 threshold.",
+      "commitment_rule": "Finalized checkpoints are committed to on-chain state in finality_checkpoint_history (append-only, indexed by height).",
+      "irreversibility": "Once a checkpoint is committed with ≥2/3 stake signatures, that block and all ancestors are permanently finalized."
+    },
+    
+    "reorg_protection": {
+      "max_reorg_depth": 0,
+      "after_finality": "Finalized blocks cannot be reorganized under any circumstance"
+    }
+  },
+  
+  "section_4a_monetary_invariants": {
+    "description": "Rules governing token supply, issuance, and value sinks",
+    
+    "supply_model": {
+      "genesis_supply": {
+        "value": 100000000000000000,
+        "unit": "base units",
+        "human_readable": "1,000,000,000 IF (1 billion tokens)",
+        "base_unit_exponent": 8,
+        "note": "1 IF = 10^8 base units (Bitcoin-style satoshi model)"
+      },
+      "max_supply": {
+        "value": "genesis_supply (no inflation)",
+        "enforcement": "Protocol CANNOT mint new tokens after genesis. Any action attempting to increase supply beyond genesis_supply returns INVALID_INPUT."
+      },
+      "issuance_schedule": {
+        "type": "none",
+        "statement": "Zero post-genesis issuance. All tokens exist at genesis."
+      }
+    },
+    
+    "fee_model": {
+      "transaction_fees": {
+        "calculation": "Base fee per action + variable fee based on computational cost",
+        "sink": "burn",
+        "enforcement": "All transaction fees are permanently removed from circulating supply (sent to unspendable address 0x0...0)."
+      },
+      "no_miner_reward": "Validators earn zero block reward. Revenue comes only from staking commission on delegator rewards (if delegation is implemented in future version)."
+    },
+    
+    "slashing_sink": {
+      "disposition": "burn",
+      "enforcement": "When validator.stake is slashed, the slashed amount is permanently removed from circulating supply (sent to unspendable address 0x0...0).",
+      "no_redistribution": "Slashed funds are NOT redistributed to reporters, remaining validators, or treasury. This prevents perverse incentives.",
+      "rationale": "Burning slashed stake creates deflationary pressure without creating adversarial bounty dynamics."
+    },
+    
+    "supply_auditability": {
+      "transparent_supply": "Sum of all account.balance values",
+      "shielded_supply": "shielded_pool.total_shielded_supply",
+      "burned_supply": "Tracked via burn_log (cumulative fees + slashed stake)",
+      "invariant": "transparent_supply + shielded_supply + burned_supply = genesis_supply at all times"
+    }
+  },
+  
+  "section_5_privacy_boundary": {
+    "description": "Explicit scope and limits of privacy guarantees",
+    
+    "shielded_privacy": {
+      "guarantees": [
+        "Sender anonymity within shielded pool",
+        "Receiver anonymity within shielded pool",
+        "Amount privacy for shielded transfers"
+      ],
+      "limitations": [
+        "Transparent transactions are fully public",
+        "Shield/unshield operations reveal amounts",
+        "Timing analysis may leak information",
+        "Network-layer metadata not protected by protocol"
+      ]
+    },
+    
+    "honest_disclosure": {
+      "statement": "Protocol provides computational privacy only. Users must take additional measures for network privacy (Tor, VPN, etc.)",
+      "no_false_claims": "Protocol does not claim to provide anonymity beyond computational unlinkability"
+    }
+  },
+  
+  "section_6_forbidden_categories": {
+    "description": "Actions and behaviors explicitly prohibited at protocol level",
+    
+    "forbidden": [
+      "Admin override mechanisms",
+      "Emergency pause functions",
+      "Discretionary token minting",
+      "Backdoors or privileged access",
+      "Time-based logic beyond block timestamps",
+      "External oracle dependencies",
+      "Upgradeable contracts without supersession",
+      "Parameter changes without protocol upgrade",
+      "Non-deterministic computation",
+      "Off-chain governance binding"
+    ],
+    
+    "enforcement": "Any action attempting forbidden behavior returns INVALID_INPUT"
+  },
+  
+  "section_7_minimum_delay_constant": {
+    "MIN_PROPOSAL_DELAY": {
+      "value": 100800,
+      "unit": "blocks",
+      "unit_note": "Explicitly block-based (not epoch-based).",
+      "time_conversion_informative_only": "Approximately 7 days at 6-second block time (NON-NORMATIVE - actual time varies with real block production rate).",
+      "normative_value": "100,800 blocks is the deterministic requirement. Time-based interpretation is informative only.",
+      "purpose": "Minimum delay between supersession proposal and activation",
+      "immutable": false,
+      "change_mechanism": "Can only be changed via supersession"
+    }
+  },
+  
+  "section_8_compliance_checklist": {
+    "description": "Self-verification gate for protocol implementations",
+    
+    "checklist": [
+      {
+        "requirement": "All actions return only PASS, FAIL, INDETERMINATE, or INVALID_INPUT",
+        "verified": false
+      },
+      {
+        "requirement": "Identical inputs produce identical outputs (determinism)",
+        "verified": false
+      },
+      {
+        "requirement": "No admin override exists",
+        "verified": false
+      },
+      {
+        "requirement": "Action space is closed (unknown actions → INVALID_INPUT)",
+        "verified": false
+      },
+      {
+        "requirement": "Canonical serialization rules followed",
+        "verified": false
+      },
+      {
+        "requirement": "reason_code uses only defined enum values",
+        "verified": false
+      },
+      {
+        "requirement": "Evidence types for slashing are closed enum",
+        "verified": false
+      },
+      {
+        "requirement": "Supersession proposal is permissionless",
+        "verified": false
+      },
+      {
+        "requirement": "Supersession activation is mechanical (no discretion)",
+        "verified": false
+      },
+      {
+        "requirement": "MIN_PROPOSAL_DELAY is block-based",
+        "verified": false
+      },
+      {
+        "requirement": "protocol_version only mutated by PROPOSE_SUPERSESSION and ACTIVATE_SUPERSESSION",
+        "verified": false
+      },
+      {
+        "requirement": "Nonce enforcement prevents out-of-order execution",
+        "verified": false
+      }
+    ]
+  },
+  
+  "ratification_status": {
+    "status": "DRAFT",
+    "version": "0.1.0-draft2",
+    "supply_finalization": "COMPLETE",
+    "pending_tasks": [
+      "Final review of all 4 artifacts",
+      "Explicit approval statement",
+      "Hash generation",
+      "Cryptographic signature"
+    ],
+    "note": "Supply is finalized. This specification remains DRAFT until explicit approval is given."
+  }
+}
