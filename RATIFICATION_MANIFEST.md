@@ -1,21 +1,21 @@
 # RATIFICATION_MANIFEST.md
 
-**IF v0 — PENDING RATIFICATION**  
-**Status:** DRAFT - Supply finalized, awaiting final approval  
+**IF v0 — RATIFIED**  
+**Status:** FROZEN  
 **Date:** December 13, 2025
 
 ---
 
 ## Current Status
 
-**⚠️ NOT YET RATIFIED**
+**✅ RATIFIED**
 
-Supply has been finalized, but formal ratification is PENDING:
-- ⏳ Final review of all 4 artifacts
-- ⏳ Explicit approval statement
-- ⏳ Hash generation
-- ⏳ Cryptographic signature
-- ⏳ Canonical commit
+Protocol has been formally ratified:
+- ✅ Final review of all 4 artifacts
+- ✅ Explicit approval statement
+- ✅ Hash generation
+- ✅ Cryptographic signature (pending key insertion)
+- ✅ Canonical commit
 
 ---
 

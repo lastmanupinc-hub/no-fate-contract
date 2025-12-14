@@ -1,0 +1,36 @@
+IF v0 RATIFICATION RECORD
+=========================
+
+APPROVAL STATEMENT
+------------------
+"I approve IF_PROTOCOL_SURFACE_v0.md, IF_PROTOCOL_SURFACE_v0.json, GENESIS_SPEC_v0.md, and PROCUREMENT_TERMS.md as complete, ambiguity-free, and representative of IF v0. Any future change requires explicit supersession."
+
+DATE
+----
+December 13, 2025
+
+INDIVIDUAL FILE HASHES (SHA-256)
+---------------------------------
+GENESIS_SPEC_v0.md:           D2272B48E3E8FBC6D83C00C7B8E05620B664E2579061F1BD615C208CFA4E8A6A
+IF_PROTOCOL_SURFACE_v0.json:  F7B386DD274BC00904A6DE2D245E5C86BC5AF18C1489AA033BE30838932CDC6D
+IF_PROTOCOL_SURFACE_v0.md:    AD69F3240B283F11C00C35CECD899693CCEB2E62A2960C94831B9BC11ACE4A02
+PROCUREMENT_TERMS.md:          E576C326747CACA6BEF8C552A218A24E26CC3BC62FCCD72426E258B6E71C756F
+
+BUNDLE HASH (SHA-256)
+---------------------
+AD8FFC58FE63AFDE87AC2A4F351BEAB9BBDBA9BA4D5EA7E46D9F32DD81BF2973
+
+CRYPTOGRAPHIC SIGNATURE
+-----------------------
+[TO BE ADDED: Ed25519 signature of this record]
+
+Algorithm: Ed25519
+Public Key: [TO BE ADDED]
+Signature: [TO BE ADDED]
+
+INSTRUCTIONS FOR SIGNATURE GENERATION
+--------------------------------------
+1. Sign the bundle hash using Ed25519 private key
+2. Replace [TO BE ADDED] fields above with actual values
+3. Commit this file to git repository
+4. Do not modify any other content after signature is added
