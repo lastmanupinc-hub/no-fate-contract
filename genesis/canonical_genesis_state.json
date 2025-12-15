@@ -1,0 +1,11 @@
+{
+  "allocations": [
+    {
+      "address": "burn:IF:0000000000000000000000000000000000000000",
+      "amount": "100000000000000000"
+    }
+  ],
+  "initial_protocol_version": "v0",
+  "initial_validator_set": [],
+  "total_supply_base_units": "100000000000000000"
+}
