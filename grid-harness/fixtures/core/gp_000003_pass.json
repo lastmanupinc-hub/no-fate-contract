@@ -1,0 +1,23 @@
+{
+  "gridpoint_id": "gp_000003_pass",
+  "genesis_ref": "sha256:825c7f320ab6ba100643775bdf40b01c1eea4359ef31ba8425bf710b107839f3",
+  "pre_state": {
+    "accounts": [
+      { "account_id": "A", "balance": 10, "nonce": 0 },
+      { "account_id": "B", "balance": 0, "nonce": 0 }
+    ]
+  },
+  "block_context": {
+    "height": 2,
+    "epoch": 0,
+    "active_protocol_version": "v0",
+    "validator_set_hash": "sha256:00",
+    "finalized_checkpoint_hash": null
+  },
+  "actions": [
+    { "type": "TRANSFER", "from": "A", "to": "B", "amount": 1, "nonce": 0 }
+  ],
+  "expected": {
+    "per_action_outcome": ["PASS"]
+  }
+}
