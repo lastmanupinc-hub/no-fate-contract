@@ -1,22 +1,39 @@
 import { spawn } from "child_process";
+import { readFileSync } from "fs";
+import { sha256Bytes } from "../hash.js";
+import { assert } from "../verify/assert.js";
 export class IFRefEngineCLIAdapter {
     cliPath;
-    extraEnv;
-    constructor(cliPath, extraEnv = {}) {
+    expectedHash;
+    hashVerified = false;
+    constructor(cliPath, expectedHash) {
         this.cliPath = cliPath;
-        this.extraEnv = extraEnv;
+        this.expectedHash = expectedHash;
     }
     name() {
         return "if_ref_engine_cli";
     }
     async exec(gridpoint) {
+        // Hash verification preflight (once per adapter instance)
+        if (!this.hashVerified) {
+            const bin = readFileSync(this.cliPath);
+            const hash = sha256Bytes(bin);
+            assert(hash === this.expectedHash, `Implementation hash mismatch: expected ${this.expectedHash}, got ${hash}`);
+            this.hashVerified = true;
+        }
         // Contract: CLI reads GridPoint JSON from stdin and prints EngineResult JSON to stdout.
         // This is the ONLY coupling point between harness and implementation.
         const input = JSON.stringify(gridpoint);
         const res = await new Promise((resolve, reject) => {
             const p = spawn(this.cliPath, ["exec-gridpoint"], {
                 stdio: ["pipe", "pipe", "pipe"],
-                env: { ...process.env, ...this.extraEnv },
+                env: {
+                    LANG: "C",
+                    LC_ALL: "C",
+                    TZ: "UTC"
+                },
+                shell: false,
+                windowsHide: true,
             });
             let stdout = "";
             let stderr = "";

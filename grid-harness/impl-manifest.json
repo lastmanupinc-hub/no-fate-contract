@@ -1,0 +1,6 @@
+{
+  "implementation_id": "if_ref_engine_v0",
+  "executable_path": "./impl/if-ref-engine",
+  "sha256": "sha256:REPLACE_WITH_REAL_HASH",
+  "protocol_version": "v0"
+}
