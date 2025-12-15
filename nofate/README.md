@@ -1,6 +1,27 @@
 # nofate
 
-Point Two (Diamond Clarity / DCG-0) is frozen at tag point-two-diamond-clarity-dcg-0.
+## Diamond Clarity (Point Two) — Public Re-implementation Verification
+
+Point Two (Diamond Clarity / DCG-0) is frozen at tag:
+
+`point-two-diamond-clarity-dcg-0`
+
+We invite independent re-implementations **for verification only**.
+
+Scope is fixed and immutable:
+- `POINTS/point-two/SPEC/DCG-0-SPEC.md`
+- `POINTS/point-two/PROOF/reference_coa0.canonical.json`
+- `POINTS/point-two/PROOF/reference_coa0.sha256`
+
+**Task**
+Re-implement DCG-0 in any language and demonstrate:
+- ACCEPT on the reference canonical input
+- Byte-identical canonical output
+- Exact match to the reference SHA-256
+
+If the hash differs, the implementation is non-compliant.
+
+No improvements, extensions, or changes are in scope.
 
 ## Principles
 
