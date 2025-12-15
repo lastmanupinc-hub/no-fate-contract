@@ -1,10 +1,12 @@
-# IF v0 Executable Grid Harness
+# GH v0 — Grid Hardness v0 (IF Diamond Standard)
 
-Minimal, non-authoritative test harness for IF protocol implementations.
+Minimal, non-authoritative boundary harness for IF protocol implementations.
 
 ## Purpose
 
 This harness provides a **deterministic grid** for verifying that multiple implementations of the IF protocol produce identical results for identical inputs. It does not impose protocol semantics — it only verifies determinism via the adapter interface.
+
+**GH v0 is a boundary harness, not a protocol or implementation.**
 
 ## Structure
 
@@ -47,6 +49,14 @@ The 10 core fixtures cover:
 - FAIL (insufficient balance, nonce mismatch, double-spend)
 - PASS (simple transfer, multi-action ordering)
 - INDETERMINATE (missing proof params, missing replay artifacts)
+
+**Canonical fixtures for GH v0:**
+- `gp_000001_invalid_input.json` — INVALID_INPUT outcome
+- `gp_000002_fail.json` — FAIL outcome
+- `gp_000003_pass.json` — PASS outcome
+- `gp_000004_indeterminate.json` — INDETERMINATE outcome
+
+These four fixtures represent the minimal enumerable grid for the IF Diamond Standard.
 
 ## Cross-Implementation Verification
 
