@@ -1,6 +1,9 @@
-Title: Verification Request: Independent DCG-0 Re-implementation (Point Two)
-
-Body:
+---
+name: Verification Request (DCG-0)
+about: Independent re-implementation verification for Point Two (Diamond Clarity)
+title: "Verification Request: Independent DCG-0 Re-implementation (Point Two)"
+labels: []
+assignees: []
 ---
 
 ## Public Re-implementation Verification: DCG-0 (Diamond Clarity, Point Two)
