@@ -1,0 +1,15 @@
+{
+  "gridpoint_id": "gp_000001",
+  "genesis_ref": "sha256:GENESIS_PLACEHOLDER",
+  "pre_state": {},
+  "block_context": {
+    "height": 0,
+    "epoch": 0,
+    "active_protocol_version": "v0",
+    "validator_set_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "finalized_checkpoint_hash": null
+  },
+  "actions": [{ "type": "ADD_NINTH_MOVE" }],
+  "expected": { "per_action_outcome": ["INVALID_INPUT"] },
+  "mode": "golden"
+}

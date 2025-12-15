@@ -1,0 +1,29 @@
+{
+  "gridpoint_id": "gp_000004",
+  "genesis_ref": "sha256:GENESIS_PLACEHOLDER",
+  "pre_state": {
+    "accounts": [
+      { "account_id": "acc:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "transparent_balance": 10, "nonce": 0 },
+      { "account_id": "acc:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "transparent_balance": 0, "nonce": 0 }
+    ]
+  },
+  "block_context": {
+    "height": 3,
+    "epoch": 0,
+    "active_protocol_version": "v0",
+    "validator_set_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "finalized_checkpoint_hash": null
+  },
+  "actions": [
+    {
+      "type": "TRANSFER_TRANSPARENT",
+      "from": "acc:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "to": "acc:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "amount": 1,
+      "nonce": 0,
+      "signature": "sig:VALID_STUB"
+    }
+  ],
+  "expected": { "per_action_outcome": ["PASS"] },
+  "mode": "golden"
+}
