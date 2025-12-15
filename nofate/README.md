@@ -1,5 +1,7 @@
 # nofate
 
+Point Two (Diamond Clarity / DCG-0) is frozen at tag point-two-diamond-clarity-dcg-0.
+
 ## Principles
 
 This repository follows a strict **three-ring structure** to ensure immutability, verifiability, and clear separation of concerns.
