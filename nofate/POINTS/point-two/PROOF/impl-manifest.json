@@ -1,0 +1,23 @@
+{
+  "point": "two",
+  "spec_version": "0",
+  "implementations": [
+    {
+      "language": "python",
+      "file": "../IMPLEMENTATIONS/dcg-0.py",
+      "verified": false,
+      "hash": ""
+    },
+    {
+      "language": "javascript",
+      "file": "../IMPLEMENTATIONS/dcg-0.js",
+      "verified": false,
+      "hash": ""
+    }
+  ],
+  "proof_anchors": [
+    "reference_coa0.canonical.json",
+    "reference_coa0.sha256"
+  ],
+  "notes": "Implementations must not be imported by PROOF. PROOF verifies implementations."
+}
