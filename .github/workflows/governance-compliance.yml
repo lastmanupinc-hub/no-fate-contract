@@ -1,0 +1,84 @@
+name: Governance Compliance Check
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  governance-compliance:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Check Verification Singularity
+        run: |
+          echo "Checking for verification singularity..."
+          
+          # Find all verification artifacts (excluding supersession files)
+          verification_files=$(find . -type f \( -name "*verification*.txt" -o -name "*VERIFICATION*.txt" \) ! -name "*SUPERSESSION*" ! -path "./.git/*")
+          
+          # Count active (non-superseded) verification files
+          active_count=0
+          for file in $verification_files; do
+            if ! head -n 1 "$file" | grep -q "STATUS: SUPERSEDED"; then
+              echo "Active verification found: $file"
+              active_count=$((active_count + 1))
+            fi
+          done
+          
+          if [ $active_count -gt 1 ]; then
+            echo "❌ DETERMINISTIC_VIOLATION: Multiple active verification artifacts without supersession"
+            exit 1
+          elif [ $active_count -eq 0 ]; then
+            echo "⚠️  NO_DETERMINISTIC_OUTCOME: No active verification artifacts found"
+            exit 0
+          else
+            echo "✅ DETERMINISTIC_COMPLIANCE: Single active verification artifact"
+          fi
+      
+      - name: Check Canonical Immutability
+        run: |
+          echo "Verifying canonical artifacts unchanged..."
+          
+          # Expected hashes from HASHES.txt
+          if [ -f "checksums/HASHES.txt" ]; then
+            cd checksums
+            if sha256sum -c HASHES.txt --ignore-missing 2>/dev/null | grep -q "FAILED"; then
+              echo "❌ DETERMINISTIC_VIOLATION: Canonical artifact modified"
+              exit 1
+            else
+              echo "✅ DETERMINISTIC_COMPLIANCE: Canonical artifacts unchanged"
+            fi
+            cd ..
+          else
+            echo "⚠️  NO_DETERMINISTIC_OUTCOME: No hash file found"
+          fi
+      
+      - name: Check Supersession Metadata
+        run: |
+          echo "Validating supersession metadata..."
+          
+          # Check if superseded files have proper headers
+          superseded_files=$(find . -type f \( -name "*verification*.txt" -o -name "*VERIFICATION*.txt" \) ! -name "*SUPERSESSION*" ! -path "./.git/*" -exec grep -l "STATUS: SUPERSEDED" {} \;)
+          
+          for file in $superseded_files; do
+            if ! head -n 1 "$file" | grep -q "verification/VERIFICATION_SUPERSESSION"; then
+              echo "❌ DETERMINISTIC_VIOLATION: Superseded file missing proper reference: $file"
+              exit 1
+            fi
+          done
+          
+          echo "✅ DETERMINISTIC_COMPLIANCE: Supersession metadata valid"
+      
+      - name: Report Compliance Status
+        if: always()
+        run: |
+          echo "Governance compliance check complete"
+          echo "See individual step results above"
