@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ──────────────────────────────────────────────────────
+// TENANTS
+// ──────────────────────────────────────────────────────
+model Tenant {
+  id                String   @id @default(cuid())
+  name              String
+  clerkOrgId        String?  @unique
+  apiKey            String   @unique
+  apiKeyHash        String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Billing
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?  @unique
+  billingStatus        String   @default("active") // active | grace | suspended
+  billingGraceUntil    DateTime?
+  
+  // Relations
+  evaluations       Evaluation[]
+  auditEvents       AuditEvent[]
+  meteringRecords   MeteringRecord[]
+  usageLedger       UsageLedger[]
+  invoiceEvents     InvoiceEvent[]
+  
+  @@index([clerkOrgId])
+  @@index([stripeCustomerId])
+}
+
+// ──────────────────────────────────────────────────────
+// EVALUATIONS
+// ──────────────────────────────────────────────────────
+model Evaluation {
+  id                  String   @id @default(cuid())
+  tenantId            String
+  tenant              Tenant   @relation(fields: [tenantId], references: [id])
+  
+  // Request
+  direction           String   // forward | backward
+  idempotencyKey      String
+  requestPayload      Json
+  requestCanonical    String   @db.Text
+  bytesIn             Int
+  
+  // Timestamps
+  observedAt          DateTime?
+  evaluatedAt         DateTime
+  decisionWindowMs    Int?
+  stalenessMs         Int?
+  temporalStatus      String?  // FRESH | STALE | DRIFTED
+  
+  // Result
+  terminalState       String   // DETERMINISTIC_COMPLIANCE | DETERMINISTIC_VIOLATION | NO_DETERMINISTIC_OUTCOME | INVALID_INPUT
+  failedGate          String?
+  reasonCode          String?
+  gateTrace           Json
+  evidence            Json?
+  
+  // Response
+  responsePayload     Json
+  responseCanonical   String   @db.Text
+  bytesOut            Int
+  
+  // Metering
+  gatesExecuted       Int
+  auditWrites         Int
+  wallTimeMs          Int
+  
+  // Audit
+  auditHeadHash       String
+  
+  createdAt           DateTime @default(now())
+  
+  @@unique([tenantId, idempotencyKey])
+  @@index([tenantId, createdAt])
+  @@index([terminalState])
+  @@index([failedGate])
+}
+
+// ──────────────────────────────────────────────────────
+// AUDIT LOG (APPEND-ONLY)
+// ──────────────────────────────────────────────────────
+model AuditEvent {
+  id                String   @id @default(cuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  
+  sequenceNumber    BigInt   @default(autoincrement())
+  eventType         String
+  evaluationId      String?
+  payload           Json
+  
+  // Hash chain
+  prevHash          String
+  thisHash          String   @unique
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([tenantId, sequenceNumber])
+  @@index([evaluationId])
+  @@index([eventType])
+}
+
+// ──────────────────────────────────────────────────────
+// METERING
+// ──────────────────────────────────────────────────────
+model MeteringRecord {
+  id                String   @id @default(cuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  
+  evaluationId      String
+  
+  bytesIn           Int
+  bytesOut          Int
+  gatesExecuted     Int
+  auditWrites       Int
+  wallTimeMs        Int
+  
+  // Pricing snapshot
+  pricePerMbIn      Int      // cents
+  pricePerMbOut     Int      // cents
+  pricePerGate      Int      // cents
+  pricePerAudit     Int      // cents
+  
+  // Calculated cost (cents)
+  costCents         Int
+  
+  recordedAt        DateTime @default(now())
+  
+  @@index([tenantId, recordedAt])
+  @@index([evaluationId])
+}
+
+// ──────────────────────────────────────────────────────
+// USAGE LEDGER (AGGREGATED)
+// ──────────────────────────────────────────────────────
+model UsageLedger {
+  id                String   @id @default(cuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  
+  periodStart       DateTime
+  periodEnd         DateTime
+  
+  totalBytesIn      BigInt   @default(0)
+  totalBytesOut     BigInt   @default(0)
+  totalGates        BigInt   @default(0)
+  totalAuditWrites  BigInt   @default(0)
+  totalCostCents    BigInt   @default(0)
+  
+  usageHash         String   @unique
+  
+  // Stripe
+  stripeReported    Boolean  @default(false)
+  stripeUsageId     String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@unique([tenantId, periodStart, periodEnd])
+  @@index([tenantId, periodEnd])
+  @@index([stripeReported])
+}
+
+// ──────────────────────────────────────────────────────
+// INVOICE EVENTS (FROM STRIPE WEBHOOKS)
+// ──────────────────────────────────────────────────────
+model InvoiceEvent {
+  id                String   @id @default(cuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  
+  stripeInvoiceId   String
+  eventType         String   // invoice.created | invoice.finalized | invoice.paid | invoice.payment_failed
+  status            String
+  amountDue         Int?
+  amountPaid        Int?
+  
+  payload           Json
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([tenantId, createdAt])
+  @@index([stripeInvoiceId])
+}
+
+// ──────────────────────────────────────────────────────
+// IDEMPOTENCY TRACKING
+// ──────────────────────────────────────────────────────
+model IdempotencyRecord {
+  key               String   @id
+  tenantId          String
+  
+  response          Json
+  expiresAt         DateTime
+  
+  createdAt         DateTime @default(now())
+  
+  @@index([tenantId])
+  @@index([expiresAt])
+}

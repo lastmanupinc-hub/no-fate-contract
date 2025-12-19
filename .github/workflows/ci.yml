@@ -1,0 +1,141 @@
+name: Diamond Dock CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  publication-gate:
+    name: Publication Gate Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Type check
+        run: npm run type-check
+      
+      - name: Lint
+        run: npm run lint
+      
+      - name: Run publication gate checks
+        run: npm run publication-gate
+        
+      - name: Check for invalid terminal states
+        run: |
+          echo "Checking for invalid terminal states..."
+          # Fail if any code emits a fifth state
+          if grep -r "MAYBE\|SUGGEST\|RECOMMEND" src --exclude-dir=node_modules; then
+            echo "ERROR: Found invalid terminal states or suggestions"
+            exit 1
+          fi
+          echo "✓ No invalid terminal states found"
+      
+      - name: Check UI for suggestions
+        run: |
+          echo "Checking UI for forbidden suggestion text..."
+          if grep -ri "try\|should\|recommended\|you might\|consider" src/app src/components --exclude-dir=node_modules; then
+            echo "ERROR: Found suggestion text in UI"
+            exit 1
+          fi
+          echo "✓ No suggestions in UI"
+      
+      - name: Verify audit log immutability
+        run: |
+          echo "Verifying audit log schema..."
+          if grep -i "UPDATE.*audit\|DELETE.*audit" prisma src --exclude-dir=node_modules; then
+            echo "ERROR: Found audit log mutation code"
+            exit 1
+          fi
+          echo "✓ Audit log is append-only"
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: publication-gate
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: diamond_dock_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Setup database
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/diamond_dock_test
+        run: |
+          npm run db:push
+      
+      - name: Run unit tests
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/diamond_dock_test
+          REDIS_URL: redis://localhost:6379
+          BILLING_MODE: mock
+        run: npm test
+      
+      - name: Build application
+        run: npm run build
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      
+      - name: Run E2E tests
+        run: npm run test:e2e

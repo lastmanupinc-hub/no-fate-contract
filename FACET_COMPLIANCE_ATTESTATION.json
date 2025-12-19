@@ -1,0 +1,44 @@
+{
+  "facet": "Diamond Docking",
+  "status": "DETERMINISTIC_COMPLIANCE",
+  "timestamp": "2025-12-19T00:00:00Z",
+  "components": {
+    "config_ts": {
+      "present": true,
+      "path": "src/lib/config.ts",
+      "boot_time_validation": true,
+      "fail_closed": true
+    },
+    "canonicalize_ts": {
+      "present": true,
+      "path": "src/lib/canonicalize.ts",
+      "order_independent": true,
+      "hash_stable": true
+    },
+    "publication_gate": {
+      "present": true,
+      "path": "scripts/publication-gate.ts",
+      "enforces_invariants": true
+    },
+    "audit_chain": {
+      "present": true,
+      "append_only": true,
+      "hash_chained": true
+    },
+    "gate_order": {
+      "correct": true,
+      "sequence": "intake→temporal→authority→rules→cardinality→validity"
+    },
+    "lockfile": {
+      "present": true,
+      "type": "package-lock.json"
+    }
+  },
+  "violations": [],
+  "evidence": {
+    "config_safety": "Zero non-null assertions on process.env",
+    "terminal_states": "Exactly 4 states enforced",
+    "audit_immutability": "No UPDATE/DELETE operations found",
+    "reproducible_builds": "package-lock.json committed"
+  }
+}
