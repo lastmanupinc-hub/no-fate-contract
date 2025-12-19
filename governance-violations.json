@@ -1,0 +1,58 @@
+[
+  {
+    "file": "Diamond-Phase1-Implementation/HOMEPAGE-IMPLEMENTATION.md",
+    "category": "guarantees",
+    "match": "guarantee",
+    "line": 140,
+    "context": "and classifies\u2014it does not predict or guarantee future behavior."
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/ADDITIONAL-PAGES.md",
+    "category": "guarantees",
+    "match": "guarantee",
+    "line": 62,
+    "context": "guarantee outcomes, or provide advice. Classification is based on the state"
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/ADDITIONAL-PAGES.md",
+    "category": "guarantees",
+    "match": "guarantee",
+    "line": 384,
+    "context": "\"A guarantee of future compliance\","
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/REMAINING-PAGES.md",
+    "category": "guarantees",
+    "match": "guarantee",
+    "line": 846,
+    "context": "legal advice or guarantee compliance\u2014certified companies remain responsible for"
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/REMAINING-PAGES.md",
+    "category": "guarantees",
+    "match": "guarantee",
+    "line": 908,
+    "context": "Certification does not constitute a guarantee of compliance with any specific"
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/README.md",
+    "category": "guarantees",
+    "match": "guarantees",
+    "line": 223,
+    "context": "4. No implied predictions or guarantees \u2713"
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/README.md",
+    "category": "guarantees",
+    "match": "guarantees",
+    "line": 278,
+    "context": "- [ ] Confirm no guarantees or predictions stated"
+  },
+  {
+    "file": "Diamond-Phase1-Implementation/README.md",
+    "category": "guarantees",
+    "match": "guarantees",
+    "line": 389,
+    "context": "All mandatory Phase-1 requirements satisfied. Specification frozen and followed "
+  }
+]
