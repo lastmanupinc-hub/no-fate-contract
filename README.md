@@ -1,190 +1,130 @@
-﻿# IRS No-Fate Tax Analysis Suite
+**No-Fate Contract**
 
-**Version 1.1** | **SPEC_COMPLETE — DEP_STATUS: CLAIM — RUNTIME_UNVERIFIED**
+**Status**: Canonical
+**Scope**: Constitutional governance, deterministic authority, and verification primitives
+**Audience**: Systems requiring provable legitimacy and refusal-first execution
 
-A deterministic IRS document analysis suite providing five specialized engines for tax document processing. No tax advice. No interpretation. No calculations. Evidence-based only.
+**Overview**
 
----
+The **No-Fate Contract** defines a deterministic constitutional framework for **high-stakes governance systems**.
+_
+It establishes:
 
-## Overview
+**Canonical** governance artifacts
 
-The IRS No-Fate Tax Analysis Suite consists of five independent engines that analyze IRS-related documents using strict No-Fate truth rules:
+Explicit **authority** and succession rules
 
-1. **IRS Document Completeness Checker** - Scans for forms and identifies missing dependencies
-2. **IRS Income Classification Engine** - Classifies income types based on explicit textual evidence
-3. **IRS Deduction Documentation Verifier** - Verifies presence of required supporting documentation
-4. **IRS Business Filing Category Router** - Routes businesses to appropriate IRS filing categories
-5. **IRS Notice Response Analyzer** - Extracts procedural requirements from IRS notices
+**Deterministic** verification of legitimacy
 
----
+Immutable historical continuity via **cryptographic identity**
 
-## Core Principles
+Refusal as a valid and final outcome where authority or compliance cannot be proven
 
-### No-Fate Truth Rules
+This repository is the root of legitimacy, not an execution environment.
 
-- **Non-inferential**: No conclusions beyond explicit evidence
-- **Strict text grounding**: All outputs anchored to quoted source text
-- **Evidence-bound**: Every classification includes evidence anchors
-- **Deterministic**: Identical inputs produce identical outputs
-- **No advice**: Zero prescriptive or advisory language
-- **No interpretation**: No tax law interpretation or compliance judgment
+What This Repository Is
 
-### Numeric Constraints
+A **constitutional specification**
 
-**Allowed numeric identifiers:**
-- Form numbers (e.g., "1040", "Schedule C")
-- Schedule numbers
-- Notice codes (e.g., "CP2000")
-- Tax years as labels (e.g., "2023")
+A **verification anchor**
 
-**Forbidden numeric content:**
-- Financial amounts, balances, totals, percentages, penalties, interest, computed values
+A source of **canonical governance artifacts**
 
-### Scope
+A reference point for **downstream enforcement systems**
 
-**In Scope:** Deterministic text analysis, form detection, dependency identification, income labeling, documentation verification, notice extraction
+What This Repository Is Not
 
-**Out of Scope:** Tax computation, legal advice, compliance judgment, strategy recommendations, financial calculations
+An **execution runtime**
 
----
+A **transaction processor**
 
+A **policy engine**
 
----
+A **product** or **service**
 
-## Installation
+A substitute for enforcement infrastructure
 
-```bash
-npm install
-npm run build
-```
+**No-Fate does not execute actions**.
+It defines whether actions may be executed.
 
----
+Canonical Artifacts
 
-## Usage
+All authoritative governance documents, schemas, and hashes contained in this repository are:
 
-### Command-Line Interface
+Deterministic
 
-```bash
-# Analyze document completeness
-irs-suite completeness --input ./docs --output report.json
+Cryptographically identifiable
 
-# Classify income types
-irs-suite income --input ./docs --format markdown
+Subject to formal supersession only
 
-# Verify deduction documentation
-irs-suite deductions --input ./docs --output deductions.json
+Preserved indefinitely, including all superseded versions
 
-# Route business filing category
-irs-suite filing-route --input ./docs --format markdown
+Any system claiming compliance with No-Fate must reference these artifacts by hash or version, **not by interpretation.**
 
-# Analyze IRS notice
-irs-suite notice --input ./notices --output notice-analysis.json
-```
+Enforcement and Execution (Important)
 
-### Programmatic API
+**No-Fate does not enforce itself.**
 
-```typescript
-import {
-  analyze_completeness,
-  classify_income,
-  verify_deduction_docs,
-  route_business_filing,
-  analyze_notice,
-  DocumentSet
-} from "irs-no-fate-tax-analysis-suite";
+Enforcement is intentionally externalized to prevent:
 
-const documentSet: DocumentSet = {
-  documents: [
-    {
-      document_id: "doc1",
-      document_type: "1040",
-      raw_text: "Form 1040 U.S. Individual Income Tax Return..."
-    }
-  ]
-};
+Coupling law to implementation
 
-const result = analyze_completeness(documentSet);
-console.log(result);
-```
+Silent mutation of authority
 
----
+Confusion between governance and execution
 
-## Engine Details
+Systems that execute actions **must** independently enforce No-Fate constraints if they wish to claim compliance.
 
-### 1. IRS Document Completeness Checker
-Detects forms and identifies missing dependencies.
+Recognized Downstream Enforcement Systems (Non-Authoritative)
 
-### 2. IRS Income Classification Engine
-Classifies income types (wages, interest, self-employment, etc.) based on explicit evidence.
+The following systems are known to bind themselves to **No-Fate governance** by reference.
+Their existence does not grant them **authority, endorsement,** or **exclusivity**.
 
-### 3. IRS Deduction Documentation Verifier
-Verifies presence of required documentation for claimed deductions.
+**Diamond Grid Runtime**
 
-### 4. IRS Business Filing Category Router
-Routes businesses to appropriate IRS filing categories based on entity type.
+**Diamond Grid** is a deterministic boundary runtime designed to enforce constitutional constraints **before** execution.
 
-### 5. IRS Notice Response Analyzer
-Extracts notice codes, deadlines, required documents, and procedural instructions.
+It operates as an **inline gate** that evaluates transaction attempts and produces one of three outcomes:
 
----
+**Approve** — execution may proceed
 
-## Testing
+**Decline** — execution is non-compliant
 
-```bash
-npm test
-npm test -- --coverage
-```
+**Refuse** — authority or compliance cannot be proven
 
----
+**Diamond Grid** explicitly declares itself subordinate to **No-Fate canonical artifacts**.
+If referenced **No-Fate governance artifacts** are superseded, invalidated, or unavailable, **Diamond Grid** is required to enter refusal mode.
 
-## Architecture
+**Diamond Grid** is not part of the **No-Fate Contract**, and **No-Fate** remains **agnostic** to its implementation.
 
-```
-src/
-├── types/              # Shared type definitions
-├── engines/            # Five analysis engines
-├── utils/              # Validation utilities
-├── output/             # JSON and Markdown formatters
-├── cli.ts              # Command-line interface
-└── index.ts            # Public API
-```
+Reference implementation:
+https://github.com/<diamond-grid-repo>
 
----
+Compliance Claims
 
-## Acceptance Criteria
+Any system claiming compliance with **No-Fate governance** must:
 
-All engines must:
-- Produce deterministic outputs for identical inputs
-- Reject unsupported or unreadable documents
-- Anchor all classifications to explicit evidence
-- Surface ambiguity rather than inferring missing facts
-- Contain zero advisory language
-- Extract zero financial numeric values
+Reference canonical artifacts by cryptographic identity
 
----
+Enforce refusal where authority cannot be proven
 
-## Limitations
+Treat supersession as binding
 
-- **TEXT_IMPLEMENTED**: Implementation complete but not runtime-verified
-- **DEP_STATUS: CLAIM**: Dependencies claimed but not verified
-- **No calculations**: Engines do not perform financial computations
-- **No advice**: Engines provide no tax or legal guidance
-- **Evidence-dependent**: Output quality depends on input text quality
+Preserve all historical governance states
 
----
+Avoid discretionary overrides
 
-## License
+Claims of compliance that rely on **interpretation, exception,** or **post-hoc audit** are **non-canonical.**
 
-MIT
+Change and Supersession
 
----
+Changes to No-Fate governance artifacts are governed by formal supersession rules defined in this repository.
 
-## Disclaimer
+Downstream systems must not modify, reinterpret, or extend canonical artifacts in place.
 
-This software provides **document analysis only**. It does not provide tax advice, legal advice, or compliance guidance. Consult qualified tax professionals for tax-related decisions.
+**Final Note**
 
----
+**No-Fate** exists to make silence, ambiguity, and discretionary override impossible at the governance layer.
 
-**IRS No-Fate Tax Analysis Suite v1.1**  
-*Deterministic. Evidence-bound. No advice. No interpretation.*
-
+Execution systems may be powerful.
+Authority must remain constrained.
