@@ -19,7 +19,8 @@ const VALID_FACETS = [
   'defense',
   'energy',
   'insurance',
-  'spacex'
+  'spacex',
+  'legal'
 ] as const
 
 type Facet = typeof VALID_FACETS[number]
